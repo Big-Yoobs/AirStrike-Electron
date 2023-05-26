@@ -1,0 +1,17 @@
+.container {
+    position: fixed;
+    inset: 0;
+    display: flex;
+}
+
+.content {
+    flex-grow: 1;
+    position: relative;
+}
+
+.sidebar {
+    background: blue;
+    width: 300px;
+    flex-grow: 0;
+    flex-shrink: 0;
+}

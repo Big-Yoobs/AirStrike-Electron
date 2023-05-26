@@ -1,0 +1,46 @@
+.videoContainer {
+    background: #000;
+    position: absolute;
+    inset: 0;
+    .video {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.dock {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 2000px;
+    height: 150px;
+    border-radius: 30px;
+    // overflow: hidden;
+    box-sizing: border-box;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    // justify-content: center;
+    align-items: center;
+
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: white;
+        opacity: 0.3;
+        transition: opacity 0.2s;
+        z-index: -1;
+    }
+
+    &:hover::before {
+        opacity: 0.5;
+    }
+
+    .progressBar {
+        width: 100%;
+    }
+}
