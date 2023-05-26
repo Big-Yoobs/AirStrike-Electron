@@ -7,7 +7,7 @@ export default function RoomComponent() {
 
     function drawView() {
         switch (view) {
-            default: return <PlayerComponent />
+            default: return <PlayerComponent src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
         }
     }
 

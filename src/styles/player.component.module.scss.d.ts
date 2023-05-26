@@ -2,6 +2,7 @@
 // Please do not change this file!
 interface CssExports {
   'dock': string;
+  'dockButtons': string;
   'progressBar': string;
   'video': string;
   'videoContainer': string;

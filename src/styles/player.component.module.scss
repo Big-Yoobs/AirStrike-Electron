@@ -43,4 +43,18 @@
     .progressBar {
         width: 100%;
     }
+
+    .dockButtons {
+        display: flex;
+        gap: 20px;
+
+        & > button {
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+    }
 }
