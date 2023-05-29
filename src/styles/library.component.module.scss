@@ -1,8 +1,50 @@
 .libraryContainer {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
     width: 100%;
-    gap: 20px;
+    
+
+    .librarySidebarContainer {
+        display: flex;
+        flex-direction: column;
+        min-width: 70px;
+        height: 100vh;
+        background-color: gray;
+        position: sticky;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+    }
+
+    .itemsCenter {
+        display: flex;
+        justify-content: center;
+        flex: 1; /* Add this line */
+        margin-left: 20px;
+        margin-right: 20px;
+        width: 100%;
+        margin-top: 100px;
+        margin-bottom: 100px;
+
+        .itemsContainer {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: flex-start;
+        }
+    }  
+
+    .libraryAlphaShortcuts {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        background-color: gray;
+        position: sticky;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        overflow: hidden;
+        min-width: 30px;
+    }
 }
