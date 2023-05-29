@@ -17,12 +17,46 @@
     transition: width 0.4s;
 
     &.open {
-        width: 300px;
+        width: 400px;
     }
 
     .sidebar {
-        width: 300px;
+        width: 400px;
         height: 100%;
+        border: 6px solid #3f0249;
+        box-sizing: border-box;
+        background: #3f0249;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: stretch;
+
+        .chat {
+            background: linear-gradient(180deg, rgba(97,35,108,1) 0%, rgba(216,185,221,1) 100%);
+            flex-grow: 1;
+            position: relative;
+
+            .chatFeed {
+                position: absolute;
+                inset: 0;
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .chatbox {
+                position: absolute;
+                bottom: 20px;
+                left: 20px;
+                right: 20px;
+                outline: none;
+                font-size: 1.2rem;
+                padding: 5px;
+                border: 1px solid black;
+                border-radius: 5px;
+            }
+        }
     }
 }
 
