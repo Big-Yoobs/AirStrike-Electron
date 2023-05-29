@@ -23,13 +23,14 @@ export default function MediaItemComponent() {
                 </div>
             </div>	
             <div className={styles.secondaryContainer}>
+                <div className={styles.secOverlay}></div>
                 <div className={styles.secTitle}>{title}</div>
-                <div className={styles.secSubtitle}>
-                    <div className={styles.year}>Release: <span>{year}</span></div>
-                    <div className={styles.director}>Director: <span>{director}</span></div>
-                </div>
-                <div className={styles.desc}>{desc}</div>
-                <div className={styles.length}>{length[0]}h {length[1]}m</div>
+                    <div className={styles.secSubtitle}>
+                        <div className={styles.year}>Release: <span>{year}</span></div>
+                        <div className={styles.director}>Director: <span>{director}</span></div>
+                    </div>
+                    <div className={styles.desc}>{desc}</div>
+                    <div className={styles.length}>{length[0]}h {length[1]}m</div>
             </div>
         </div>
 
