@@ -1,0 +1,77 @@
+.button {
+    border: none;
+    flex-grow: 1;
+    transition: all 0.2s;
+    position: relative;
+    right: 0;
+    width: 100%;
+    flex: 1;
+    background: #3f0249;
+    padding-left: 0;
+    color: #fff;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 10px 0 0 10px;
+
+    & > * {
+        transition: transform 0.2s;
+    }
+
+    &:hover {
+        background: #550063;
+        right: 5px;
+        width: calc(100% + 5px);
+        padding-left: 5px;
+    }
+
+    &:first-of-type {
+        border-radius: 10px 10px 0 10px;
+    }
+
+    &:last-of-type {
+        border-radius: 10px 0 10px 10px;
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        left: -35px;
+        transition: left 0.3s;
+        top: 50%;
+        transform: translateY(-50%) rotate(-45deg);
+        width: 20px;
+        height: 20px;
+        border: 4px solid white;
+        border-width: 0 4px 4px 0;
+    }
+
+    &.selected {
+        background: #77008b;
+        right: 20px;
+        width: calc(100% + 20px);
+        padding-left: 40px;
+        border-radius: 10px 0 0 10px;
+        flex: 1.5;
+
+        &::before {
+            left: 5px;
+        }
+
+        & > * {
+            transform: scale(1.2);
+        }
+    }
+
+    &.arrow {
+        &::before {
+            left: 50%;
+            border-width: 0 6px 6px 0;
+            transform: translate(calc(-50% + 3px), -50%) scaleX(-1) rotate(-45deg);
+            transition: transform 0.3s;
+        }
+
+        &.open::before {
+            transform: translate(calc(-50% - 8px), -50%) rotate(-45deg);
+        }
+    }
+}
