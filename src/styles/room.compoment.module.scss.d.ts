@@ -3,7 +3,10 @@
 interface CssExports {
   'container': string;
   'content': string;
+  'open': string;
+  'popout': string;
   'sidebar': string;
+  'sidebarContainer': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

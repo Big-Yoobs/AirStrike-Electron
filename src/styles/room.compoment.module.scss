@@ -9,9 +9,33 @@
     position: relative;
 }
 
-.sidebar {
-    background: blue;
-    width: 300px;
+.sidebarContainer {
+    width: 0;
     flex-grow: 0;
     flex-shrink: 0;
+    position: relative;
+    transition: width 0.4s;
+
+    &.open {
+        width: 300px;
+    }
+
+    .sidebar {
+        width: 300px;
+        height: 100%;
+    }
+}
+
+.popout {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(-100%, -50%);
+    width: 100px;
+    height: 350px;
+    background: #3f0249;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
 }
