@@ -4,9 +4,13 @@
     justify-content: flex-start;
     align-items: center;
     gap: 15px;
+    max-width: 100%;
     margin-top: 3px;
     padding-left: 10px;
     margin-right: 10px;
+    margin-left: 5px;
+    
+    color: #939393;
 
 
 
@@ -41,7 +45,11 @@
 }
 
 .selected {
-    background-color: #1e1e1e;
+    
+    background-color: #120023;
+    border: 2px solid #2d0057;
+    max-width: 100%;
+    border-radius: 5px;
     color: white;
-    width: 100%;
+    max-width: 100%;
 }

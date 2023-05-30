@@ -13,6 +13,7 @@ export default function LibraryComponent() {
     return (
         <div className={styles.libraryContainer}>
             <div className={styles.librarySidebarContainer}>
+                
                 <LibrarySidebarItemComponent selected={false} title='Home' icon={FaHome}/>
                 <LibrarySidebarItemComponent selected={true} title='Movies' icon={FaFilm}/>
                 <LibrarySidebarItemComponent selected={false} title='Series' icon={BsTvFill}/>

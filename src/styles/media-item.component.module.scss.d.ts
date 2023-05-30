@@ -7,6 +7,7 @@ interface CssExports {
   'primaryContainer': string;
   'secOverlay': string;
   'secSubtitle': string;
+  'secText': string;
   'secTitle': string;
   'secondaryContainer': string;
   'title': string;
