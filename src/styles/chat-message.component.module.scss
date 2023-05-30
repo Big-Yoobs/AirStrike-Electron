@@ -11,16 +11,18 @@
 
         &:hover {
             transform: scale(1.2);
+            border: 2px solid #430082;
         }
     }
 
     .bubble {
         flex-grow: 1;
-        background: #fff;
+        background: #2d0057;
         padding: 14px;
         margin: 0;
         font-size: 1.2rem;
         border-radius: 0 20px 20px 20px;
+        color: white;
 
         span {
             vertical-align: middle;

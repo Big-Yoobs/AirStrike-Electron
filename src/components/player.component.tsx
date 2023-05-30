@@ -71,7 +71,7 @@ export default function PlayerComponent(props: PlayerComponentProps) {
                             </button>
                         </IconContext.Provider>
                     </div>
-                    <Slider min={0} max={10_000} value={currentTime * 10_000} onChange={value => setTime(value / 10_000)} length={dockWidth - 40} color="#77008b" />
+                    <Slider min={0} max={10_000} value={currentTime * 10_000} onChange={value => setTime(value / 10_000)} length={dockWidth - 40} color="#430082" />
                 </div>
             )}
         </div>

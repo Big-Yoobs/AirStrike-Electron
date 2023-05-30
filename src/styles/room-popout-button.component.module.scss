@@ -6,7 +6,7 @@
     right: 0;
     width: 100%;
     flex: 1;
-    background: #3f0249;
+    background: #120023;
     padding-left: 0;
     color: #fff;
     overflow: hidden;
@@ -18,18 +18,18 @@
     }
 
     &:hover {
-        background: #550063;
+        background: #430082;
         right: 5px;
         width: calc(100% + 5px);
         padding-left: 5px;
     }
 
     &:first-of-type {
-        border-radius: 10px 10px 0 10px;
+        border-radius: 10px 0 0 10px;
     }
 
     &:last-of-type {
-        border-radius: 10px 0 10px 10px;
+        border-radius: 10px 0 0px 10px;
     }
 
     &::before {
@@ -46,7 +46,7 @@
     }
 
     &.selected {
-        background: #77008b;
+        background: #430082;
         right: 20px;
         width: calc(100% + 20px);
         padding-left: 40px;

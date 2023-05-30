@@ -18,12 +18,12 @@ export default function MediaItemComponent() {
     return (
         <div className={styles.container}>
             <div className={styles.primaryContainer}>
-                <img className={styles.cover} src={coverSrc} />
+                <img src={coverSrc} />
                 <div className={styles.textContainer}>
                     <div className={styles.title}>{title}</div>
                     <div className={styles.secondLineContainer}>
                         <div className={styles.year}>{year}</div>
-                        <div className={styles.subtitle}>{subtitle}</div>
+                        <div>{subtitle}</div>
                         {watched ? (
                             <div className={styles.watchedContainer}>
                                 <BsFillCheckCircleFill />
@@ -38,7 +38,7 @@ export default function MediaItemComponent() {
                     <div className={styles.secTitle}>{title}</div>
                     <div className={styles.secSubtitle}>
                         <div className={styles.year}>Release: <span>{year}</span></div>
-                        <div className={styles.director}>Director: <span>{director}</span></div>
+                        <div>Director: <span>{director}</span></div>
                     </div>
                     <div className={styles.desc}>{desc}</div>
                     <div className={styles.length}>{length[0]}h {length[1]}m</div>

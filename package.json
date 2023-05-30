@@ -1,6 +1,6 @@
 {
-  "name": "stacktest",
-  "productName": "stacktest",
+  "name": "AirStrike",
+  "productName": "AirStrike",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": ".webpack/main",

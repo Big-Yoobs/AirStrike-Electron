@@ -29,7 +29,7 @@
         content: "";
         position: absolute;
         inset: 0;
-        background: white;
+        background: #3E3E3E;
         opacity: 0.3;
         transition: opacity 0.2s;
         z-index: -1;
@@ -46,14 +46,22 @@
     .dockButtons {
         display: flex;
         gap: 20px;
+        
 
         & > button {
+            color: #430082;
             border-radius: 50%;
             width: 60px;
             height: 60px;
             border: none;
             background: none;
             cursor: pointer;
+
+            &:hover {
+                
+                color: #fff;
+            }
+            
         }
     }
 }
