@@ -6,11 +6,15 @@
     width: auto;
     margin: 0;
     position: relative;
+    transition: transform 1.0s ease;
+    
 }
 
 .container:hover {
     position: relative;
     z-index: 10;
+    
+    transform: scale(1.05);
 }
 
 .primaryContainer {
@@ -71,6 +75,10 @@
             .secOverlay {
                 filter: blur(1px);
             }
+
+            .secText {
+                opacity: 1;
+            }
         }
     }
 }
@@ -106,6 +114,7 @@
         width: 100%;
         height: 100%;
         gap: 20px;
+        opacity: 0;
 
         .secTitle {
             font-weight: bold;
