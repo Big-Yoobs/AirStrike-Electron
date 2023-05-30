@@ -3,7 +3,7 @@ import './styles/style.scss';
 import AppComponent from './app.component';
 
 function render() {
-  ReactDOM.render(<AppComponent />, document.body);
+    ReactDOM.render(<AppComponent />, document.body);
 }
 
 render();
