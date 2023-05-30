@@ -13,7 +13,7 @@ export default function RoomComponent() {
 
     function drawView() {
         switch (view) {
-            default: return <PlayerComponent src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" />
+            default: return <PlayerComponent src="content://chungus.mp4" />
         }
     }
 
@@ -27,7 +27,7 @@ export default function RoomComponent() {
                     <div className={styles.chat}>
                         <div className={styles.chatFeed}>
                             <ChatMessageComponent text="cool" />
-                            <ChatMessageComponent text="test emoji :damn:" />
+                            <ChatMessageComponent text="test emoji :joecool: :floydwhite:" />
                             <ChatMessageComponent text="cool" />
                             <ChatMessageComponent text="cool" />
                             <ChatMessageComponent text="cool" />
