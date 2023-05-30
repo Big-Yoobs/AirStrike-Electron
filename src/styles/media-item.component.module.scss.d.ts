@@ -9,8 +9,12 @@ interface CssExports {
   'secSubtitle': string;
   'secText': string;
   'secTitle': string;
+  'secondLineContainer': string;
   'secondaryContainer': string;
+  'textContainer': string;
   'title': string;
+  'watchedContainer': string;
+  'year': string;
 }
 export const cssExports: CssExports;
 export default cssExports;
