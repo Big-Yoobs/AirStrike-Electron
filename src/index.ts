@@ -129,7 +129,6 @@ for (let avatarCategory of avatarDir) {
         avatars.set(avatar.slice(0, -extension.length), Path.join(avatarCategory, avatar));
     }
 }
-console.log(avatars);
 
 
 const emojis: Map<string, string> = new Map();
