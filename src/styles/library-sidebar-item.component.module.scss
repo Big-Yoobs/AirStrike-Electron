@@ -1,0 +1,55 @@
+.librarySidebarItemContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+    max-width: 100%;
+    margin-top: 3px;
+    padding-left: 10px;
+    margin-right: 10px;
+    margin-left: 5px;
+    
+    color: #939393;
+
+
+
+    .librarySidebarItemIcon {
+        min-height: 25px;
+        max-height: 25px;
+        min-width: 25px;
+        max-width: 25px;
+        display: flex;
+        align-items: center;
+        
+    }
+
+    .librarySidebarItemTitle {
+        min-height: 25px;
+        display: flex;
+        align-items: center;
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+    
+}
+
+.librarySidebarItemIcon svg {
+    min-width: 25px;
+    min-height: 25px;
+    max-width: 25px;
+    max-height: 25px;
+    object-fit: cover;
+}
+
+.selected {
+    
+    background-color: #120023;
+    border: 2px solid #2d0057;
+    max-width: 100%;
+    border-radius: 5px;
+    color: white;
+    max-width: 100%;
+}

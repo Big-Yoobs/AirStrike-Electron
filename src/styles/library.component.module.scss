@@ -1,0 +1,62 @@
+.libraryContainer {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    
+
+    .librarySidebarContainer {
+        display: flex;
+        flex-direction: column;
+        min-width: 70px;
+        width: 216px;
+        height: 100vh;
+        background: linear-gradient(180deg, rgba(7, 7, 7, 0.5) 0%, rgba(0, 2, 33, 0.5) 100%);
+        position: sticky;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+    }
+
+    .itemsCenter {
+        display: flex;
+        justify-content: center;
+        flex: 1; /* Add this line */
+        margin-left: 20px;
+        margin-right: 20px;
+        width: 100%;
+        margin-top: 100px;
+        margin-bottom: 100px;
+
+        .itemsContainer {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: flex-start;
+
+            
+        }
+    }  
+
+    .libraryAlphaShortcuts {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        background: linear-gradient(180deg, rgba(7, 7, 7, 0.5) 0%, rgba(0, 2, 33, 0.5) 100%);
+        color: #bbb;
+        position: sticky;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        overflow: hidden;
+        min-width: 30px;
+        justify-content: center;
+        align-items: center;
+
+        div:hover {
+            cursor: pointer;
+            color: white;
+            
+        }
+    }
+}

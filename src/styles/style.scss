@@ -1,17 +1,7 @@
 body {
-    background: #000;
+    background: linear-gradient(145deg, #3E3E3E 0%, #002994 100%);
     margin: 0;
     padding: 0;
-}
-
-.container {
-    .underline {
-        text-decoration: underline;
-    }
-}
-
-header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    min-width: 100%;
+    overflow-x: hidden;
 }

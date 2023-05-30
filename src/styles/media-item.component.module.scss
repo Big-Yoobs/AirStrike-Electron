@@ -1,0 +1,170 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: auto;
+    margin: 0;
+    position: relative;
+    transition: transform 1.0s ease;
+    box-sizing: border-box;
+}
+
+.container:hover {
+    position: relative;
+    z-index: 10;
+    transform: scale(1.05);
+    background-color: rgb(52, 52, 52);
+    border-radius: 5px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+    box-sizing: border-box;
+}
+
+.primaryContainer {
+    color: #bbbbbb;
+    img {
+        width: 240px;
+        height: 360px;
+        aspect-ratio: 2/3;
+        object-fit: cover;
+    }
+
+    .textContainer {
+        margin: 6px;
+
+        .title {
+            font-size: 1rem;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .secondLineContainer {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-top: 3px;
+            align-items: center;
+
+            .year {
+                font-size: small;                
+            }
+
+            .watchedContainer {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            
+        }
+    }
+
+    &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+        color: white;
+        
+
+        & > img {
+            // border-top: 3px solid rgb(52, 52, 52);
+            // border-left: 3px solid rgb(52, 52, 52);
+        }
+
+        ~ .secondaryContainer {
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            width: 400px;
+            height: 360px;
+            position: absolute;
+            top: 0;
+            left: 100%;
+            opacity: 1;
+            // border-top: 3px solid rgb(52, 52, 52);
+            // border-bottom: 3px solid rgb(52, 52, 52);
+            // border-right: 3px solid rgb(52, 52, 52);
+            box-shadow: 4px 2px 4px rgba(0, 0, 0, 0.6);
+
+
+            &::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 1;
+            }
+
+            .secOverlay {
+                filter: blur(1px);
+            }
+
+            .secText {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+.secondaryContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    transition: opacity 1.0s ease;
+    
+
+    .secOverlay {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background-image: url(https://www.themoviedb.org/t/p/original/xKb6mtdfI5Qsggc44Hr9CCUDvaj.jpg);
+        background-size: cover;
+        background-position: center;
+        z-index: -1;
+    }
+
+    .secText {
+
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        z-index: 10;
+        color: white;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        gap: 20px;
+        opacity: 0;
+
+        .secTitle {
+            font-weight: bold;
+        }
+
+        .secSubtitle {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            width: 100%;
+            font-weight: bold;
+
+            span {
+                font-weight: normal;
+                text-decoration: underline;
+            }
+        }
+
+        .desc {
+            width: 80%;
+            text-align: center;
+        }
+
+        .length {
+            font-weight: bold;
+        }
+    }
+}
