@@ -8,6 +8,7 @@
         height: 50px;
         border-radius: 15px;
         transition: transform 0.2s;
+        box-sizing: border-box;
 
         &:hover {
             transform: scale(1.2);
@@ -26,6 +27,23 @@
 
         span {
             vertical-align: middle;
+        }
+
+        img {
+            margin-right: 4px;
+        }
+    }
+
+    .emojis {
+        flex-grow: 1;
+        font-size: 10rem;
+
+        &:has(:nth-child(2)) {
+            font-size: 5rem;
+        }
+
+        &:has(:nth-child(5)) {
+            font-size: 2.5rem;
         }
     }
 }
