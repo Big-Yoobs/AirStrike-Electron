@@ -1,4 +1,6 @@
 const fs = require("fs");
-fs.rmdirSync("out", {
-    recursive: true
-});
+try {
+    fs.rmdirSync("out", {
+        recursive: true
+    });
+} catch {}
