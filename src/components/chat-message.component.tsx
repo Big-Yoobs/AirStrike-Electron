@@ -1,6 +1,7 @@
 import { useMemo } from "react"
 import styles from "../styles/chat-message.component.module.scss"
 import EmojiComponent from "./emoji.component";
+import AvatarGuiComponent from "./avatar-gui.component";
 
 export interface ChatMessageProps {
     text: string
@@ -26,7 +27,9 @@ export default function ChatMessageComponent(props: ChatMessageProps) {
 
     return (
         <div className={styles.container}>
-            <img className={styles.avatar} src="avatar://villainbiden" />
+            <div className={styles.avatarContainer}>
+                <AvatarGuiComponent />
+            </div>
             <p className={styles.bubble}>{words}</p>
         </div>
     )

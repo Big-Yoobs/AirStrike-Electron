@@ -1,10 +1,28 @@
 .headerContainer {
-    background-color: red;
+    background-color: #1D1D1D;
     height: 100px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+    div {
+        cursor: pointer;
+    }
+
+    img {
+        cursor: pointer;
+    }
+
+    .menuItem {
+        color: white;
+
+        &:hover {
+            color: #5b00b1;
+            text-decoration: underline;
+        }
+    }
 
     .logo {
         width: 20%;
@@ -14,5 +32,13 @@
     }
     .searchContainer {
         margin: 10px;
+        width: 300px;
+        height: 30px;
+
+    }
+
+    .avatarContainer {
+        width: 50px;
+        height: 50px;
     }
 }
