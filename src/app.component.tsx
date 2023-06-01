@@ -7,7 +7,7 @@ export default function AppComponent() {
         <>
             <HeaderComponent />
             {/* <RoomComponent /> */}
-            {/* <LibraryComponent/> */}
+            <LibraryComponent/>
 
         </>
     )
