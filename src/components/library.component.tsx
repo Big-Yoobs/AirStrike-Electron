@@ -16,7 +16,6 @@ export default function LibraryComponent() {
 
     useEffect(() => {
         if (!width) return setColumns(1);
-        console.log(width);
         setColumns(Math.max(Math.floor(width / 260) || 0, 1));
     }, [width]);
     

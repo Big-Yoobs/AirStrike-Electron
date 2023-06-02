@@ -1,15 +1,13 @@
 import HomeComponent from "./components/home.component";
 import RoomComponent from "./components/room.component";
-import RoomModalComponent from "./components/room-modal.component";
-import { electron } from "./utils";
-
-electron().addEventListener("room ID", console.log);
+import useRoomId from "./hooks/use-room-id";
 
 export default function AppComponent() {
-    return (
-        <>
-            <HomeComponent />
-            {/* <LibraryComponent/> */}
-        </>
-    )
+    const roomId = useRoomId();
+
+    if (roomId) {
+        return <RoomComponent />
+    }
+
+    return <HomeComponent />
 }
