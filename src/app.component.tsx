@@ -1,4 +1,5 @@
 import HeaderComponent from "./components/header-component";
+import LibraryComponent from "./components/library.component";
 import RoomComponent from "./components/room.component";
 import { electron } from "./utils";
 
