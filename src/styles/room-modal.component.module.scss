@@ -1,0 +1,104 @@
+.joinRoomContainer {
+    background-color: #1D1D1D;
+    z-index: 12;
+    width: 600px;
+    height: 300px;
+    filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.25));
+    border-radius: 10px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+
+    .joinRoomTitle {
+        font-weight: bold;
+        font-size: 42px;
+        color: white;
+        margin-top: 20px;
+    }
+
+    .closeButton {
+        position: absolute;
+        top: 15px;
+        right: 25px;
+        color: rgb(52, 52, 52);
+        font-weight: bold;
+        font-size: 30px;
+        cursor: pointer;
+
+        &:hover {
+            color: #430082;
+        }
+
+        &:active {
+            color: white;
+        }
+    }
+
+    .inputMainContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 400px;
+        margin-top: 50px;
+
+        .inputLabel {
+            font-weight: bold;
+            font-size: 24px;
+            color: white;
+            margin-bottom: 10px;
+            
+        }
+
+        .inputContainer {
+
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+
+            .inputField {
+
+                
+                height: 26px;
+                background: #1D1D1D;
+                outline: none;
+                color: white;
+                padding: 14px;
+                font-size: 1.3rem;
+                border: 1px solid rgb(52, 52, 52);
+                border-radius: 10px 0 0 10px;
+                
+                
+                &:focus {
+                    border: 1px solid #430082;
+                }
+                
+            }
+
+            .actionBtn {
+                width: 130px;
+                font-weight: bold;
+                font-size: 1.3rem;
+                color: white;
+                background-color: #430082;
+                border: none;
+                border-radius: 0 10px 10px 0;
+
+                &:hover {
+                    background-color: #5F0099;
+                    cursor: pointer;
+                }
+
+                &:active {
+                    background-color: white;
+                    color: #5F0099;
+                }
+
+            }
+        }
+    }
+}
