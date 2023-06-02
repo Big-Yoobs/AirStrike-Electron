@@ -8,7 +8,7 @@ export default function HeaderComponent() {
 
         <div className={styles.headerContainer}>
 
-            <img className={styles.logo} src="https://i.imgur.com/2hdMZWw.png"/>
+            <img className={styles.logo} src="https://i.imgur.com/8otsuij.png"/>
 
             <div className={styles.menuItem}>Home</div>
             <div className={styles.menuItem}>Create Room</div>
