@@ -1,6 +1,7 @@
 import { useMemo } from "react"
 import styles from "../styles/chat-message.component.module.scss"
 import EmojiComponent from "./emoji.component";
+import AvatarGuiComponent from "./avatar-gui.component";
 // import { ipcRenderer } from "electron";
 
 // ipcRenderer.on("emojis", (event, value) => {
@@ -37,7 +38,9 @@ export default function ChatMessageComponent(props: ChatMessageProps) {
 
     return (
         <div className={styles.container}>
-            <img className={styles.avatar} src="avatar://villainbiden" />
+            <div className={styles.avatarContainer}>
+                <AvatarGuiComponent />
+            </div>
             {isOnlyEmojis ? (
                 <div className={styles.emojis}>{words}</div>
             ) : (

@@ -12,7 +12,7 @@
 
 .container:hover {
     position: relative;
-    z-index: 10;
+    z-index: 9;
     transform: scale(1.05);
     background-color: rgb(52, 52, 52);
     border-radius: 5px;
@@ -135,6 +135,7 @@
         height: 100%;
         gap: 20px;
         opacity: 0;
+        overflow: hidden;
 
         .secTitle {
             font-weight: bold;
@@ -162,6 +163,9 @@
 
         .length {
             font-weight: bold;
+            position: absolute;
+            bottom: 0;
+            right: 0;
         }
     }
 }
