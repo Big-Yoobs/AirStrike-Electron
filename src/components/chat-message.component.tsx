@@ -1,11 +1,13 @@
 import { useMemo } from "react"
 import styles from "../styles/chat-message.component.module.scss"
 import EmojiComponent from "./emoji.component";
-// import { ipcRenderer } from "electron";
+import { electron } from "../utils";
 
-// ipcRenderer.on("emojis", (event, value) => {
-//     console.log(event, value);
-// });
+const emojis: string[] = [];
+
+electron().addEventListener("emojis", (newEmojis: string[]) => {
+    emojis.splice(0, emojis.length, ...newEmojis);
+});
 
 export interface ChatMessageProps {
     text: string
@@ -18,9 +20,13 @@ export default function ChatMessageComponent(props: ChatMessageProps) {
         for (let i = 0; i < separated.length; i++) {
             let word = separated[i];
             if (word.startsWith("\\") && word.endsWith("\\") && word.length > 2) {
-                word = word.substring(1, word.length - 1);
-                out.push(<EmojiComponent emoji={word} key={i} />)
-            } else if (i == separated.length - 1) {
+                const emojiName = word.substring(1, word.length - 1);
+                if (emojis.includes(emojiName)) {
+                    out.push(<EmojiComponent emoji={emojiName} key={i} />);
+                    break;
+                }
+            }
+            if (i == separated.length - 1) {
                 out.push(<span key={i}>{word}</span>);
             } else {
                 out.push(<span key={i}>{word} </span>);
@@ -31,7 +37,6 @@ export default function ChatMessageComponent(props: ChatMessageProps) {
 
     let isOnlyEmojis = true;
     for (let word of words) {
-        console.log(word.props);
         if (word.props.children) isOnlyEmojis = false;
     }
 
