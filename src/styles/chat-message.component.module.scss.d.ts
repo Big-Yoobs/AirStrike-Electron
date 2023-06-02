@@ -4,6 +4,7 @@ interface CssExports {
   'avatarContainer': string;
   'bubble': string;
   'container': string;
+  'emojis': string;
 }
 export const cssExports: CssExports;
 export default cssExports;
