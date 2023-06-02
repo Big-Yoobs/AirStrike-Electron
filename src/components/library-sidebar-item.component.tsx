@@ -3,7 +3,7 @@ import styles from '../styles/library-sidebar-item.component.module.scss';
 export interface LibrarySidebarItemProps {
     selected: boolean;
     title: string;
-    icon: any;
+    icon: React.FC;
 }
 
 export default function LibrarySidebarItemComponent(props: LibrarySidebarItemProps) {

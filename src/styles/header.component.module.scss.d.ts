@@ -2,9 +2,10 @@
 // Please do not change this file!
 interface CssExports {
   'avatarContainer': string;
-  'bubble': string;
-  'container': string;
-  'emojis': string;
+  'headerContainer': string;
+  'logo': string;
+  'menuItem': string;
+  'searchContainer': string;
 }
 export const cssExports: CssExports;
 export default cssExports;
