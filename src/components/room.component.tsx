@@ -6,6 +6,7 @@ import { IoLibrary } from "react-icons/io5";
 import { BsFillDoorOpenFill, BsFillNutFill } from "react-icons/bs"
 import { FaTheaterMasks } from "react-icons/fa";
 import ChatMessageComponent from "./chat-message.component";
+import LibraryComponent from "./library.component";
 
 export default function RoomComponent() {
     const [view, setView] = useState<"library" | "theatre" | "settings">("theatre");
@@ -15,6 +16,7 @@ export default function RoomComponent() {
 
     function drawView() {
         switch (view) {
+            case "library": return <LibraryComponent />
             default: return <PlayerComponent src="content://chungus.mp4" />
         }
     }

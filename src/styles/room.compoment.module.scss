@@ -6,6 +6,7 @@
 
 .content {
     flex-grow: 1;
+    flex-shrink: 1;
     position: relative;
 }
 
@@ -69,7 +70,6 @@
     transform: translate(-100%, -50%);
     width: 100px;
     height: 350px;
-    background: #3f0249;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
