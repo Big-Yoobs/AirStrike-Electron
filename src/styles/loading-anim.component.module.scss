@@ -1,0 +1,74 @@
+
+
+.container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    gap: 100px;
+
+    .logoIconContainer {
+        position: relative;
+        transform: scale(0.9);
+        
+        .spinContainer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+
+            .ldsDualRing {
+                display: inline-block;
+                width: 160px;
+                height: 160px;
+
+                &:after {
+                    content: " ";
+                    display: block;
+                    width: 128px;
+                    height: 128px;
+                    margin: 8px;
+                    border-radius: 50%;
+                    border: 10px solid #fff;
+                    border-color: #fff transparent #fff transparent;
+                    animation: ldsDualRing 1.2s linear infinite;
+                }
+            }
+            
+            @keyframes ldsDualRing {
+                0% {
+                transform: rotate(0deg);
+                }
+                100% {
+                transform: rotate(360deg);
+                }
+            }
+        }
+
+        img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            max-width: 135px;
+            max-height: 135px;
+            object-fit: contain;
+            margin-left: 3px;
+        }
+    }
+
+    .loadingText {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-align: center;
+    }
+}
+  
