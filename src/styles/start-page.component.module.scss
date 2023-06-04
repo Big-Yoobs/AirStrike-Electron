@@ -1,0 +1,68 @@
+.container {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(145deg, #3E3E3E 0%, #29375a 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    .logo {
+        margin-bottom: 50px; 
+        img {
+            width: 700px;
+            object-fit: contain;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            
+        }
+    }
+
+    .buttons {
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+
+        .button {
+            background: linear-gradient(145deg, #3E3E3E 0%, #29375a 100%);
+            width: 200px;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            border-radius: 10px;
+            box-sizing: border-box;
+            transition: transform 0.2s ease-in;
+
+            &:hover {
+                cursor: pointer;
+                background: linear-gradient(145deg, #3E3E3E 0%, #430082 100%);
+                transform: scale(1.1);
+                filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.25));
+            }
+
+            &:active {
+                transform: scale(1);
+                background: linear-gradient(145deg, #5b00b1 0%, #430082 100%);
+            }
+
+            .buttonIcon svg {
+                width: 80px;
+                height: 80px;
+                object-fit: contain;
+                margin: 0;
+            }
+
+            .buttonText {
+                font-size: 20px;
+                font-weight: bold;
+                margin: 0;
+            }
+        }
+
+    }
+}
