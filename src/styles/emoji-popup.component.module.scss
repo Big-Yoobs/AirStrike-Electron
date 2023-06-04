@@ -1,0 +1,19 @@
+.container {
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.emoji {
+    width: 350px;
+    height: 350px;
+    position: absolute;
+    font-size: 15rem;
+    z-index: 80;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

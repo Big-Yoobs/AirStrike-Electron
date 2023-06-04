@@ -10,7 +10,7 @@ export interface NotificationInfo {
 let notificationText: string | null = null;
 let notificationStatus: "normal" | "success" | "danger" | "none" = "none";
 
-let eventListeners: ((info: NotificationInfo) => void)[] = [];
+const eventListeners: ((info: NotificationInfo) => void)[] = [];
 
 export default class Notifications {
     static set(notification: string, status: "normal" | "success" | "danger") {

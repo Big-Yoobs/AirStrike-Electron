@@ -51,6 +51,7 @@
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
+    "framer-motion": "^10.12.16",
     "fs-extra": "^11.1.1",
     "mime-types": "^2.1.35",
     "react": "^18.2.0",

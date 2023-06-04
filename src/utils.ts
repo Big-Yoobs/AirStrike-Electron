@@ -9,3 +9,9 @@ export interface ElectronAPI {
 export function electron(): ElectronAPI {
     return (window as any).electronAPI;
 }
+
+export function wait(seconds: number) {
+    return new Promise(r => {
+        setTimeout(r, seconds * 1000);
+    })
+}

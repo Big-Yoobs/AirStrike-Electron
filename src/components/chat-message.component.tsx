@@ -24,7 +24,7 @@ export default function ChatMessageComponent(props: ChatMessageProps) {
                 const emojiName = word.substring(1, word.length - 1);
                 if (emojis.includes(emojiName)) {
                     out.push(<EmojiComponent emoji={emojiName} key={i} />);
-                    break;
+                    continue;
                 }
             }
             if (i == separated.length - 1) {

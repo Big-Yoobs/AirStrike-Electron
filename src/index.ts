@@ -27,6 +27,7 @@ const createWindow = (): void => {
             preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
             nodeIntegration: true
         },
+        autoHideMenuBar: true
     });
 
     // and load the index.html of the app.

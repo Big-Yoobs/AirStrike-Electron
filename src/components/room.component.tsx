@@ -37,10 +37,18 @@ export default function RoomComponent() {
             } else {
                 const message = chatInput.current.value;
                 chatInput.current.value = "";
-                electron().socketSend("chat", message);
+                electron().socketSend("chat", message.trim());
                 setSuggestedEmoji(null);
                 setAutoComplete(null);
             }
+        } else if (e.key == "Tab") {
+            e.preventDefault();
+            if (autoComplete && suggestedEmoji) {
+                selectEmoji(suggestedEmoji);
+                setAutoComplete(null);
+            }
+        } else if (e.key == "Escape") {
+            setAutoComplete(null);
         } else {
             setTimeout(() => {
                 if (chatInput.current.value) {
@@ -60,11 +68,17 @@ export default function RoomComponent() {
             const lastWord = words[words.length - 1];
             if (lastWord) words.pop();
         }
-        chatInput.current.value = words.join(" ") + `\\${emoji}\\ `;
+        if (words.length) {
+            chatInput.current.value = words.join(" ") + ` \\${emoji}\\ `;
+        } else {
+            chatInput.current.value = `\\${emoji}\\ `;
+        }
+        
         chatInput.current.focus();
+        setAutoComplete(null);
     }
 
-    const shouldShowEmojis = chatInput.current?.value.split(" ").pop()?.startsWith("\\");
+    const shouldShowEmojis = chatInput.current?.value.split(" ").pop()?.startsWith("\\") && autoComplete;
 
     return (
         <div className={styles.container}>

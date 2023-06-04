@@ -29,13 +29,16 @@
     .emojis {
         flex-grow: 1;
         font-size: 10rem;
+        line-height: 224px;
 
         &:has(:nth-child(2)) {
             font-size: 5rem;
+            line-height: calc(112px - 40px);
         }
 
         &:has(:nth-child(5)) {
             font-size: 2.5rem;
+            line-height: calc(56px - 40px);
         }
     }
 }

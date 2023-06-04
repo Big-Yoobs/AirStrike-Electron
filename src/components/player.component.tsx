@@ -4,6 +4,8 @@ import Slider from "./slider.component";
 import { useResizeDetector } from "react-resize-detector";
 import { BsPauseFill, BsPlayFill, BsFastForwardFill, BsRewindFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
+import EmojiPopupComponent from "./emoji-popup.component";
+import useEmojiPopups from "../hooks/use-emoji-popups";
 
 export interface PlayerComponentProps {
     src: string
@@ -14,6 +16,7 @@ export default function PlayerComponent(props: PlayerComponentProps) {
     const [currentTime, setCurrentTime] = useState(0);
     const [isBuffering, setIsBuffering] = useState(true);
     const {width: dockWidth, height: dockHeight, ref: dockRef} = useResizeDetector();
+    const emojiPopups = useEmojiPopups();
 
     function setTime(time: number) {
         video.current.currentTime = time * video.current.duration;
@@ -52,6 +55,9 @@ export default function PlayerComponent(props: PlayerComponentProps) {
             <div className={styles.videoContainer}>
                 <video ref={video} onLoad={videoLoaded} onError={console.error} onTimeUpdate={e => setCurrentTimeInternal(e.currentTarget.currentTime / e.currentTarget.duration)} className={styles.video} src={props.src}></video>
             </div>
+            {emojiPopups.map(emoji => (
+                <EmojiPopupComponent emoji={emoji.emoji} key={emoji.uid} visible={emoji.visible} />
+            ))}
             {!isNaN(video.current?.currentTime) && !isNaN(video.current?.duration) && (
                 <div className={styles.dock} ref={dockRef}>
                     <div className={styles.dockButtons}>
