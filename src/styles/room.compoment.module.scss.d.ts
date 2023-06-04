@@ -2,11 +2,13 @@
 // Please do not change this file!
 interface CssExports {
   'chat': string;
+  'chatBox': string;
   'chatFeed': string;
+  'chatInput': string;
   'chatMessages': string;
-  'chatbox': string;
   'container': string;
   'content': string;
+  'emojiSelector': string;
   'open': string;
   'popout': string;
   'roomCode': string;

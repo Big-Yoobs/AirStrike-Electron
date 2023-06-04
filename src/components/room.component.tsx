@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PlayerComponent from "./player.component";
 import styles from "../styles/room.compoment.module.scss";
 import RoomPopoutButton from "./room-popout-button.component";
@@ -10,6 +10,7 @@ import LibraryComponent from "./library.component";
 import { electron } from "../utils";
 import useChat from "../hooks/use-chat";
 import useRoomId from "../hooks/use-room-id";
+import EmojiSelectionComponent from "./emoji-selection.component";
 
 export default function RoomComponent() {
     const [view, setView] = useState<"library" | "theatre" | "settings">("theatre");
@@ -17,6 +18,8 @@ export default function RoomComponent() {
     const chatMessages = useChat();
     const chatInput = useRef<HTMLInputElement>();
     const roomCode = useRoomId();
+    const [autoComplete, setAutoComplete] = useState<string | null>(null);
+    const [suggestedEmoji, setSuggestedEmoji] = useState<string | null>(null);
 
     function drawView() {
         switch (view) {
@@ -27,11 +30,41 @@ export default function RoomComponent() {
 
     function chatKeypress(e: React.KeyboardEvent) {
         if (e.key == "Enter") {
-            const message = chatInput.current.value;
-            chatInput.current.value = "";
-            electron().socketSend("chat", message);
+            if (autoComplete && suggestedEmoji) {
+                selectEmoji(suggestedEmoji);
+                setAutoComplete(null);
+                return;
+            } else {
+                const message = chatInput.current.value;
+                chatInput.current.value = "";
+                electron().socketSend("chat", message);
+                setSuggestedEmoji(null);
+                setAutoComplete(null);
+            }
+        } else {
+            setTimeout(() => {
+                if (chatInput.current.value) {
+                    let word = chatInput.current.value.split(" ").pop();
+                    if (!word || !word.startsWith("\\")) return setAutoComplete("");
+                    setAutoComplete(word);
+                } else {
+                    setAutoComplete(null);
+                }
+            });
         }
     }
+
+    function selectEmoji(emoji: string) {
+        const words = chatInput.current.value.split(" ");
+        if (words.length) {
+            const lastWord = words[words.length - 1];
+            if (lastWord) words.pop();
+        }
+        chatInput.current.value = words.join(" ") + `\\${emoji}\\ `;
+        chatInput.current.focus();
+    }
+
+    const shouldShowEmojis = chatInput.current?.value.split(" ").pop()?.startsWith("\\");
 
     return (
         <div className={styles.container}>
@@ -54,7 +87,14 @@ export default function RoomComponent() {
                                 ))}
                             </div>
                         </div>
-                        <input ref={chatInput} type="text" className={styles.chatbox} placeholder="Say something..." onKeyDown={chatKeypress} />
+                        <div className={styles.chatInput}>
+                            <input ref={chatInput} type="text" className={styles.chatBox} placeholder="Say something..." onKeyDown={chatKeypress} />
+                            <div className={styles.emojiSelector}>
+                                {shouldShowEmojis && (
+                                    <EmojiSelectionComponent autoComplete={autoComplete} onSelect={selectEmoji} onSuggestionChange={setSuggestedEmoji} />
+                                )}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div className={styles.popout} onClick={() => setSidebarOpen(!sidebarOpen)}>

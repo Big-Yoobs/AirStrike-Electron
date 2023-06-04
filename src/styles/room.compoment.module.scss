@@ -45,6 +45,7 @@
                 h4 {
                     margin: 0;
                     color: #808080;
+                    font-weight: normal;
                 }
 
                 h2 {
@@ -92,16 +93,28 @@
                 }
             }
           
-            .chatbox {
+            .chatInput {
                 position: absolute;
                 bottom: 10px;
                 left: 10px;
                 right: 16px;
-                outline: none;
-                font-size: 1.2rem;
-                padding: 5px;
-                border: 1px solid black;
-                border-radius: 5px;
+
+                .chatBox {
+                    font-size: 1.2rem;
+                    padding: 5px;
+                    border: 1px solid black;
+                    outline: none;
+                    border-radius: 5px;
+                    width: 100%;
+                    box-sizing: border-box;
+                }
+
+                .emojiSelector {
+                    position: absolute;
+                    bottom: 45px;
+                    left: 0;
+                    right: 0;
+                }
             }
         }
           

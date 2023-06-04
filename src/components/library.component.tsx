@@ -38,61 +38,9 @@ export default function LibraryComponent() {
             </div>
             <div className={styles.itemsCenter} ref={ref}>
                 <div className={styles.itemsContainer} style={{width: libraryWidth + "px"}}>
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
-                    <MediaItemComponent />
+                    {Array(50).map((e, index) => (
+                        <MediaItemComponent key={index} />
+                    ))}
                 </div>
             </div>
         </div>
