@@ -30,15 +30,23 @@
             background: linear-gradient(180deg, rgba(7, 7, 7, 0.5) 0%, rgba(0, 2, 33, 0.5) 100%);
             color: #bbb;
             overflow: hidden;
-            justify-content: space-evenly;
-            align-items: center;
+            justify-content: stretch;
+            user-select: none;
 
-            div {
-                height: 0;
+            a {
+                flex-grow: 1;
+                position: relative;
                 cursor: pointer;
 
                 &:hover {
                     color: white;
+                }
+
+                span {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
                 }
             }
         }

@@ -3,13 +3,16 @@
 interface CssExports {
   'chat': string;
   'chatFeed': string;
+  'chatMessages': string;
   'chatbox': string;
   'container': string;
   'content': string;
   'open': string;
   'popout': string;
+  'roomCode': string;
   'sidebar': string;
   'sidebarContainer': string;
+  'sidebarTop': string;
 }
 export const cssExports: CssExports;
 export default cssExports;

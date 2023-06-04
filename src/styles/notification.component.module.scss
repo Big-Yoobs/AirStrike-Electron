@@ -1,0 +1,35 @@
+.container {
+    position: fixed;
+    bottom: 50px;
+    left: 50%;
+    max-width: calc(min(100vw, 600px) - 200px);
+    transform: translateX(-50%);
+    z-index: 9999;
+    border-radius: 10px;
+    transition: background 0.2s, bottom 0.2s, opacity 0.2s;
+    opacity: 1;
+    color: #fff;
+
+    .text {
+        padding: 1rem;
+        display: inline-block;
+    }
+
+    &.none {
+        background: transparent;
+        bottom: 30px;
+        opacity: 0;
+    }
+
+    &.success {
+        background: #47c972;
+    }
+
+    &.danger {
+        background: #ff3b45;
+    }
+
+    &.normal {
+        background: #616161;
+    }
+}

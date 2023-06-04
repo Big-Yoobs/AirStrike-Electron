@@ -2,6 +2,7 @@
 // Please do not change this file!
 interface CssExports {
   'actionBtn': string;
+  'background': string;
   'closeButton': string;
   'inputContainer': string;
   'inputField': string;

@@ -24,39 +24,65 @@
     .sidebar {
         width: 400px;
         height: 100%;
-        border: 6px solid #120023;
+        border-left: 6px solid #120023;
         box-sizing: border-box;
         background: #120023;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
+        align-items: stretch;
+        justify-content: stretch;
+
+        .sidebarTop {
+            height: 50px;
+            flex-grow: 0;
+            flex-shrink: 0;
+            padding-top: 5px;
+
+            .roomCode {
+                height: 50px;
+
+                h4 {
+                    margin: 0;
+                    color: #808080;
+                }
+
+                h2 {
+                    margin: 0;
+                    color: #fff;
+                }
+            }
+        }
 
         .chat {
-            background-color: #120023;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100vh;
-            width: 100%;
+            flex-grow: 1;
+            position: relative;
           
             .chatFeed {
-              padding: 10px;
-              display: flex;
-              flex-direction: column;
-              gap: 20px;
-              overflow-y: auto; /* Enable vertical scrolling */
-              height: calc(100% - 40px); /* Subtract the height of .chatbox from the parent container */
+                padding: 10px 10px 60px 10px;
+                position: absolute;
+                inset: 0;
+                box-sizing: border-box;
+                overflow-y: scroll;
+
+                .chatMessages {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+                    min-height: 100%;
+                    justify-content: flex-end;
+                }
             }
           
             .chatbox {
-              outline: none;
-              font-size: 1.2rem;
-              padding: 5px;
-              border: 1px solid black;
-              border-radius: 5px;
-              margin-top: 10px;
-              margin-bottom: 20px;
+                position: absolute;
+                bottom: 10px;
+                left: 10px;
+                right: 30px;
+                outline: none;
+                font-size: 1.2rem;
+                padding: 5px;
+                border: 1px solid black;
+                border-radius: 5px;
             }
         }
           

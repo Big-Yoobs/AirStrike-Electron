@@ -2,7 +2,11 @@
     width: 100%;
     height: 100%;
     border-radius: 15px;
-    transition: transform 0.2s;
+    transition: transform 0.2s, border 0.2s;
+    box-sizing: border-box;
+    border: 2px solid transparent;
+    flex-grow: 0;
+    flex-shrink: 0;
 
     &:hover {
         transform: scale(1.2);

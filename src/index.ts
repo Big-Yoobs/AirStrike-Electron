@@ -16,6 +16,7 @@ if (require('electron-squirrel-startup')) {
 }
 
 let mainWindow: BrowserWindow;
+let socket: Websocket;
 
 const createWindow = (): void => {
     // Create the browser window.
@@ -53,8 +54,6 @@ const createWindow = (): void => {
         }
     });
 
-    let socket: Websocket;
-
     mainWindow.webContents.on('dom-ready', () => {
         console.log("Window opened");
         mainWindow.webContents.send("emojis", Array.from(emojis.keys()));
@@ -62,26 +61,34 @@ const createWindow = (): void => {
         socket = new Websocket("wss://airstrike.eyezah.com");
         socket.on("open", () => {
             console.log("websocket open");
-            socket.message("create room");
-        });
-
-        socket.addCallback("room ID", data => {
-            console.log("room id:", data);
+            // socket.message("create room");
         });
     });
 
     mainWindow.webContents.on("destroyed", () => {
         console.log("Closing websocket");
         socket.close();
-    })
+    });
 };
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
+
 app.on('ready', () => {
-    ipcMain.on("get-emojis", () => {
-        console.log("requested to get emojis");
+    ipcMain.on("socket", (e, data) => {
+
+        if (data.type == "leave") {
+            socket.runCallback("room ID", null);
+        }
+
+        if (data.type == "chat") {
+            socket.runCallback("chat", data.data);
+        }
+
+        try {
+            socket.message(data.type, data.data);
+        } catch {}
     });
 
     createWindow();
@@ -96,7 +103,6 @@ app.on('ready', () => {
 
     protocol.registerFileProtocol("avatar", (request, callback) => { // src="avatar://villainbiden"
         const avatarName = request.url.substring(9);
-        console.log("avatar:", avatarName);
         const avatar = avatars.get(avatarName);
         if (!avatar) return callback(null);
 
@@ -180,15 +186,20 @@ class Websocket extends BaseWebsocket {
         this.on("message", message => {
             try {
                 const data = JSON.parse(message.toString());
-                mainWindow.webContents.send(data.type, data.data);
-                const listeners = this.eventListeners.get(data.type) || [];
-                for (let callback of listeners) {
-                    callback(data.data);
-                }
+                this.runCallback(data.type, data.data);
             } catch (e) {
                 console.error(e);
             }
         });
+    }
+
+    runCallback(event: string, data?: any) {
+        mainWindow.webContents.send(event, data);
+        const listeners = this.eventListeners.get(event) || [];
+        for (let callback of listeners) {
+            console.log(callback, event, data);
+            callback(data);
+        }
     }
 
     addCallback(event: string, callback: (data: any) => void) {

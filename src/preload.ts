@@ -2,8 +2,11 @@
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 
 import { contextBridge, ipcRenderer } from "electron";
+const ALLOWED_EVENTS = ["emojis", "room ID", "chat", "error", "url"];
+
 
 const eventListeners: Map<string, ((data: any) => void)[]> = new Map();
+
 
 contextBridge.exposeInMainWorld('electronAPI', {
     addEventListener: (event: string, callback: (data: any) => void) => {
@@ -21,20 +24,29 @@ contextBridge.exposeInMainWorld('electronAPI', {
         const index = listeners.indexOf(callback);
         if (index < 0) return;
         listeners.splice(index, 1);
+    },
+
+    socketSend: (type: string, data?: any) => {
+        try {
+            ipcRenderer.send("socket", {
+                type,
+                data
+            });
+        } catch (e) {
+            console.error("error whilst trying to contact electron", e);
+        }
     }
 });
 
-function sendEvent(event: string, data: any) {
+function sendEvent(event: string, data?: any) {
     const listeners = eventListeners.get(event) || [];
     for (let callback of listeners) {
         callback(data);
     }
 }
 
-ipcRenderer.on("emojis", (e, data) => {
-    sendEvent("emojis", data);
-});
-
-ipcRenderer.on("room ID", (e, data) => {
-    sendEvent("room ID", data);
-});
+for (let event of ALLOWED_EVENTS) {
+    ipcRenderer.on(event, (e, data) => {
+        sendEvent(event, data);
+    })
+}

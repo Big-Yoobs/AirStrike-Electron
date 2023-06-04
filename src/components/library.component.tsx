@@ -20,6 +20,7 @@ export default function LibraryComponent() {
     }, [width]);
     
     const libraryWidth = columns * 260;
+    const alphaShortcuts = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     return (
         <div className={styles.libraryContainer}>
@@ -30,33 +31,9 @@ export default function LibraryComponent() {
                 <LibrarySidebarItemComponent selected={false} title='Series' icon={BsTvFill}/>
 
                 <div className={styles.libraryAlphaShortcuts}>
-                    <div>#</div>
-                    <div>A</div>
-                    <div>B</div>
-                    <div>C</div>
-                    <div>D</div>
-                    <div>E</div>
-                    <div>F</div>
-                    <div>G</div>
-                    <div>H</div>
-                    <div>I</div>
-                    <div>J</div>
-                    <div>K</div>
-                    <div>L</div>
-                    <div>M</div>
-                    <div>N</div>
-                    <div>O</div>
-                    <div>P</div>
-                    <div>Q</div>
-                    <div>R</div>
-                    <div>S</div>
-                    <div>T</div>
-                    <div>U</div>
-                    <div>V</div>
-                    <div>W</div>
-                    <div>X</div>
-                    <div>Y</div>
-                    <div>Z</div>
+                    {alphaShortcuts.split("").map(letter => (
+                        <a key={letter}><span>{letter}</span></a>
+                    ))}
                 </div>
             </div>
             <div className={styles.itemsCenter} ref={ref}>
