@@ -1,6 +1,5 @@
 import { IconContext } from "react-icons";
 import styles from "../styles/room-popout-button.component.module.scss";
-import { LuInstagram } from "react-icons/lu";
 
 export interface RoomPopoutButtonProps {
     selected?: boolean
