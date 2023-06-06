@@ -14,17 +14,17 @@ export default function MediaItemComponent({ media }: MediaItemComponentProps) {
 
     console.log(meta);
     
-    const title = meta?.title || media.filename;
+    const title = meta?.details.title || media.filename;
     const watched = false;
 
-    const releaseYear = meta ? meta.release_date.split("-").shift() : undefined;
+    const releaseYear = meta ? meta.details.release_date.split("-").shift() : undefined;
 
     return (
         <div className={styles.container}>
             <div className={styles.primaryContainer}>
                 <div className={styles.imageContainer}>
                     {meta ? (
-                        <ImageWrapperComponent src={"https://image.tmdb.org/t/p/w500/" + meta.poster_path} />
+                        <ImageWrapperComponent src={"https://image.tmdb.org/t/p/w500/" + meta.details.poster_path} />
                     ) : (
                         <LoadingAnimComponent />
                     )}
@@ -49,7 +49,7 @@ export default function MediaItemComponent({ media }: MediaItemComponentProps) {
                         <div className={styles.secSubtitle}>
                             <div className={styles.year}>Release: <span>{releaseYear}</span></div>
                         </div>
-                        <div className={styles.desc}>{meta?.overview}</div>
+                        <div className={styles.desc}>{meta?.details.overview}</div>
                     </div>
                 </div>           
             </div>

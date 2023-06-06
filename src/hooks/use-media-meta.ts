@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { MovieMetadata } from "../backend/meta";
+import { Movie } from "../backend/meta";
 import { electron } from "../utils";
 
 const usedIds: string[] = [];
@@ -24,8 +24,8 @@ function generateId() {
     return id;
 }
 
-export default function useMediaMeta(filename: string): MovieMetadata | undefined | null {
-    const [meta, setMeta] = useState<MovieMetadata | undefined | null>(undefined);
+export default function useMediaMeta(filename: string): Movie | undefined | null {
+    const [meta, setMeta] = useState<Movie | undefined | null>(undefined);
 
     useEffect(() => {
         let active = true;
