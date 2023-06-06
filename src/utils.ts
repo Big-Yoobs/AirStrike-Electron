@@ -4,6 +4,8 @@ export interface ElectronAPI {
     removeEventListener: (event: string, callback: (data: any) => void) => void
 
     socketSend: (type: string, data?: any) => void
+
+    getMetadata: (filename: string, requestId: string) => void
 }
 
 export function electron(): ElectronAPI {

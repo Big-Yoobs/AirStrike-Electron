@@ -7,7 +7,7 @@ export default function LoadingAnimComponent() {
                 <div className={styles.spinContainer}>
                     <div className={styles.ldsDualRing}></div>
                 </div>
-                <img src="https://i.imgur.com/DzzTph7.png" /> //replace with logo from assets/gui
+                <img src="https://i.imgur.com/DzzTph7.png" />
             </div>
             
             <div className={styles.loadingText}>AIRSTRIKE</div>

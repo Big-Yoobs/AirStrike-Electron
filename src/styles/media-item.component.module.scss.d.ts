@@ -3,6 +3,7 @@
 interface CssExports {
   'container': string;
   'desc': string;
+  'imageContainer': string;
   'length': string;
   'primaryContainer': string;
   'secOverlay': string;
@@ -11,6 +12,7 @@ interface CssExports {
   'secTitle': string;
   'secondLineContainer': string;
   'secondaryContainer': string;
+  'secondarySlide': string;
   'textContainer': string;
   'title': string;
   'watchedContainer': string;

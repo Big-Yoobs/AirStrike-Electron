@@ -2,7 +2,7 @@
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 
 import { contextBridge, ipcRenderer } from "electron";
-const ALLOWED_EVENTS = ["emojis", "room ID", "chat", "error", "url"];
+const ALLOWED_EVENTS = ["emojis", "room ID", "chat", "error", "url", "library", "metadata"];
 
 
 const eventListeners: Map<string, ((data: any) => void)[]> = new Map();
@@ -35,6 +35,13 @@ contextBridge.exposeInMainWorld('electronAPI', {
         } catch (e) {
             console.error("error whilst trying to contact electron", e);
         }
+    },
+
+    getMetadata: (filename: string, requestId: string) => {
+        ipcRenderer.send("get metadata", {
+            filename,
+            requestId
+        });
     }
 });
 
