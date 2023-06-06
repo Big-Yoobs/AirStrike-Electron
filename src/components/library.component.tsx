@@ -7,12 +7,14 @@ import { FaHome } from 'react-icons/fa';
 import { FaFilm } from 'react-icons/fa';
 import { BsTvFill } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
+import useLibrary from '../hooks/use-library';
 
 
 
 export default function LibraryComponent() {
     const {width, ref} = useResizeDetector();
     const [columns, setColumns] = useState(1);
+    const files = useLibrary();
 
     useEffect(() => {
         if (!width) return setColumns(1);
@@ -38,8 +40,8 @@ export default function LibraryComponent() {
             </div>
             <div className={styles.itemsCenter} ref={ref}>
                 <div className={styles.itemsContainer} style={{width: libraryWidth + "px"}}>
-                    {Array(50).map((e, index) => (
-                        <MediaItemComponent key={index} />
+                    {files.map(media => (
+                        <MediaItemComponent media={media} key={media.filename} />
                     ))}
                 </div>
             </div>
