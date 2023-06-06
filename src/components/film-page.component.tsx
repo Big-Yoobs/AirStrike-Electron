@@ -3,8 +3,10 @@ import {BsPlayFill} from 'react-icons/bs';
 import {FaUserFriends} from 'react-icons/fa';
 import {AiFillEdit} from 'react-icons/ai';
 import {BsFillCheckCircleFill} from 'react-icons/bs';
+import useMediaMeta from '../hooks/use-media-meta';
 
 export default function FilmPageComponent() {
+    const meta = useMediaMeta("terminator 2.mp4");
 
     const title : string = "Terminator 2: Judgement Day"
     const coverSrc : string = "https://www.themoviedb.org/t/p/w1280/weVXMD5QBGeQil4HEATZqAkXeEc.jpg"
