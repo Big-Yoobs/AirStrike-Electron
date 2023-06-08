@@ -4,18 +4,12 @@ import {FaUserFriends} from 'react-icons/fa';
 import {AiFillEdit} from 'react-icons/ai';
 import {BsFillCheckCircleFill} from 'react-icons/bs';
 import useMediaMeta from '../hooks/use-media-meta';
-import { MovieCrewMember } from '../backend/meta';
+import { MovieAllCredits, MovieCrewMember } from '../backend/meta';
 
 export default function FilmPageComponent() {
     const meta = useMediaMeta("terminator 2.mp4");
 
-    const title : string = "Terminator 2: Judgement Day"
-    const coverSrc : string = "https://www.themoviedb.org/t/p/w1280/weVXMD5QBGeQil4HEATZqAkXeEc.jpg"
-    const bgSrc : string = "https://www.themoviedb.org/t/p/original/xKb6mtdfI5Qsggc44Hr9CCUDvaj.jpg"
-    //const director : MovieCrewMember = meta.credits.crewList.crew.find(member => member.job === 'Director');
-    console.log(meta.credits.id);
-    const length : number[] = [2, 17];
-    const watched : boolean = true;
+    
 
     if (meta === null) {
         return <h1>Failed to load</h1>
@@ -24,6 +18,16 @@ export default function FilmPageComponent() {
     if (!meta) {
         return <h1>Loading...</h1>
     }
+
+    const title : string = "Terminator 2: Judgement Day"
+    const coverSrc : string = "https://www.themoviedb.org/t/p/w1280/weVXMD5QBGeQil4HEATZqAkXeEc.jpg"
+    const bgSrc : string = "https://www.themoviedb.org/t/p/original/xKb6mtdfI5Qsggc44Hr9CCUDvaj.jpg"
+    const director : MovieCrewMember = meta.credits.crew.find(member => member.job == 'Director');
+    const directorName = director.name;
+    console.log(meta.credits.id);
+    const length : number[] = [2, 17];
+    const watched : boolean = true;
+    
 
 
     return (
@@ -40,7 +44,7 @@ export default function FilmPageComponent() {
                 <div className={styles.txtHeader}>
                     <div className={styles.title}>{meta.details.title}</div>
                     <div className={styles.txtHeaderSecLine}>
-                        <div className={styles.director}>{director}</div>
+                    <div className={styles.director}>{directorName}</div>
                         <div className={styles.release}>{meta.details.release_date}</div>
                     </div>
                 </div>
