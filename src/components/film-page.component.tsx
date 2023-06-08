@@ -17,6 +17,14 @@ export default function FilmPageComponent() {
     const length : number[] = [2, 17];
     const watched : boolean = true;
 
+    if (meta === null) {
+        return <h1>Failed to load</h1>
+    }
+
+    if (!meta) {
+        return <h1>Loading...</h1>
+    }
+
 
     return (
 
@@ -29,7 +37,7 @@ export default function FilmPageComponent() {
                         <img src={coverSrc}/>
                     </div>
                 </div>
-                <div className={styles.title}>{title}</div>
+                <div className={styles.title}>{meta.details.title}</div>
 
                 <div className={styles.btnsContainer}>
                     <div className={styles.btn}>

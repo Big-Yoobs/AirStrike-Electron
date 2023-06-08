@@ -10,6 +10,12 @@ export default function AppComponent() {
 
     return (
         <div className={styles.container}>
+            <FilmPageComponent/>
+        </div>
+    )
+
+    return (
+        <div className={styles.container}>
             {roomId ? (
                 <RoomComponent/>
             ) : (
