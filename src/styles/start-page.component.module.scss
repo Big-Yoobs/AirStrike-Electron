@@ -1,7 +1,7 @@
 .container {
     width: 100%;
     height: 100vh;
-    background: linear-gradient(145deg, #3E3E3E 0%, #29375a 100%);
+    background: var(--gradient);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -26,7 +26,7 @@
         gap: 30px;
 
         .button {
-            background: linear-gradient(145deg, #3E3E3E 0%, #29375a 100%);
+            background: var(--gradient);
             width: 200px;
             height: 200px;
             display: flex;
@@ -40,14 +40,14 @@
 
             &:hover {
                 cursor: pointer;
-                background: linear-gradient(145deg, #3E3E3E 0%, #430082 100%);
+                background: var(--active-gradient);
                 transform: scale(1.1);
                 filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.25));
             }
 
             &:active {
                 transform: scale(1);
-                background: linear-gradient(145deg, #5b00b1 0%, #430082 100%);
+                background: var(--active-gradient);
             }
 
             .buttonIcon svg {

@@ -1,6 +1,10 @@
 import styles from '../styles/loading-anim.component.module.scss';
 
-export default function LoadingAnimComponent() {
+export interface LoadingAnimComponentProps {
+    title?: string
+}
+
+export default function LoadingAnimComponent({ title }: LoadingAnimComponentProps) {
     return (
         <div className={styles.container}>
             <div className={styles.logoIconContainer}>
@@ -10,7 +14,7 @@ export default function LoadingAnimComponent() {
                 <img src="https://i.imgur.com/DzzTph7.png" />
             </div>
             
-            <div className={styles.loadingText}>AIRSTRIKE</div>
+            <div className={styles.loadingText}>{title || "AirStrike"}</div>
         </div>
     );
 }

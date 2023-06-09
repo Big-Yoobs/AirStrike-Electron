@@ -8,16 +8,12 @@ import { useEffect, useState } from 'react';
 
 export interface MediaItemComponentProps {
     media: FileContainer
+    onClick?: () => void
 }
 
-export default function MediaItemComponent({ media }: MediaItemComponentProps) {
+export default function MediaItemComponent({ media, onClick }: MediaItemComponentProps) {
     const meta = useMediaMeta(media.filename);
     const [imageLoaded, setImageLoaded] = useState(false);
-    
-    const title = meta?.details.title || media.filename;
-    const watched = false;
-
-    const releaseYear = meta ? meta.details.release_date.split("-").shift() : undefined;
 
     useEffect(() => {
         setImageLoaded(false);
@@ -45,12 +41,14 @@ export default function MediaItemComponent({ media }: MediaItemComponentProps) {
         )
     }
 
+    const releaseYear = meta.details.release_date.split("-").shift();
+
     return (
         <div className={styles.container}>
             <div className={styles.image}>
                 <ImageWrapperComponent src={"https://image.tmdb.org/t/p/w500/" + meta.details.poster_path} onLoad={() => setImageLoaded(true)} />
             </div>
-            <div className={styles.info}>
+            <div className={styles.info} onClick={onClick}>
                 <div className={styles.bottom}>
                     <div className={styles.split}>
                         <h1 className={styles.title}>{meta.details.title}</h1>
