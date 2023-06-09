@@ -44,6 +44,28 @@ if (require('electron-squirrel-startup')) {
 
 let mainWindow: BrowserWindow;
 let socket: Websocket;
+let socketId = -1;
+
+function newSocket() {
+    const newSocketId = Date.now();
+    socketId = newSocketId;
+    if (socket) socket.close();
+    socket = new Websocket("wss://airstrike.eyezah.com");
+    socket.on("open", () => {
+        console.log("websocket open");
+        mainWindow.webContents.send("websocket state", {
+            connected: true
+        });
+    });
+    socket.on("close", () => {
+        if (newSocketId != socketId) return console.log("cancelling socket!");
+        console.log("websocket close");
+        mainWindow.webContents.send("websocket state", {
+            connected: false
+        });
+        newSocket();
+    });
+}
 
 const createWindow = (): void => {
     // Create the browser window.
@@ -83,20 +105,14 @@ const createWindow = (): void => {
     });
 
     mainWindow.webContents.on('dom-ready', () => {
-        console.log("Window opened");
         mainWindow.webContents.send("emojis", Array.from(emojis.keys()));
         mainWindow.webContents.send("library", library);
-
-        socket = new Websocket("wss://airstrike.eyezah.com");
-        socket.on("open", async () => {
-            console.log("websocket open");
-            
-            // socket.message("create room");
-        });
+        newSocket();
     });
 
     mainWindow.webContents.on("destroyed", () => {
         console.log("Closing websocket");
+        socketId = -1;
         socket.close();
     });
 };

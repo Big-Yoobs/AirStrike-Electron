@@ -1,4 +1,8 @@
-
+:root {
+    --dark-gradient: linear-gradient(180deg, rgba(7, 7, 7, 1) 0%, rgba(0, 2, 33, 1) 100%);
+    --gradient: linear-gradient(145deg, #3E3E3E 0%, #29375a 100%);
+    --active-gradient: linear-gradient(145deg, #3E3E3E 0%, #430082 100%);
+}
 
 body {
     margin: 0;
@@ -6,4 +10,5 @@ body {
     min-width: 100%;
     overflow-x: hidden;
     min-height: 100%;
+    background: #000;
 }

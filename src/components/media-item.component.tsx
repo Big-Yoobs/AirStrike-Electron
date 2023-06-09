@@ -1,60 +1,63 @@
 import useMediaMeta from '../hooks/use-media-meta';
 import { FileContainer } from '../hooks/use-library';
 import styles from '../styles/media-item.component.module.scss';
-import { BsFillCheckCircleFill } from 'react-icons/bs';
 import LoadingAnimComponent from "./loading-anim.component";
 import ImageWrapperComponent from './image-wrapper.component';
+import { BsPlayFill } from "react-icons/bs";
+import { useEffect, useState } from 'react';
 
 export interface MediaItemComponentProps {
     media: FileContainer
+    onClick?: () => void
 }
 
-export default function MediaItemComponent({ media }: MediaItemComponentProps) {
+export default function MediaItemComponent({ media, onClick }: MediaItemComponentProps) {
     const meta = useMediaMeta(media.filename);
+    const [imageLoaded, setImageLoaded] = useState(false);
 
-    console.log(meta);
-    
-    const title = meta?.details.title || media.filename;
-    const watched = false;
+    useEffect(() => {
+        setImageLoaded(false);
+    }, [media.filename]);
 
-    const releaseYear = meta ? meta.details.release_date.split("-").shift() : undefined;
+    if (!meta) {
+        return (
+            <div className={styles.container}>
+                <div className={styles.image}>
+                    <LoadingAnimComponent />
+                </div>
+                <h1 className={styles.loadingTitle}>{media.filename}</h1>
+            </div>
+        )
+    }
+
+    if (!imageLoaded) {
+        return (
+            <div className={styles.container}>
+                <div className={styles.image}>
+                <ImageWrapperComponent src={"https://image.tmdb.org/t/p/w500/" + meta.details.poster_path} onLoad={() => setImageLoaded(true)} />
+                </div>
+                <h1 className={styles.loadingTitle}>{media.filename}</h1>
+            </div>
+        )
+    }
+
+    const releaseYear = meta.details.release_date.split("-").shift();
 
     return (
         <div className={styles.container}>
-            <div className={styles.primaryContainer}>
-                <div className={styles.imageContainer}>
-                    {meta ? (
-                        <ImageWrapperComponent src={"https://image.tmdb.org/t/p/w500/" + meta.details.poster_path} />
-                    ) : (
-                        <LoadingAnimComponent />
-                    )}
-                </div>
-                <div className={styles.textContainer}>
-                    <div className={styles.title}>{title}</div>
-                    <div className={styles.secondLineContainer}>
-                        <div className={styles.year}>{releaseYear}</div>
-                        {watched ? (
-                            <div className={styles.watchedContainer}>
-                                <BsFillCheckCircleFill />
-                            </div>
-                        ) : null}                
+            <div className={styles.image}>
+                <ImageWrapperComponent src={"https://image.tmdb.org/t/p/w500/" + meta.details.poster_path} onLoad={() => setImageLoaded(true)} />
+            </div>
+            <div className={styles.info} onClick={onClick}>
+                <div className={styles.bottom}>
+                    <div className={styles.split}>
+                        <h1 className={styles.title}>{meta.details.title}</h1>
+                        <span className={styles.rating}>{releaseYear}</span>
                     </div>
                 </div>
-            </div>	
-            <div className={styles.secondarySlide}>
-                <div className={styles.secondaryContainer}>
-                    <div className={styles.secOverlay}></div>  
-                    <div className={styles.secText}> 
-                        <div className={styles.secTitle}>{title}</div>
-                        <div className={styles.secSubtitle}>
-                            <div className={styles.year}>Release: <span>{releaseYear}</span></div>
-                        </div>
-                        <div className={styles.desc}>{meta?.details.overview}</div>
-                    </div>
-                </div>           
+                <button className={styles.play}><BsPlayFill /></button>
             </div>
         </div>
-
     )
     
 }

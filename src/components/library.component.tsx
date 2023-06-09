@@ -8,6 +8,7 @@ import { FaFilm } from 'react-icons/fa';
 import { BsTvFill } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
 import useLibrary from '../hooks/use-library';
+import FilmPageComponent from './film-page.component';
 
 
 
@@ -15,6 +16,7 @@ export default function LibraryComponent() {
     const {width, ref} = useResizeDetector();
     const [columns, setColumns] = useState(1);
     const files = useLibrary();
+    const [currentPage, setCurrentPage] = useState<string | null>(null);
 
     useEffect(() => {
         if (!width) return setColumns(1);
@@ -23,6 +25,10 @@ export default function LibraryComponent() {
     
     const libraryWidth = columns * 260;
     const alphaShortcuts = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    if (currentPage) {
+        return <FilmPageComponent filename={currentPage} />
+    }
 
     return (
         <div className={styles.libraryContainer}>
@@ -41,7 +47,7 @@ export default function LibraryComponent() {
             <div className={styles.itemsCenter} ref={ref}>
                 <div className={styles.itemsContainer} style={{width: libraryWidth + "px"}}>
                     {files.map(media => (
-                        <MediaItemComponent media={media} key={media.filename} />
+                        <MediaItemComponent media={media} key={media.filename} onClick={() => setCurrentPage(media.filename)} />
                     ))}
                 </div>
             </div>
