@@ -4,18 +4,14 @@ import {FaUserFriends} from 'react-icons/fa';
 import {AiFillEdit} from 'react-icons/ai';
 import {BsFillCheckCircleFill} from 'react-icons/bs';
 import useMediaMeta from '../hooks/use-media-meta';
+import ImageWrapperComponent from './image-wrapper.component';
 
-export default function FilmPageComponent() {
-    const meta = useMediaMeta("terminator 2.mp4");
+export interface FilmPageComponentProps {
+    filename: string
+}
 
-    const title : string = "Terminator 2: Judgement Day"
-    const coverSrc : string = "https://www.themoviedb.org/t/p/w1280/weVXMD5QBGeQil4HEATZqAkXeEc.jpg"
-    const bgSrc : string = "https://www.themoviedb.org/t/p/original/xKb6mtdfI5Qsggc44Hr9CCUDvaj.jpg"
-    const year : number = 1991;
-    const director : string = "James Cameron";
-    const desc : string = "Nearly 10 years have passed since Sarah Connor was targeted for termination by a cyborg from the future. Now her son, John, the future leader of the resistance, is the target for a newer, more deadly terminator. Once again, the resistance has managed to send a protector back to attempt to save John and his mother Sarah."
-    const length : number[] = [2, 17];
-    const watched : boolean = true;
+export default function FilmPageComponent({ filename } : FilmPageComponentProps) {
+    const meta = useMediaMeta(filename);
 
     if (meta === null) {
         return <h1>Failed to load</h1>
@@ -25,19 +21,50 @@ export default function FilmPageComponent() {
         return <h1>Loading...</h1>
     }
 
+    const title : string = meta.details.title;
+    const coverSrc : string = "https://image.tmdb.org/t/p/w500/" + meta.details.poster_path;
+    const bgSrc : string = "https://image.tmdb.org/t/p/original/" + meta.details.backdrop_path;
+    
+    const release = new Date(meta.details.release_date).toLocaleDateString("en-NZ", {year: "numeric", month: "long", day: "numeric"});
+
+
+
+    const director : string = meta.credits.crew.find((person) => person.job === "Director").name;
+    const desc : string = meta.details.overview;
+    const runtime : number = meta.details.runtime;
+    const length : number[] = [runtime / 60, runtime % 60];
+    const watched : boolean = true;
+
+    
+
 
     return (
 
         <div className={styles.container}>
             <div className={styles.header}>
                 <div className={styles.bgImg}>
-                    <img src={bgSrc}/>
+                    <ImageWrapperComponent src={bgSrc}/>
                     <div className={styles.bgImgOverlay}></div>
                     <div className = {styles.coverContainer}>
-                        <img src={coverSrc}/>
+                        <ImageWrapperComponent src={coverSrc}/>
                     </div>
                 </div>
-                <div className={styles.title}>{meta.details.title}</div>
+
+                <div className={styles.txtHeader}>
+                    <div className={styles.title}>{title}</div>
+                    <div className={styles.txtHeaderSecLine}>
+
+                        <div className={styles.director}>
+                            <span className={styles.tag}>Director: </span> 
+                            <span>{director}</span>
+                        </div>
+
+                        <div className={styles.release}>
+                            <span className={styles.tag}>Release: </span>
+                            <span>{release}</span>
+                        </div>
+                    </div>
+                </div>
 
                 <div className={styles.btnsContainer}>
                     <div className={styles.btn}>
@@ -74,16 +101,7 @@ export default function FilmPageComponent() {
                 <div className={styles.description}>
                     <div className={styles.descriptionTitle}>Description</div>
                     <div className={styles.descriptionText}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Donec euismod, nisl sed aliquam ultricies, nunc sapien
-                        tincidunt odio, quis aliquam nunc nisl vitae nunc. Donec
-                        euismod, nisl sed aliquam ultricies, nunc sapien tincidunt
-                        odio, quis aliquam nunc nisl vitae nunc. Donec euismod, nisl
-                        sed aliquam ultricies, nunc sapien tincidunt odio, quis
-                        aliquam nunc nisl vitae nunc. Donec euismod, nisl sed
-                        aliquam ultricies, nunc sapien tincidunt odio, quis aliquam
-                        nunc nisl vitae nunc. Donec euismod, nisl sed aliquam
-                        ultricies, nunc sapien tincidunt odio, quis aliquam nunc
+                        {desc}
                     </div>
                 </div>
             </div>
