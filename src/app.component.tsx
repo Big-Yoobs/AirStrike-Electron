@@ -10,6 +10,12 @@ export default function AppComponent() {
 
     return (
         <div className={styles.container}>
+            <FilmPageComponent filename="Drive.mp4" />
+        </div>
+    )
+
+    return (
+        <div className={styles.container}>
             {roomId ? (
                 <RoomComponent/>
             ) : (
