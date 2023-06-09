@@ -15,6 +15,7 @@ export default function LibraryComponent() {
     const {width, ref} = useResizeDetector();
     const [columns, setColumns] = useState(1);
     const files = useLibrary();
+    const [currentPage, setCurrentPage] = useState<string | null>(null);
 
     useEffect(() => {
         if (!width) return setColumns(1);
