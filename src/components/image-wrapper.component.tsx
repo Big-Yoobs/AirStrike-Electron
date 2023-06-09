@@ -3,11 +3,12 @@ import styles from "../styles/image-wrapper.component.module.scss";
 import LoadingAnimComponent from "./loading-anim.component";
 
 export interface ImageWrapperProps {
-    src: string,
+    src: string
     fallback?: string
+    onLoad?: () => void
 }
 
-export default function ImageWrapperComponent({src, fallback}: ImageWrapperProps) {
+export default function ImageWrapperComponent({src, fallback, onLoad}: ImageWrapperProps) {
     const image = useRef<HTMLImageElement>(null);
     const [loading, setLoading] = useState(true);
     const [activeSrc, setActiveSrc] = useState("");
@@ -29,6 +30,7 @@ export default function ImageWrapperComponent({src, fallback}: ImageWrapperProps
         setLoading(false);
         if (!image.current) return;
         setActiveSrc(image.current.src);
+        if (onLoad) onLoad();
     }
 
     return (

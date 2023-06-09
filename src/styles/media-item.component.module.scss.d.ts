@@ -5,6 +5,10 @@ interface CssExports {
   'container': string;
   'image': string;
   'info': string;
+  'loadingTitle': string;
+  'play': string;
+  'rating': string;
+  'split': string;
   'title': string;
 }
 export const cssExports: CssExports;
