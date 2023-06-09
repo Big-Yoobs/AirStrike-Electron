@@ -77,7 +77,7 @@ export interface MovieCastMember {
 }
 
 export interface MovieCast {
-    castMember: MovieCastMember[]
+    cast: MovieCastMember[]
 }
 
 export interface MovieCrewMember {
@@ -95,21 +95,18 @@ export interface MovieCrewMember {
 }
 
 export interface MovieCrew {
-    crewMember: MovieCrewMember[]
+    crew: MovieCrewMember[]
 }
 
 export interface MovieAllCredits {
     id : number
-    crew : MovieCrew;
-    cast : MovieCast;
+    castList : MovieCast
+    crewList : MovieCrew
 }
 
 export interface Movie {
     details: MovieMetadata
     credits: MovieAllCredits
-    crewList: MovieCrew
-    castList: MovieCast
-
 }
 
 const DIRECTORY = Path.resolve("./");
@@ -160,14 +157,9 @@ export async function getMovieMetadata(filename: string): Promise<Movie | null> 
 
         const credits = await tmdbRequest(`https://api.themoviedb.org/3/movie/${tmdbId}/credits`);
 
-        const crewList = credits.crew;
-        const castList = credits.cast;
-
         const data = {
             details,
-            credits,
-            crewList,
-            castList
+            credits
         }
 
         FS.writeFile(metaFile, JSON.stringify(data, null, 2), () => {});
