@@ -5,14 +5,38 @@
     background-color: red;
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
     
     
 
 
     .bgImg{
         width: 100%;
+        height: 420px;
+
+        .backBtn {
+            color: white;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 15;
+            svg {
+                width: 30px;
+                height: 30px;
+
+            }
+            &:hover {
+                cursor: pointer;
+                transform: scale(1.1);
+            }
+            &:active {
+                transform: scale(0.9);
+                color: #50009b;
+            }
+        }
         img {
-            max-height: 420px;
+            height: 100%;
+            max-height: 100%;
             width: 100%;
             object-fit: cover;
             object-position: top;            
@@ -51,7 +75,8 @@
 
         .txtHeaderSecLine {
             display: flex;
-            gap: 25px;
+            gap: 10px 30px;
+            flex-wrap: wrap;
 
             .tag {
                 font-weight: bold;
@@ -129,16 +154,18 @@
         max-width: 100%;
         color: white;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: center;
         align-items: center;
 
-        .descriptionTitle {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }     
-
+        .description {
+            width: 50%;
+            .descriptionTitle {
+                font-size: 2rem;
+                font-weight: bold;
+                margin-bottom: 20px;
+            }
+        }
 
     }
 }

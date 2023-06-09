@@ -9,7 +9,7 @@ import LoadingAnimComponent from "./components/loading-anim.component";
 export default function AppComponent() {
     const roomId = useRoomId();
     const socketState = useWebsocketState();
-
+  
     if (!socketState.connected) {
         return (
             <div className={styles.container}>
