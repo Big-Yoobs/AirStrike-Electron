@@ -5,6 +5,10 @@ import {AiFillEdit} from 'react-icons/ai';
 import {BsFillCheckCircleFill} from 'react-icons/bs';
 import useMediaMeta from '../hooks/use-media-meta';
 import ImageWrapperComponent from './image-wrapper.component';
+import {MdOutlineArrowBackIos} from 'react-icons/md';
+import { MovieCrewMember } from '../backend/meta';
+import { MovieCastMember } from '../backend/meta';
+import CastPfpComponent from './cast-pfp.component';
 
 export interface FilmPageComponentProps {
     filename: string
@@ -26,13 +30,22 @@ export default function FilmPageComponent({ filename } : FilmPageComponentProps)
     const bgSrc : string = "https://image.tmdb.org/t/p/original/" + meta.details.backdrop_path;
     
     const release = new Date(meta.details.release_date).toLocaleDateString("en-NZ", {year: "numeric", month: "long", day: "numeric"});
+    const directors: MovieCrewMember[] = [];
+    const writers: MovieCrewMember[] = [];
+    for (let member of meta.credits.crew) {
+        if (member.job === "Director") {
+            directors.push(member);
+        } else if (member.job === "Writer" || member.job === "Screenplay") {
+            writers.push(member);
+        }
 
+    }
 
-
-    const director : string = meta.credits.crew.find((person) => person.job === "Director").name;
+    // const director : string = meta.credits.crew.find((person) => person.job === "Director").name;
+    // const writers = meta.credits.crew.filter((person) => person.job === "Writer");
     const desc : string = meta.details.overview;
     const runtime : number = meta.details.runtime;
-    const length : number[] = [runtime / 60, runtime % 60];
+    const length : number[] = [Math.floor(runtime / 60), runtime % 60];
     const watched : boolean = true;
 
     
@@ -43,6 +56,9 @@ export default function FilmPageComponent({ filename } : FilmPageComponentProps)
         <div className={styles.container}>
             <div className={styles.header}>
                 <div className={styles.bgImg}>
+                    <div className={styles.backBtn}>
+                        <MdOutlineArrowBackIos/>
+                    </div>
                     <ImageWrapperComponent src={bgSrc}/>
                     <div className={styles.bgImgOverlay}></div>
                     <div className = {styles.coverContainer}>
@@ -54,14 +70,34 @@ export default function FilmPageComponent({ filename } : FilmPageComponentProps)
                     <div className={styles.title}>{title}</div>
                     <div className={styles.txtHeaderSecLine}>
 
+                        
                         <div className={styles.director}>
-                            <span className={styles.tag}>Director: </span> 
-                            <span>{director}</span>
+                            <span className={styles.tag}>Director: </span>
+                            <span>{directors.map(d => d.name).join(", ")}</span>
                         </div>
+
+                        <div className={styles.writer}>
+                            <span className={styles.tag}>Writer: </span>
+                            <span>{writers.map(w => w.name).join(", ")}</span>
+                        </div>                       
 
                         <div className={styles.release}>
                             <span className={styles.tag}>Release: </span>
                             <span>{release}</span>
+                        </div>
+
+                        <div className={styles.length}>
+                            <span className={styles.tag}>Length: </span>
+                            <span>{length[0]}h {length[1]}m</span>
+                        </div>
+
+                        <div className={styles.genres}>
+                            <span className={styles.tag}>Genres: </span>
+                            <span>{meta.details.genres.map(g => g.name).join(", ")}</span>
+                        </div>
+
+                        <div className={styles.rating}>
+                            <span className={styles.tag}>Rating: </span>
                         </div>
                     </div>
                 </div>
@@ -103,6 +139,11 @@ export default function FilmPageComponent({ filename } : FilmPageComponentProps)
                     <div className={styles.descriptionText}>
                         {desc}
                     </div>
+                </div>
+                <div className={styles.cast}>
+                    {meta.credits.cast.map(c => (
+                        <CastPfpComponent castMember={c} />
+                    ))}
                 </div>
             </div>
 

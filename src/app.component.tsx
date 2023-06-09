@@ -10,7 +10,7 @@ export default function AppComponent() {
 
     return (
         <div className={styles.container}>
-            <FilmPageComponent filename="Drive.mp4" />
+            <FilmPageComponent filename="Dragon Ball Z.mp4" />
         </div>
     )
 
