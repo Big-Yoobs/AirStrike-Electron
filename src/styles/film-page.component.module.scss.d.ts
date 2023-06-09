@@ -12,10 +12,7 @@ interface CssExports {
   'coverContainer': string;
   'descriptionTitle': string;
   'editBtn': string;
-  'release': string;
   'title': string;
-  'txtHeader': string;
-  'txtHeaderSecLine': string;
   'watchedContainer': string;
 }
 export const cssExports: CssExports;

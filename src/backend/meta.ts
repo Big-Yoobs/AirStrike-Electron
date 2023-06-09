@@ -70,43 +70,20 @@ export interface MovieCastMember {
     original_name: string
     popularity: number
     profile_path: string
-    cast_id: number
+    cast_id: 4
     character: string
     credit_id: string
     order: number
 }
 
 export interface MovieCast {
-    cast: MovieCastMember[]
-}
-
-export interface MovieCrewMember {
-    adult: boolean
-    gender: number
     id: number
-    known_for_department: string
-    name: string
-    original_name: string
-    popularity: number
-    profile_path: string
-    credit_id: string
-    department: string
-    job: string
-}
-
-export interface MovieCrew {
-    crew: MovieCrewMember[]
-}
-
-export interface MovieAllCredits {
-    id : number
-    castList : MovieCast
-    crewList : MovieCrew
+    cast: MovieCastMember[]
 }
 
 export interface Movie {
     details: MovieMetadata
-    credits: MovieAllCredits
+    credits: MovieCast
 }
 
 const DIRECTORY = Path.resolve("./");

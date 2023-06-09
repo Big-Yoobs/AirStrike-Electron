@@ -40,30 +40,12 @@
         }
     }
 
-    .txtHeader {
+    .title {
+        color: white;
         margin-left: 380px;
         margin-top: 35px;
-
-        .title {
-            color: white;
-            
-            font-size: 3rem;
-            font-weight: bold;
-        }
-
-        .txtHeaderSecLine {
-            display: flex;
-            flex-direction: row;
-            gap: 20px;
-            margin-left: 25px;
-
-            .release {
-                color: darkgray;    
-            }
-        }
-
-        
-        
+        font-size: 3rem;
+        font-weight: bold;
     }
 
     .btnsContainer {
