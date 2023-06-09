@@ -19,42 +19,28 @@ export default function MediaItemComponent({ media }: MediaItemComponentProps) {
 
     const releaseYear = meta ? meta.details.release_date.split("-").shift() : undefined;
 
+    if (!meta) {
+        return (
+            <div className={styles.container}>
+                <div className={styles.image}>
+                    <LoadingAnimComponent />
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div className={styles.container}>
-            <div className={styles.primaryContainer}>
-                <div className={styles.imageContainer}>
-                    {meta ? (
-                        <ImageWrapperComponent src={"https://image.tmdb.org/t/p/w500/" + meta.details.poster_path} />
-                    ) : (
-                        <LoadingAnimComponent />
-                    )}
+            <div className={styles.image}>
+                <ImageWrapperComponent src={"https://image.tmdb.org/t/p/w500/" + meta.details.poster_path} />
+            </div>
+            <div className={styles.info}>
+                <div className={styles.bottom}>
+                    <h1 className={styles.title}>{meta.details.title}</h1>
                 </div>
-                <div className={styles.textContainer}>
-                    <div className={styles.title}>{title}</div>
-                    <div className={styles.secondLineContainer}>
-                        <div className={styles.year}>{releaseYear}</div>
-                        {watched ? (
-                            <div className={styles.watchedContainer}>
-                                <BsFillCheckCircleFill />
-                            </div>
-                        ) : null}                
-                    </div>
-                </div>
-            </div>	
-            <div className={styles.secondarySlide}>
-                <div className={styles.secondaryContainer}>
-                    <div className={styles.secOverlay}></div>  
-                    <div className={styles.secText}> 
-                        <div className={styles.secTitle}>{title}</div>
-                        <div className={styles.secSubtitle}>
-                            <div className={styles.year}>Release: <span>{releaseYear}</span></div>
-                        </div>
-                        <div className={styles.desc}>{meta?.details.overview}</div>
-                    </div>
-                </div>           
+                
             </div>
         </div>
-
     )
     
 }
