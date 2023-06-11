@@ -13,6 +13,7 @@
     .bgImg{
         width: 100%;
         height: 420px;
+        position: relative;
 
         .backBtn {
             color: white;
@@ -149,22 +150,43 @@
 
     .body {
         margin-top: 100px;
-        margin-left: 100px;
-        margin-right: 100px;
+        width: 100%;
         max-width: 100%;
         color: white;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
+        gap: 10px;
+
+        .bodyTitleContainer {
+            width: 70%;
+            margin-top: 20px;
+        }
+
+        .bodyTitle {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }       
 
         .description {
-            width: 50%;
-            .descriptionTitle {
-                font-size: 2rem;
-                font-weight: bold;
-                margin-bottom: 20px;
-            }
+            width: 70%;
+            
+        }
+
+        .cast {
+            display: flex;
+            flex-direction: row;
+            gap: 50px;
+            width: 70%;
+            padding-left: 50px;
+            padding-right: 50px;
+            justify-content: flex-start;
+            align-items: center;
+            overflow-x: scroll;
+            overflow-y: hidden;
+            // height: 200px;
         }
 
     }

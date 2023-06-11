@@ -5,14 +5,16 @@ interface CssExports {
   'bgImg': string;
   'bgImgOverlay': string;
   'body': string;
+  'bodyTitle': string;
+  'bodyTitleContainer': string;
   'btn': string;
   'btnIcon': string;
   'btnText': string;
   'btnsContainer': string;
+  'cast': string;
   'container': string;
   'coverContainer': string;
   'description': string;
-  'descriptionTitle': string;
   'editBtn': string;
   'tag': string;
   'title': string;

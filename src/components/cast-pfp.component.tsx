@@ -20,6 +20,10 @@ export default function CastPfpComponent({castMember} : CastPfpComponentProps) {
             <div className={styles.name}>
                 {castName}
             </div>
+            <div className={styles.role}>
+                {castMember.character}
+            </div>
+
         </div>
 
 

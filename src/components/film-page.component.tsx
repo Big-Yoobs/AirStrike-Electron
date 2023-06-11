@@ -135,10 +135,14 @@ export default function FilmPageComponent({ filename } : FilmPageComponentProps)
 
             <div className={styles.body}>
                 <div className={styles.description}>
-                    <div className={styles.descriptionTitle}>Description</div>
+                    <div className={styles.bodyTitle}>Description</div>
                     <div className={styles.descriptionText}>
                         {desc}
                     </div>
+                </div>
+
+                <div className={styles.bodyTitleContainer}>    
+                    <div className={styles.bodyTitle}>Cast</div>
                 </div>
                 <div className={styles.cast}>
                     {meta.credits.cast.map(c => (
