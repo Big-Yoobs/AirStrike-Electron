@@ -146,12 +146,33 @@ export default function FilmPageComponent({ filename } : FilmPageComponentProps)
                 </div>
                 <div className={styles.cast}>
                     {meta.credits.cast.map(c => (
-                        <CastPfpComponent castMember={c} />
+                        <CastPfpComponent member={c} />
+                    ))}
+                </div>
+
+                <div className={styles.bodyTitleContainer}>
+                    <div className={styles.bodyTitle}>Reviews</div>
+                </div>
+                <div className={styles.reviews}>
+
+                </div>
+
+                <div className={styles.bodyTitleContainer}>
+                    <div className={styles.bodyTitle}>Related</div>
+                </div>
+                <div className={styles.related}></div>
+
+                <div className={styles.bodyTitleContainer}>
+                    <div className={styles.bodyTitle}>Crew</div>
+                </div>
+                <div className={styles.cast}>
+                    {meta.credits.crew.map(c => (
+                        <CastPfpComponent member={c} />
                     ))}
                 </div>
             </div>
-
         </div>
+            
     )
 
 }
