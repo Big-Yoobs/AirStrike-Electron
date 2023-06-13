@@ -41,15 +41,27 @@ export default function FilmPageComponent({ filename } : FilmPageComponentProps)
 
     }
 
-    // const director : string = meta.credits.crew.find((person) => person.job === "Director").name;
-    // const writers = meta.credits.crew.filter((person) => person.job === "Writer");
     const desc : string = meta.details.overview;
     const runtime : number = meta.details.runtime;
     const length : number[] = [Math.floor(runtime / 60), runtime % 60];
     const watched : boolean = true;
-
-    
-
+    const userScore : number = Math.round(meta.details.vote_average * 10);
+    const scoreThresholds: { [key: number]: string } = {
+        0: "Very Bad",
+        20: "Bad",
+        40: "Average",
+        60: "Good",
+        80: "Very Good",
+        90: "Excellent"
+    };
+    let userScoreTitle: string;
+      
+    for (const threshold in scoreThresholds) {
+        if (userScore >= Number(threshold)) {
+            userScoreTitle = scoreThresholds[threshold];
+        }
+    }
+    console.log(userScoreTitle);
 
     return (
 
@@ -97,7 +109,9 @@ export default function FilmPageComponent({ filename } : FilmPageComponentProps)
                         </div>
 
                         <div className={styles.rating}>
-                            <span className={styles.tag}>Rating: </span>
+                            <span className={styles.tag}>User Score: </span>
+                            <span>{userScore}%  </span>
+                            <span>{userScoreTitle}</span>
                         </div>
                     </div>
                 </div>
@@ -144,31 +158,49 @@ export default function FilmPageComponent({ filename } : FilmPageComponentProps)
                 <div className={styles.bodyTitleContainer}>    
                     <div className={styles.bodyTitle}>Cast</div>
                 </div>
-                <div className={styles.cast}>
-                    {meta.credits.cast.map(c => (
-                        <CastPfpComponent member={c} />
-                    ))}
+                <div className={styles.castContainer}>
+                    <div className={`${styles.arrowLeft} ${styles.arrow}`}>
+                        <MdOutlineArrowBackIos/>
+                    </div>
+                    <div className={styles.cast}>
+                        {meta.credits.cast.map(c => (
+                            <CastPfpComponent member={c} />
+                        ))}
+                    </div>
+                    <div className={`${styles.arrowRight} ${styles.arrow}`}>
+                        <MdOutlineArrowBackIos/>
+                    </div>
                 </div>
 
                 <div className={styles.bodyTitleContainer}>
                     <div className={styles.bodyTitle}>Reviews</div>
                 </div>
                 <div className={styles.reviews}>
-
+                    {/* TODO: add reviews here */}
                 </div>
 
                 <div className={styles.bodyTitleContainer}>
                     <div className={styles.bodyTitle}>Related</div>
                 </div>
-                <div className={styles.related}></div>
+                <div className={styles.related}>
+                    {/* TODO: add related films here */}
+                </div>
 
                 <div className={styles.bodyTitleContainer}>
                     <div className={styles.bodyTitle}>Crew</div>
                 </div>
-                <div className={styles.cast}>
-                    {meta.credits.crew.map(c => (
-                        <CastPfpComponent member={c} />
-                    ))}
+                <div className={styles.castContainer}>
+                    <div className={`${styles.arrowLeft} ${styles.arrow}`}>
+                        <MdOutlineArrowBackIos/>
+                    </div>
+                    <div className={styles.cast}>
+                        {meta.credits.crew.map(c => (
+                            <CastPfpComponent member={c} />
+                        ))}
+                    </div>
+                    <div className={`${styles.arrowRight} ${styles.arrow}`}>
+                        <MdOutlineArrowBackIos/>
+                    </div>
                 </div>
             </div>
         </div>
