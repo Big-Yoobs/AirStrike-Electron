@@ -50,7 +50,7 @@ function newSocket() {
     const newSocketId = Date.now();
     socketId = newSocketId;
     if (socket) socket.close();
-    socket = new Websocket("wss://airstrike.eyezah.com");
+    socket = new Websocket("wss://socket.airstrike.tv");
     socket.on("open", () => {
         console.log("websocket open");
         mainWindow.webContents.send("websocket state", {
