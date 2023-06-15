@@ -138,7 +138,7 @@ export async function getMovieMetadata(filename: string): Promise<Movie | null> 
 
 
     const name = Path.parse(filename).name;
-    console.log(`Searching TMDB for '${name}'...`);
+    // console.log(`Searching TMDB for '${name}'...`);
     try {
         const search = await tmdbRequest(`https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(name)}&include_adult=false&language=en-US&page=1`);
         if (!Array.isArray(search?.results) || !search.results.length) return null;
@@ -154,6 +154,7 @@ export async function getMovieMetadata(filename: string): Promise<Movie | null> 
             credits
         }
 
+        // console.log("writing...", metaFile);
         FS.writeFile(metaFile, JSON.stringify(data, null, 2), () => {});
 
         return data;

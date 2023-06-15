@@ -1,28 +1,23 @@
 import { useEffect, useState } from "react";
 import { electron } from "../utils";
-import { MovieMetadata } from "../backend/meta";
+import { File } from "../backend/library";
 
-export interface FileContainer {
-    filename: string
-    meta?: MovieMetadata
-}
 
-const files: FileContainer[] = [];
-const listeners: ((files: FileContainer[]) => void)[] = [];
+const files: File[] = [];
+const listeners: ((files: File[]) => void)[] = [];
 
-electron().addEventListener("library", data => {
+electron().addEventListener("library", (data: File[]) => {
+    const filenames = data.map(file => file.filename);
+
     for (let item of files) {
-        if (!data.includes(item.filename)) {
+        if (!filenames.includes(item.filename)) {
             files.splice(files.indexOf(item), 1);
-            data.splice(data.indexOf(item.filename), 1);
+        } else {
+            data.splice(data.indexOf(item), 1);
         }
     }
 
-    for (let filename of data) {
-        files.push({
-            filename
-        });
-    }
+    files.unshift(...data);
 
     for (let callback of listeners) {
         callback([...files]);

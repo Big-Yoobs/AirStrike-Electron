@@ -1,13 +1,13 @@
 import useMediaMeta from '../hooks/use-media-meta';
-import { FileContainer } from '../hooks/use-library';
 import styles from '../styles/media-item.component.module.scss';
 import LoadingAnimComponent from "./loading-anim.component";
 import ImageWrapperComponent from './image-wrapper.component';
 import { BsPlayFill } from "react-icons/bs";
 import { useEffect, useState } from 'react';
+import { File } from '../backend/library';
 
 export interface MediaItemComponentProps {
-    media: FileContainer
+    media: File
     onClick?: () => void
 }
 
