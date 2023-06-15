@@ -137,27 +137,151 @@ export async function getMovieMetadata(filename: string): Promise<Movie | null> 
     
 
 
-    const name = Path.parse(filename).name;
-    // console.log(`Searching TMDB for '${name}'...`);
+    let name = Path.parse(filename).name;
+
+
+    const foundYears: string[] = [];
+    for (let i = 0; i < name.length - 3; i++) {
+        const sub = name.substring(i, i + 4);
+        if (sub.match(/^\d{4}$/g)) {
+            const year = name.substring(i, i + 4);
+            if (parseInt(year) >= 1900) {
+                foundYears.push(year);
+            }
+        }
+    }
+
+
+    for (let i= 1; i < name.length; i++) {
+        if (["(", "[", "{"].includes(name[i])) {
+            name = name.substring(0, i - 1);
+            break;
+        }
+    }
+    
+    name = name.replace(/\./g, " ");
+
+    const blacklist = [
+        "x264",
+        "x265",
+        "h264",
+        "h265",
+        "1080p",
+        "2160p",
+        "720p",
+        "uhd",
+        "bluray",
+        "blu-ray",
+        "webrip",
+        "web-dl",
+        "dvdrip",
+        "dvd-rip",
+        "aac-rarbg",
+        "rarbg",
+        "yts",
+        "yify",
+        "eztv",
+        "amzn",
+        "amznwebrip",
+        "amznweb-dl",
+    ];
+    blacklist.forEach(b => {
+        name = name.replace(new RegExp(b, "gi"), "");
+    });
+
+    // remove instances of ' - '
+    name = name.replace(/ - /g, " ");
+
+
+    // remove everything in brackets including the brackets
+    name = name.replace(/\[.*?\]/g, "");
+
+    // remove everything in parentheses including the parentheses
+    name = name.replace(/\(.*?\)/g, "");
+
+    
+    // remove extra spaces
+    name = name.replace(/\s+/g, " ").trim();
+
+    if (name.endsWith(" -")) {
+        name = name.substring(0, name.length - 2);
+    }
+
+    let data = await checkName(name, foundYears[0]);
+
+    if (!data) {
+        // get all indexes of 4-character numbers in name
+        const indexes = [];
+        for (let i = 0; i < name.length - 3; i++) {
+            const sub = name.substring(i, i + 4);
+            if (sub.match(/^\d{4}$/g)) {
+                indexes.push(i);
+            }
+        }
+        if (indexes.length) {
+            for (let index of indexes) {
+                if (!index) {
+                    name = name.substring(4);
+                } else {
+                    name = name.substring(0, index);
+                }
+            }
+            name = name.trim();
+            data = await checkName(name, foundYears[0]);
+        }
+    }
+
+    if (!data) {
+        console.log("\nFailed!", name);
+        console.log(filename, "\n");
+    }
+
+    // console.log("writing...", metaFile);
+    if (data) {
+        FS.writeFile(metaFile, JSON.stringify(data, null, 2), () => {});
+    }
+    
+
+    return data;
+}
+
+async function checkName(name: string, year?: string) {
     try {
-        const search = await tmdbRequest(`https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(name)}&include_adult=false&language=en-US&page=1`);
-        if (!Array.isArray(search?.results) || !search.results.length) return null;
+        const search = await tmdbRequest(`https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(name)}&include_adult=false&language=en-US&page=1` + (year ? `&primary_release_year=${year}` : ``));
+        if (!Array.isArray(search?.results) || !search.results.length) {
+            return null;
+        }
 
-        const tmdbId = search.results[0].id;
+        let tmdbId = null;
 
+        if (year) {
+            for (let result of search.results) {
+                if (result.release_date.startsWith(year)) {
+                    tmdbId = result.id;
+                    break;
+                }
+            }
+        }
+        if (!tmdbId) {
+            tmdbId = search.results[0].id;
+        }
+        if (!tmdbId) {
+            return null;
+        }
+        
+    
         const details = await tmdbRequest(`https://api.themoviedb.org/3/movie/${tmdbId}`);
-
+    
         const credits = await tmdbRequest(`https://api.themoviedb.org/3/movie/${tmdbId}/credits`);
-
+    
         const data = {
             details,
             credits
         }
-
-        // console.log("writing...", metaFile);
-        FS.writeFile(metaFile, JSON.stringify(data, null, 2), () => {});
-
+    
         return data;
-    } catch {}
-    return null;
+    } catch (e) {
+        console.error(e);
+        return null;
+    }
 }
