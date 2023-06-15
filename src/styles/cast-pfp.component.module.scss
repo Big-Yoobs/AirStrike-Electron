@@ -1,0 +1,30 @@
+.container {
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    max-width: 70px;
+    .name {
+        text-align: center;
+        font-size: 0.7rem;
+    }
+
+    .role {
+        text-align: center;
+        font-size: 0.7rem;
+        font-weight: lighter;
+        font-style: italic;
+    }
+
+
+    .pfp {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        img {
+            border-radius: 50%;
+        }
+    }
+}
