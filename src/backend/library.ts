@@ -22,7 +22,6 @@ Axios.get("https://assets.airstrike.tv").then(data => {
             }
         }
         library.splice(0, library.length, ...newLibrary);
-        console.log(library);
     }
 });
 

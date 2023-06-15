@@ -12,32 +12,6 @@ declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
 const DIRECTORY = Path.resolve("./");
 
-// const library = [
-//     "Shrek.mp4",
-//     "Shrek 2.mov",
-//     "Terminator 2.mp4",
-//     "Clutch Powers.mov",
-//     "John Wick.mp4",
-//     "Batman Ninja.mov",
-//     "Guardians of the Galaxy.mp4",
-//     "I, Robot.mov",
-//     "Snakes on a plane.mp4",
-//     "Sharknado.mov",
-//     "Army of Darkness.mp4",
-//     "Hostel.mov",
-//     "The Lego Movie.mp4",
-//     "Avatar.mov",
-//     "The Amazing Spider-Man.mp4",
-//     "Top Gun: Maverick",
-//     "Puss In Boots: The Last Wish.mov",
-//     "Nope.mp4",
-//     "Knives Out.mp4",
-//     "Alien.mov",
-//     "Robocop.mp4",
-//     "Jumanji.mov",
-//     "The Conjuring.mp4"
-// ];
-
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
     app.quit();
