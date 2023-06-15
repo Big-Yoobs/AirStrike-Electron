@@ -184,6 +184,7 @@ export async function getMovieMetadata(filename: string): Promise<Movie | null> 
         "amzn",
         "amznwebrip",
         "amznweb-dl",
+        "documentary"
     ];
     blacklist.forEach(b => {
         name = name.replace(new RegExp(b, "gi"), "");
@@ -232,7 +233,7 @@ export async function getMovieMetadata(filename: string): Promise<Movie | null> 
     }
 
     if (!data) {
-        console.log("\nFailed!", name);
+        console.log("\nFailed!", `'${name}'`);
         console.log(filename, "\n");
     }
 
@@ -247,9 +248,14 @@ export async function getMovieMetadata(filename: string): Promise<Movie | null> 
 
 async function checkName(name: string, year?: string) {
     try {
-        const search = await tmdbRequest(`https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(name)}&include_adult=false&language=en-US&page=1` + (year ? `&primary_release_year=${year}` : ``));
+        const url = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(name)}&include_adult=false&language=en-US&page=1`;
+        const yearUrl = url + (year ? `&primary_release_year=${year}` : ``);
+        let search = await tmdbRequest(yearUrl);
         if (!Array.isArray(search?.results) || !search.results.length) {
-            return null;
+            search = await tmdbRequest(url);
+            if (!Array.isArray(search?.results) || !search.results.length) {
+                return null;
+            }
         }
 
         let tmdbId = null;
@@ -271,7 +277,6 @@ async function checkName(name: string, year?: string) {
         
     
         const details = await tmdbRequest(`https://api.themoviedb.org/3/movie/${tmdbId}`);
-    
         const credits = await tmdbRequest(`https://api.themoviedb.org/3/movie/${tmdbId}/credits`);
     
         const data = {

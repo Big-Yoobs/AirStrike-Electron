@@ -26,17 +26,26 @@ function newSocket() {
     socketId = newSocketId;
     if (socket) socket.close();
     socket = new Websocket("wss://socket.airstrike.tv");
+    let open = true;
     socket.on("open", () => {
         console.log("websocket open");
         mainWindow.webContents.send("websocket state", {
             connected: true
         });
+        const timeout = setInterval(() => {
+            if (!open) {
+                clearInterval(timeout);
+                return;
+            }
+            socket.ping();
+        }, 5_000);
     });
     socket.once("error", e => {
         console.error(e);
     });
 
     socket.on("close", () => {
+        open = false;
         if (newSocketId != socketId) return console.log("cancelling socket!");
         console.log("websocket close");
         mainWindow.webContents.send("websocket state", {
