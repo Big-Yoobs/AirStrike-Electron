@@ -66,7 +66,7 @@ export default function FilmPageComponent({ filename } : FilmPageComponentProps)
     return (
 
         <div className={styles.container}>
-            <div className={styles.header}>
+            <div>
                 <div className={styles.bgImg}>
                     <div className={styles.backBtn}>
                         <MdOutlineArrowBackIos/>
@@ -83,32 +83,32 @@ export default function FilmPageComponent({ filename } : FilmPageComponentProps)
                     <div className={styles.txtHeaderSecLine}>
 
                         
-                        <div className={styles.director}>
+                        <div>
                             <span className={styles.tag}>Director: </span>
                             <span>{directors.map(d => d.name).join(", ")}</span>
                         </div>
 
-                        <div className={styles.writer}>
+                        <div>
                             <span className={styles.tag}>Writer: </span>
                             <span>{writers.map(w => w.name).join(", ")}</span>
                         </div>                       
 
-                        <div className={styles.release}>
+                        <div>
                             <span className={styles.tag}>Release: </span>
                             <span>{release}</span>
                         </div>
 
-                        <div className={styles.length}>
+                        <div>
                             <span className={styles.tag}>Length: </span>
                             <span>{length[0]}h {length[1]}m</span>
                         </div>
 
-                        <div className={styles.genres}>
+                        <div>
                             <span className={styles.tag}>Genres: </span>
                             <span>{meta.details.genres.map(g => g.name).join(", ")}</span>
                         </div>
 
-                        <div className={styles.rating}>
+                        <div>
                             <span className={styles.tag}>User Score: </span>
                             <span>{userScore}%  </span>
                             <span>{userScoreTitle}</span>
@@ -150,7 +150,7 @@ export default function FilmPageComponent({ filename } : FilmPageComponentProps)
             <div className={styles.body}>
                 <div className={styles.description}>
                     <div className={styles.bodyTitle}>Description</div>
-                    <div className={styles.descriptionText}>
+                    <div>
                         {desc}
                     </div>
                 </div>
@@ -159,7 +159,7 @@ export default function FilmPageComponent({ filename } : FilmPageComponentProps)
                     <div className={styles.bodyTitle}>Cast</div>
                 </div>
                 <div className={styles.castContainer}>
-                    <div className={`${styles.arrowLeft} ${styles.arrow}`}>
+                    <div className={`${styles.arrow}`}>
                         <MdOutlineArrowBackIos/>
                     </div>
                     <div className={styles.cast}>
@@ -175,14 +175,14 @@ export default function FilmPageComponent({ filename } : FilmPageComponentProps)
                 <div className={styles.bodyTitleContainer}>
                     <div className={styles.bodyTitle}>Reviews</div>
                 </div>
-                <div className={styles.reviews}>
+                <div>
                     {/* TODO: add reviews here */}
                 </div>
 
                 <div className={styles.bodyTitleContainer}>
                     <div className={styles.bodyTitle}>Related</div>
                 </div>
-                <div className={styles.related}>
+                <div>
                     {/* TODO: add related films here */}
                 </div>
 
@@ -190,7 +190,7 @@ export default function FilmPageComponent({ filename } : FilmPageComponentProps)
                     <div className={styles.bodyTitle}>Crew</div>
                 </div>
                 <div className={styles.castContainer}>
-                    <div className={`${styles.arrowLeft} ${styles.arrow}`}>
+                    <div className={`${styles.arrow}`}>
                         <MdOutlineArrowBackIos/>
                     </div>
                     <div className={styles.cast}>
