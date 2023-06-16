@@ -6,9 +6,10 @@ export interface ImageWrapperProps {
     src: string
     fallback?: string
     onLoad?: () => void
+    loadingTitle?: string
 }
 
-export default function ImageWrapperComponent({src, fallback, onLoad}: ImageWrapperProps) {
+export default function ImageWrapperComponent({src, fallback, onLoad, loadingTitle}: ImageWrapperProps) {
     const image = useRef<HTMLImageElement>(null);
     const [loading, setLoading] = useState(true);
     const [activeSrc, setActiveSrc] = useState("");
@@ -36,7 +37,7 @@ export default function ImageWrapperComponent({src, fallback, onLoad}: ImageWrap
     return (
         <div className={styles.container}>
             {loading && (
-                <LoadingAnimComponent />
+                <LoadingAnimComponent title={loadingTitle} />
             )}
             
             <img ref={image} className={styles.image + (loading ? "" : ` ${styles.loaded}`)} src={activeSrc} onLoadStart={() => setLoading(true)} onError={loadError} onLoad={loadSuccess} />

@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
 import { electron } from "../utils";
 
-const chat: string[] = [];
-const listeners: ((chat: string[]) => void)[] = [];
+export interface ChatMessage {
+    sender: string
+    message: string
+}
 
-electron().addEventListener("chat", (message: string) => {
+const chat: ChatMessage[] = [];
+const listeners: ((chat: ChatMessage[]) => void)[] = [];
+
+electron().addEventListener("chat", (message: ChatMessage) => {
     chat.push(message);
     const newChat = [...chat];
     for (let callback of listeners) {
@@ -12,7 +17,7 @@ electron().addEventListener("chat", (message: string) => {
     }
 });
 
-export default function useChat(): string[] {
+export default function useChat(): ChatMessage[] {
     const [messages, setMessages] = useState(chat);
 
     useEffect(() => {

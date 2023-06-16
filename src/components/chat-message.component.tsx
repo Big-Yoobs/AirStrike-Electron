@@ -3,6 +3,7 @@ import styles from "../styles/chat-message.component.module.scss"
 import EmojiComponent from "./emoji.component";
 import AvatarGuiComponent from "./avatar-gui.component";
 import { electron } from "../utils";
+import { ChatMessage } from "../hooks/use-chat";
 
 const emojis: string[] = [];
 
@@ -11,12 +12,12 @@ electron().addEventListener("emojis", (newEmojis: string[]) => {
 });
 
 export interface ChatMessageProps {
-    text: string
+    message: ChatMessage
 }
 
-export default function ChatMessageComponent(props: ChatMessageProps) {
+export default function ChatMessageComponent({ message }: ChatMessageProps) {
     const words = useMemo(() => {
-        const separated = props.text.split(" ");
+        const separated = message.message.split(" ");
         const out: JSX.Element[] = [];
         for (let i = 0; i < separated.length; i++) {
             let word = separated[i];
@@ -34,7 +35,7 @@ export default function ChatMessageComponent(props: ChatMessageProps) {
             }
         }
         return out;
-    }, [props.text]);
+    }, [message]);
 
     let isOnlyEmojis = true;
     for (let word of words) {

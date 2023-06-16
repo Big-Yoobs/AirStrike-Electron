@@ -118,13 +118,9 @@ const createWindow = (): void => {
 app.on('ready', () => {
     ipcMain.on("socket", (e, data) => {
 
-        if (data.type == "leave") {
-            socket.runCallback("room ID", null);
-        }
-
-        if (data.type == "chat") {
-            socket.runCallback("chat", data.data);
-        }
+        // if (data.type == "leave") {
+        //     socket.runCallback("room ID", null);
+        // }
 
         try {
             socket.message(data.type, data.data);
@@ -235,6 +231,7 @@ class Websocket extends BaseWebsocket {
         this.on("message", message => {
             try {
                 const data = JSON.parse(message.toString());
+                console.log(data);
                 this.runCallback(data.type, data.data);
             } catch (e) {
                 console.error(e);

@@ -13,11 +13,6 @@ export interface MediaItemComponentProps {
 
 export default function MediaItemComponent({ media, onClick }: MediaItemComponentProps) {
     const meta = useMediaMeta(media.filename);
-    const [imageLoaded, setImageLoaded] = useState(false);
-
-    useEffect(() => {
-        setImageLoaded(false);
-    }, [media.filename]);
 
     if (!meta) {
         return (
@@ -30,23 +25,12 @@ export default function MediaItemComponent({ media, onClick }: MediaItemComponen
         )
     }
 
-    if (!imageLoaded) {
-        return (
-            <div className={styles.container}>
-                <div className={styles.image}>
-                <ImageWrapperComponent src={"https://image.tmdb.org/t/p/w500/" + meta.details.poster_path} onLoad={() => setImageLoaded(true)} />
-                </div>
-                <h1 className={styles.loadingTitle}>{media.filename}</h1>
-            </div>
-        )
-    }
-
     const releaseYear = meta.details.release_date.split("-").shift();
 
     return (
         <div className={styles.container}>
             <div className={styles.image}>
-                <ImageWrapperComponent src={"https://image.tmdb.org/t/p/w500/" + meta.details.poster_path} onLoad={() => setImageLoaded(true)} />
+                <ImageWrapperComponent src={"https://image.tmdb.org/t/p/w500/" + meta.details.poster_path} loadingTitle={meta.details.title} />
             </div>
             <div className={styles.info} onClick={onClick}>
                 <div className={styles.bottom}>

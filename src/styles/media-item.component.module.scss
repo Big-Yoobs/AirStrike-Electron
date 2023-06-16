@@ -15,7 +15,7 @@
     .image {
         position: absolute;
         inset: 0;
-        background: rgb(52, 52, 52);
+        background: var(--primary-dark);
     }
 
     .loadingTitle {

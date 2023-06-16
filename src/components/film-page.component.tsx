@@ -7,14 +7,15 @@ import useMediaMeta from '../hooks/use-media-meta';
 import ImageWrapperComponent from './image-wrapper.component';
 import {MdOutlineArrowBackIos} from 'react-icons/md';
 import { MovieCrewMember } from '../backend/meta';
-import { MovieCastMember } from '../backend/meta';
 import CastPfpComponent from './cast-pfp.component';
+import LoadingAnimComponent from './loading-anim.component';
 
 export interface FilmPageComponentProps {
     filename: string
+    onBack?: () => void
 }
 
-export default function FilmPageComponent({ filename } : FilmPageComponentProps) {
+export default function FilmPageComponent({ filename, onBack } : FilmPageComponentProps) {
     const meta = useMediaMeta(filename);
 
     if (meta === null) {
@@ -22,7 +23,7 @@ export default function FilmPageComponent({ filename } : FilmPageComponentProps)
     }
 
     if (!meta) {
-        return <h1>Loading...</h1>
+        return <LoadingAnimComponent title={filename} />
     }
 
     const title : string = meta.details.title;
@@ -61,16 +62,15 @@ export default function FilmPageComponent({ filename } : FilmPageComponentProps)
             userScoreTitle = scoreThresholds[threshold];
         }
     }
-    console.log(userScoreTitle);
 
     return (
 
         <div className={styles.container}>
             <div>
                 <div className={styles.bgImg}>
-                    <div className={styles.backBtn}>
+                    <button className={styles.backBtn} onClick={onBack}>
                         <MdOutlineArrowBackIos/>
-                    </div>
+                    </button>
                     <ImageWrapperComponent src={bgSrc}/>
                     <div className={styles.bgImgOverlay}></div>
                     <div className = {styles.coverContainer}>
@@ -124,12 +124,12 @@ export default function FilmPageComponent({ filename } : FilmPageComponentProps)
                         <div className={styles.btnText}>Play</div>
                     </div>
 
-                    <div className={styles.btn}>
+                    {/* <div className={styles.btn}>
                         <div className={styles.btnIcon}>
                             <FaUserFriends/>
                         </div>
                         <div className={styles.btnText}>Start Room</div>
-                    </div>
+                    </div> */}
 
                     <div className={`${styles.btn} ${styles.editBtn}`}>
                         <div className={styles.btnIcon}>

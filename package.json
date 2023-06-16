@@ -7,6 +7,7 @@
   "scripts": {
     "start": "electron-forge start",
     "package": "node ./clearscript.js && electron-forge package && node ./copyscript.js",
+    "build": "npm run package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "eslint --ext .ts,.tsx ."

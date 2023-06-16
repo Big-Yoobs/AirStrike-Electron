@@ -23,7 +23,7 @@ export default function RoomComponent() {
 
     function drawView() {
         switch (view) {
-            case "library": return <LibraryComponent />
+            case "library": return <LibraryComponent extraMargin />
             default: return <PlayerComponent src="content://chungus.mp4" />
         }
     }
@@ -97,7 +97,7 @@ export default function RoomComponent() {
                         <div className={styles.chatFeed}>
                             <div className={styles.chatMessages}>
                                 {chatMessages.map((message, index) => (
-                                    <ChatMessageComponent text={message} key={index} />
+                                    <ChatMessageComponent message={message} key={index} />
                                 ))}
                             </div>
                         </div>

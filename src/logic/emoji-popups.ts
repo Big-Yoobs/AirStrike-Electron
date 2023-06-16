@@ -1,3 +1,4 @@
+import { ChatMessage } from "../hooks/use-chat";
 import { electron, wait } from "../utils";
 
 export interface EmojiInfo {
@@ -26,8 +27,8 @@ electron().addEventListener("emojis", (newEmojis: string[]) => {
     emojis.splice(0, emojis.length, ...newEmojis);
 });
 
-electron().addEventListener("chat", async message => {
-    const separated = message.split(" ");
+electron().addEventListener("chat", async (message: ChatMessage) => {
+    const separated = message.message.split(" ");
     const foundEmojis: string[] = [];
     for (let i = 0; i < separated.length; i++) {
         let word = separated[i];

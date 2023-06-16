@@ -1,64 +1,79 @@
+.container {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--background);
+
+    .header {
+        height: 50px;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        gap: 20px;
+        padding: 0 10px 0 40px;
+    }
+}
+
 .libraryContainer {
     position: relative;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(145deg, #3E3E3E 0%, #29375a 100%);
+    flex-grow: 1;
+    // background: linear-gradient(145deg, #3E3E3E 0%, #29375a 100%);
+    background: rgba(0,0,0,0.5);
+    margin-left: 30px;
+    border-radius: 30px 30px 0 0;
     
 
-    .librarySidebarContainer {
+    // .librarySidebarContainer {
+    //     position: absolute;
+    //     display: flex;
+    //     flex-direction: column;
+    //     width: 250px;
+    //     padding-right: 30px;
+    //     background: linear-gradient(180deg, rgba(7, 7, 7, 0.5) 0%, rgba(0, 2, 33, 0.5) 100%);
+    //     box-sizing: border-box;
+    //     top: 0;
+    //     bottom: 0;
+    //     left: 0;
+    //     flex-shrink: 0;
+    //     padding-top: 30px;
+    // }
+
+    .libraryAlphaShortcuts {
         position: absolute;
-        display: flex;
-        flex-direction: column;
-        width: 250px;
-        padding-right: 30px;
-        background: linear-gradient(180deg, rgba(7, 7, 7, 0.5) 0%, rgba(0, 2, 33, 0.5) 100%);
-        box-sizing: border-box;
         top: 0;
         bottom: 0;
-        left: 0;
-        flex-shrink: 0;
-        padding-top: 30px;
+        left: -30px;
+        width: 30px;
+        display: flex;
+        flex-direction: column;
+        color: #bbb;
+        overflow: hidden;
+        justify-content: stretch;
+        user-select: none;
 
-        .libraryAlphaShortcuts {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            width: 30px;
-            display: flex;
-            flex-direction: column;
-            background: linear-gradient(180deg, rgba(7, 7, 7, 0.5) 0%, rgba(0, 2, 33, 0.5) 100%);
-            color: #bbb;
-            overflow: hidden;
-            justify-content: stretch;
-            user-select: none;
+        a {
+            flex-grow: 1;
+            position: relative;
+            cursor: pointer;
 
-            a {
-                flex-grow: 1;
-                position: relative;
-                cursor: pointer;
+            &:hover {
+                color: white;
+            }
 
-                &:hover {
-                    color: white;
-                }
-
-                span {
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                }
+            span {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
             }
         }
     }
 
     .itemsCenter {
         position: absolute;
-        top: 0;
-        right: 0;
-        left: 250px;
+        inset: 0;
         overflow-y: auto;
-        bottom: 0;
 
         &::-webkit-scrollbar {
             display: none;

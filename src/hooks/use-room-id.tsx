@@ -16,7 +16,16 @@ electron().addEventListener("url", ({room}: {room: string}) => {
     for (let callback of listeners) {
         callback(roomId);
     }
-})
+});
+
+electron().addEventListener("error", (e: string) => {
+    if (roomId != null && e == "You're not in a room") {
+        roomId = null;
+        for (let callback of listeners) {
+            callback(roomId);
+        }
+    }
+});
 
 export default function useRoomId(): string | null {
     const [id, setId] = useState(roomId);

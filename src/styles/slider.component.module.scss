@@ -75,7 +75,7 @@
         transform: translate(-50%, -50%);
         width: calc(var(--length) - 10px);
         height: 4px;
-        background: var(--gradient);
+        background: var(--primary);
         border-radius: 2px;
         transition: opacity 0.2s;
     }
