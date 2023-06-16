@@ -11,7 +11,27 @@
         justify-content: space-evenly;
         align-items: center;
         gap: 20px;
-        padding: 0 10px 0 40px;
+        padding: 0 10px 0 5px;
+
+        .home {
+            background: radial-gradient(50% 50% at 50% 50%, #49008e 0%,  #2e0059 100%);
+            // background-color: #2e0059;
+            border-radius: 50%;
+            // margin-top: 10px;
+            margin-right: 50px;
+            z-index: 20;
+            // border: 1px solid darkgray;
+            padding: 2px;
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            .logo {
+                width: 35px;
+                height: 35px;
+                object-fit: contain;
+            }
+        }
     }
 }
 

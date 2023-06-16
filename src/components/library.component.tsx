@@ -43,6 +43,9 @@ export default function LibraryComponent(props: LibraryComponentProps) {
         <>
             <div className={styles.container}>
                 <div className={styles.header}>
+                    <div className={styles.home}>
+                        <img className={styles.logo} src="https://i.imgur.com/DzzTph7.png"/>
+                    </div>
                     {props.showRoomButtons && (
                         <>
                             <button onClick={() => electron().socketSend("create room")} className="button">Create Room</button>
