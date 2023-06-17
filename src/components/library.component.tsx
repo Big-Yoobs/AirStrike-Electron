@@ -2,11 +2,12 @@ import styles from '../styles/library.component.module.scss';
 import MediaItemComponent from './media-item.component';
 import LibrarySidebarItemComponent from './library-sidebar-item.component';
 import { useResizeDetector } from "react-resize-detector";
+import { ViewportList } from 'react-viewport-list';
 
 import { FaHome } from 'react-icons/fa';
 import { FaFilm } from 'react-icons/fa';
 import { BsTvFill } from 'react-icons/bs';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useLibrary from '../hooks/use-library';
 import FilmPageComponent from './film-page.component';
 import { electron } from '../utils';
@@ -26,6 +27,7 @@ export default function LibraryComponent(props: LibraryComponentProps) {
     const files = useLibrary();
     const [currentPage, setCurrentPage] = useState<string | null>(null);
     const [joinModelOpen, setJoinModalOpen] = useState(false);
+    const itemsContainer = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (!width) return setColumns(0);
@@ -63,10 +65,14 @@ export default function LibraryComponent(props: LibraryComponentProps) {
                         ))}
                     </div>
                     <div className={styles.itemsCenter} ref={ref} style={{margin: `0 ${props.extraMargin ? 120 : 15}px`}}>
-                        <div className={styles.itemsContainer} style={{width: libraryWidth + "px"}}>
-                            {columns ? files.map(media => (
-                                <MediaItemComponent media={media} key={media.filename} onClick={() => setCurrentPage(media.filename)} />
-                            )) : (
+                        <div className={styles.itemsContainer} ref={itemsContainer} style={{width: libraryWidth + "px"}}>
+                            {columns ? (
+                                <ViewportList items={files} viewportRef={itemsContainer}>
+                                    {media => (
+                                        <MediaItemComponent media={media} key={media.filename} onClick={() => setCurrentPage(media.filename)} />
+                                    )}
+                                </ViewportList>
+                            ) : (
                                 <LoadingAnimComponent title="Loading your library" />
                             )}
                         </div>

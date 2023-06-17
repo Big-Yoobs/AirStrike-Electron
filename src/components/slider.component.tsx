@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import styles from "../styles/slider.component.module.scss"
 
 export interface SliderProps {
@@ -10,6 +10,7 @@ export interface SliderProps {
     orientation?: "horizontal" | "vertical"
     length: number
     color: string
+    activeCallback?: (active: boolean) => void
 }
 
 export default function Slider(props: SliderProps) {
@@ -24,6 +25,23 @@ export default function Slider(props: SliderProps) {
         "--length": props.length + "px",
         "--color": props.color
     };
+
+    useEffect(() => {
+        if (!props.activeCallback) return;
+        let active = true;
+
+        if (isActive) {
+            props.activeCallback(true);
+        } else {
+            setTimeout(() => {
+                if (active) props.activeCallback(false);
+            }, 500);
+        }
+
+        return () => {
+            active = false;
+        }
+    }, [isActive]);
 
     function mouseDown(originalEvent: MouseEvent) {
         setIsActive(false);

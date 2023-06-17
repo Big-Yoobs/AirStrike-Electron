@@ -11,6 +11,7 @@ import { electron } from "../utils";
 import useChat from "../hooks/use-chat";
 import useRoomId from "../hooks/use-room-id";
 import EmojiSelectionComponent from "./emoji-selection.component";
+import useRoomUrl from "../hooks/use-room-url";
 
 export default function RoomComponent() {
     const [view, setView] = useState<"library" | "theatre" | "settings">("theatre");
@@ -20,11 +21,19 @@ export default function RoomComponent() {
     const roomCode = useRoomId();
     const [autoComplete, setAutoComplete] = useState<string | null>(null);
     const [suggestedEmoji, setSuggestedEmoji] = useState<string | null>(null);
+    const url = useRoomUrl();
+
+    useEffect(() => {
+        if (url) {
+            console.log("URL changed to:", url);
+            setView("theatre");
+        }
+    }, [url]);
 
     function drawView() {
         switch (view) {
             case "library": return <LibraryComponent extraMargin />
-            default: return <PlayerComponent src="content://chungus.mp4" />
+            default: return <PlayerComponent src={url} />
         }
     }
 

@@ -61,6 +61,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.9.0",
     "react-resize-detector": "^9.1.0",
+    "react-viewport-list": "^7.1.1",
     "string-similarity": "^4.0.4"
   }
 }

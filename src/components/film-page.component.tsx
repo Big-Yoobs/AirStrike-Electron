@@ -9,6 +9,8 @@ import {MdOutlineArrowBackIos} from 'react-icons/md';
 import { MovieCrewMember } from '../backend/meta';
 import CastPfpComponent from './cast-pfp.component';
 import LoadingAnimComponent from './loading-anim.component';
+import useRoomId from '../hooks/use-room-id';
+import { electron } from '../utils';
 
 export interface FilmPageComponentProps {
     filename: string
@@ -17,6 +19,7 @@ export interface FilmPageComponentProps {
 
 export default function FilmPageComponent({ filename, onBack } : FilmPageComponentProps) {
     const meta = useMediaMeta(filename);
+    const roomId = useRoomId();
 
     if (meta === null) {
         return <h1>Failed to load</h1>
@@ -60,6 +63,15 @@ export default function FilmPageComponent({ filename, onBack } : FilmPageCompone
     for (const threshold in scoreThresholds) {
         if (userScore >= Number(threshold)) {
             userScoreTitle = scoreThresholds[threshold];
+        }
+    }
+
+    function play() {
+        if (roomId) {
+            console.log("already in room! change media");
+            electron().socketSend("url", "https://assets.airstrike.tv/" + filename);
+        } else {
+            console.log("not in room, create one");
         }
     }
 
@@ -117,7 +129,7 @@ export default function FilmPageComponent({ filename, onBack } : FilmPageCompone
                 </div>
 
                 <div className={styles.btnsContainer}>
-                    <div className={styles.btn}>
+                    <div className={styles.btn} onClick={play}>
                         <div className={styles.btnIcon}>
                             <BsPlayFill/>
                         </div>
@@ -163,8 +175,8 @@ export default function FilmPageComponent({ filename, onBack } : FilmPageCompone
                         <MdOutlineArrowBackIos/>
                     </div>
                     <div className={styles.cast}>
-                        {meta.credits.cast.map(c => (
-                            <CastPfpComponent member={c} />
+                        {meta.credits.cast.map((c, index) => (
+                            <CastPfpComponent member={c} key={index} />
                         ))}
                     </div>
                     <div className={`${styles.arrowRight} ${styles.arrow}`}>
@@ -194,8 +206,8 @@ export default function FilmPageComponent({ filename, onBack } : FilmPageCompone
                         <MdOutlineArrowBackIos/>
                     </div>
                     <div className={styles.cast}>
-                        {meta.credits.crew.map(c => (
-                            <CastPfpComponent member={c} />
+                        {meta.credits.crew.map((c, index) => (
+                            <CastPfpComponent member={c} key={index} />
                         ))}
                     </div>
                     <div className={`${styles.arrowRight} ${styles.arrow}`}>

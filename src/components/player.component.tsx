@@ -6,78 +6,106 @@ import { BsPauseFill, BsPlayFill, BsFastForwardFill, BsRewindFill } from "react-
 import { IconContext } from "react-icons";
 import EmojiPopupComponent from "./emoji-popup.component";
 import useEmojiPopups from "../hooks/use-emoji-popups";
+import { electron } from "../utils";
+import useBuffering from "../hooks/use-buffering";
+import LoadingAnimComponent from "./loading-anim.component";
+import useTimestamp from "../hooks/use-timestamp";
+import usePaused from "../hooks/use-paused";
 
 export interface PlayerComponentProps {
-    src: string
+    src: string | null
 }
 
 export default function PlayerComponent(props: PlayerComponentProps) {
     const video = useRef<HTMLVideoElement>();
-    const [currentTime, setCurrentTime] = useState(0);
     const [isBuffering, setIsBuffering] = useState(true);
     const {width: dockWidth, height: dockHeight, ref: dockRef} = useResizeDetector();
     const emojiPopups = useEmojiPopups();
+    const roomBuffering = useBuffering();
+    const targetTimestamp = useTimestamp();
+    const roomPaused = usePaused();
+    const [sliderActive, setSliderActive] = useState(false);
 
-    function setTime(time: number) {
-        video.current.currentTime = time * video.current.duration;
-    }
+    useEffect(() => {
+        const difference = Math.abs(targetTimestamp - video.current.currentTime);
+        if (difference > 1) { // allow 1 second offset
+            video.current.currentTime = targetTimestamp;
+        }
+    }, [targetTimestamp]);
 
     function togglePlay() {
-        const v = video.current;
-        if (!v) return;
-        if (v.paused) {
-            v.play();
-        } else {
-            v.pause();
-        }
+        electron().socketSend("paused", !roomPaused);
     }
 
     useEffect(() => {
         video.current.onload = console.log;
         video.current.onerror = console.error;
         video.current.oncanplay = () => setIsBuffering(false);
+        setIsBuffering(true);
         video.current.load();
     }, [props.src]);
 
-    function videoLoaded() {
-        setIsBuffering(false);
-        console.log("stopped buffering");
+    useEffect(() => {
+        electron().socketSend("buffering", isBuffering);
+    }, [isBuffering]);
+
+    function sliderSetTime(time: number) {
+        const newTime = time * video.current.duration;
+        electron().socketSend("timestamp", newTime);
     }
 
-    function setCurrentTimeInternal(time: number) {
-        if (!isNaN(time)) {
-            setCurrentTime(time);
-        }
+    function videoSetTime(time: number) {
+        if (sliderActive) return;
+        electron().socketSend("timestamp", time);
     }
+
+    let timeDecimal = 0;
+    if (video.current?.duration) {
+        timeDecimal = targetTimestamp / video.current.duration;
+    }
+
+    const videoElementReady = !isNaN(video.current?.currentTime) && !isNaN(video.current?.duration);
+
+    useEffect(() => {
+        if (!videoElementReady) return;
+        if (roomBuffering || roomPaused) {
+            video.current.play();
+        } else {
+            video.current.pause();
+        }
+    }, [roomBuffering, video.current, roomPaused, videoElementReady]);
 
     return (
         <div>
             <div className={styles.videoContainer}>
-                <video ref={video} onLoad={videoLoaded} onError={console.error} onTimeUpdate={e => setCurrentTimeInternal(e.currentTarget.currentTime / e.currentTarget.duration)} className={styles.video} src={props.src}></video>
+                <video ref={video} onWaiting={() => setIsBuffering(true)} onLoad={() => setIsBuffering(false)} onLoadStart={() => setIsBuffering(true)} onPlaying={() => setIsBuffering(false)} onError={console.error} onTimeUpdate={e => videoSetTime(e.currentTarget.currentTime)} className={styles.video} src={props.src}></video>
+                {(roomBuffering || !videoElementReady) && (
+                    <LoadingAnimComponent title={props.src ? "Buffering" : "Select a Video"} />
+                )}
             </div>
             {emojiPopups.map(emoji => (
                 <EmojiPopupComponent emoji={emoji.emoji} key={emoji.uid} visible={emoji.visible} />
             ))}
-            {!isNaN(video.current?.currentTime) && !isNaN(video.current?.duration) && (
+            {videoElementReady && (
                 <div className={styles.dock} ref={dockRef}>
                     <div className={styles.dockButtons}>
                         <IconContext.Provider value={{size: "40px"}}>
-                            <button onClick={() => setTime(currentTime - 10 / video.current.duration)}>
+                            <button>
                                 <BsRewindFill />
                             </button>
                             <IconContext.Provider value={{size: "50px"}}>
-                                <button onClick={togglePlay}>{video.current?.paused ? (
-                                    <BsPlayFill />
-                                ) : (
+                                <button onClick={togglePlay}>{roomPaused ? (
                                     <BsPauseFill />
+                                ) : (
+                                    <BsPlayFill />
                                 )}</button>
                             </IconContext.Provider>
-                            <button onClick={() => setTime(currentTime + 10 / video.current.duration)}>
+                            <button>
                                 <BsFastForwardFill />
                             </button>
                         </IconContext.Provider>
                     </div>
-                    <Slider min={0} max={10_000} value={currentTime * 10_000} onChange={value => setTime(value / 10_000)} length={dockWidth - 40} color="#430082" />
+                    <Slider min={0} max={10_000} activeCallback={setSliderActive} value={timeDecimal * 10_000} onChange={value => sliderSetTime(value / 10_000)} length={dockWidth - 40} color="#430082" />
                 </div>
             )}
         </div>
