@@ -69,9 +69,9 @@ export default function PlayerComponent(props: PlayerComponentProps) {
     useEffect(() => {
         if (!videoElementReady) return;
         if (roomBuffering || roomPaused) {
-            video.current.play();
-        } else {
             video.current.pause();
+        } else {
+            video.current.play();
         }
     }, [roomBuffering, video.current, roomPaused, videoElementReady]);
 
@@ -95,9 +95,9 @@ export default function PlayerComponent(props: PlayerComponentProps) {
                             </button>
                             <IconContext.Provider value={{size: "50px"}}>
                                 <button onClick={togglePlay}>{roomPaused ? (
-                                    <BsPauseFill />
-                                ) : (
                                     <BsPlayFill />
+                                ) : (
+                                    <BsPauseFill />
                                 )}</button>
                             </IconContext.Provider>
                             <button>
