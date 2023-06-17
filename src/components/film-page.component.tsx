@@ -11,6 +11,7 @@ import CastPfpComponent from './cast-pfp.component';
 import LoadingAnimComponent from './loading-anim.component';
 import useRoomId from '../hooks/use-room-id';
 import { electron } from '../utils';
+import ScrollComponent from './scroll.component';
 
 export interface FilmPageComponentProps {
     filename: string
@@ -76,14 +77,15 @@ export default function FilmPageComponent({ filename, onBack } : FilmPageCompone
     }
 
     return (
-
         <div className={styles.container}>
             <div>
                 <div className={styles.bgImg}>
                     <button className={styles.backBtn} onClick={onBack}>
-                        <MdOutlineArrowBackIos/>
+                        <MdOutlineArrowBackIos />
                     </button>
-                    <ImageWrapperComponent src={bgSrc}/>
+
+                    <ImageWrapperComponent src={bgSrc} />
+                    
                     <div className={styles.bgImgOverlay}></div>
                     <div className = {styles.coverContainer}>
                         <ImageWrapperComponent src={coverSrc}/>
@@ -159,62 +161,28 @@ export default function FilmPageComponent({ filename, onBack } : FilmPageCompone
                 </div>
             </div>
 
-            <div className={styles.body}>
-                <div className={styles.description}>
-                    <div className={styles.bodyTitle}>Description</div>
-                    <div>
-                        {desc}
-                    </div>
-                </div>
-
-                <div className={styles.bodyTitleContainer}>    
-                    <div className={styles.bodyTitle}>Cast</div>
-                </div>
-                <div className={styles.castContainer}>
-                    <div className={`${styles.arrow}`}>
-                        <MdOutlineArrowBackIos/>
-                    </div>
-                    <div className={styles.cast}>
-                        {meta.credits.cast.map((c, index) => (
-                            <CastPfpComponent member={c} key={index} />
-                        ))}
-                    </div>
-                    <div className={`${styles.arrowRight} ${styles.arrow}`}>
-                        <MdOutlineArrowBackIos/>
-                    </div>
-                </div>
-
-                <div className={styles.bodyTitleContainer}>
-                    <div className={styles.bodyTitle}>Reviews</div>
-                </div>
-                <div>
-                    {/* TODO: add reviews here */}
-                </div>
-
-                <div className={styles.bodyTitleContainer}>
-                    <div className={styles.bodyTitle}>Related</div>
-                </div>
-                <div>
-                    {/* TODO: add related films here */}
-                </div>
-
-                <div className={styles.bodyTitleContainer}>
-                    <div className={styles.bodyTitle}>Crew</div>
-                </div>
-                <div className={styles.castContainer}>
-                    <div className={`${styles.arrow}`}>
-                        <MdOutlineArrowBackIos/>
-                    </div>
-                    <div className={styles.cast}>
-                        {meta.credits.crew.map((c, index) => (
-                            <CastPfpComponent member={c} key={index} />
-                        ))}
-                    </div>
-                    <div className={`${styles.arrowRight} ${styles.arrow}`}>
-                        <MdOutlineArrowBackIos/>
-                    </div>
-                </div>
+            <div className={styles.description}>
+                <div className={styles.bodyTitle}>Description</div>
+                <div>{desc}</div>
             </div>
+
+            <ScrollComponent title="Cast">
+                {meta.credits.cast.map((c, index) => (
+                    <CastPfpComponent member={c} key={index} />
+                ))}
+            </ScrollComponent>
+
+            <ScrollComponent title="Reviews">
+            </ScrollComponent>
+
+            <ScrollComponent title="Related Films">
+            </ScrollComponent>
+
+            <ScrollComponent title="Crew">
+                {meta.credits.crew.map((c, index) => (
+                    <CastPfpComponent member={c} key={index} />
+                ))}
+            </ScrollComponent>
         </div>
             
     )

@@ -9,7 +9,7 @@ export default function StartPageComponent() {
     return (
         <div className={styles.container}>
             <div className={styles.logo}>
-                <img src="https://i.imgur.com/8otsuij.png" />
+                <img src="gui://logo.png" />
             </div>
 
             <div className={styles.buttons}>

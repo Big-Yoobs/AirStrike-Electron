@@ -9,6 +9,7 @@
     flex-shrink: 1;
     position: relative;
     isolation: isolate;
+    background: var(--background-dark);
 }
 
 .sidebarContainer {
@@ -58,24 +59,6 @@
         .chat {
             flex-grow: 1;
             position: relative;
-
-            ::-webkit-scrollbar {
-                width: 6px;
-            }
-            
-            ::-webkit-scrollbar-track {
-                background: transparent;
-                border-radius: 3px;
-            }
-            
-            ::-webkit-scrollbar-thumb {
-                background: var(--primary);
-                border-radius: 3px;
-            }
-            
-            ::-webkit-scrollbar-thumb:hover {
-                background: var(--primary-selected);
-            }
           
             .chatFeed {
                 padding: 10px 10px 60px 10px;

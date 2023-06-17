@@ -68,10 +68,14 @@ export default function PlayerComponent(props: PlayerComponentProps) {
 
     useEffect(() => {
         if (!videoElementReady) return;
-        if (roomBuffering || roomPaused) {
-            video.current.pause();
-        } else {
-            video.current.play();
+        try {
+            if (roomBuffering || roomPaused) {
+                video.current.pause();
+            } else {
+                video.current.play();
+            }
+        } catch (e) {
+            console.error(e);
         }
     }, [roomBuffering, video.current, roomPaused, videoElementReady]);
 

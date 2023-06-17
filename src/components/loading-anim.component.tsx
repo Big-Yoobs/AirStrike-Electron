@@ -11,10 +11,12 @@ export default function LoadingAnimComponent({ title }: LoadingAnimComponentProp
                 <div className={styles.spinContainer}>
                     <div className={styles.ldsDualRing}></div>
                 </div>
-                <img src="https://i.imgur.com/DzzTph7.png" />
+                <img src="gui://logo.png" />
             </div>
             
-            <div className={styles.loadingText}>{title || "AirStrike"}</div>
+            {title && (
+                <div className={styles.loadingText}>{title}</div>
+            )}
         </div>
     );
 }

@@ -138,11 +138,11 @@ app.on('ready', () => {
 
     createWindow();
 
-    protocol.registerFileProtocol("content", (request, callback) => { // src="content://chungus"
-        const contentName = request.url.substring(10);
+    protocol.registerFileProtocol("gui", (request, callback) => { // src="gui://logo.png"
+        const contentName = request.url.substring(6);
         if (contentName.includes("..") || contentName.includes(":")) return callback(null);
 
-        const path = Path.join(DIRECTORY, "content", contentName);
+        const path = Path.join(DIRECTORY, "assets", "gui", contentName);
         callback({path});
     });
 

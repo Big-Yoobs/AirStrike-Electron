@@ -46,7 +46,7 @@ export default function LibraryComponent(props: LibraryComponentProps) {
             <div className={styles.container}>
                 <div className={styles.header}>
                     <div className={styles.home}>
-                        <img className={styles.logo} src="https://i.imgur.com/DzzTph7.png"/>
+                        <img className={styles.logo} src="gui://logo.png"/>
                     </div>
                     {props.showRoomButtons && (
                         <>

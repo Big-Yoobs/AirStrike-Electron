@@ -11,7 +11,7 @@ export default function HeaderComponent() {
     return (
         <>
             <div className={styles.headerContainer}>
-                <img className={styles.logo} src="https://i.imgur.com/8otsuij.png"/>
+                <img className={styles.logo} src="gui://logo.png"/>
 
                 <div className={styles.menuItem}>Home</div>
                 <div className={styles.menuItem} onClick={() => electron().socketSend("create room")}>Create Room</div>
