@@ -12,7 +12,7 @@ export interface ImageWrapperProps {
 export default function ImageWrapperComponent({src, fallback, onLoad, loadingTitle}: ImageWrapperProps) {
     const image = useRef<HTMLImageElement>(null);
     const [loading, setLoading] = useState(true);
-    const [imgSrc, setSrc] = useState(src || "/no-album-art.png");
+    const [imgSrc, setSrc] = useState<string | null>(null);
 
     const onImageLoad = useCallback(() => {
         setSrc(src);
@@ -34,9 +34,9 @@ export default function ImageWrapperComponent({src, fallback, onLoad, loadingTit
 
     return (
         <div className={styles.container}>
-            {loading && (
+            {/* {loading && (
                 <LoadingAnimComponent title={loadingTitle} />
-            )}
+            )} */}
             
             <img ref={image} className={styles.image + (loading ? "" : ` ${styles.loaded}`)} src={imgSrc} />
         </div>
