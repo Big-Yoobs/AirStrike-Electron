@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "../styles/image-wrapper.component.module.scss";
 import LoadingAnimComponent from "./loading-anim.component";
 
@@ -12,27 +12,25 @@ export interface ImageWrapperProps {
 export default function ImageWrapperComponent({src, fallback, onLoad, loadingTitle}: ImageWrapperProps) {
     const image = useRef<HTMLImageElement>(null);
     const [loading, setLoading] = useState(true);
-    const [activeSrc, setActiveSrc] = useState("");
+    const [imgSrc, setSrc] = useState(src || "/no-album-art.png");
 
-    useEffect(() => {
-        if (!image.current) return;
-
-        image.current.src = src;
-        setActiveSrc(image.current.src);
-    }, [src]);
-
-    function loadError() {
-        if (!image.current) return;
-        const newSrc = fallback || "/no-album-art.png";
-        setActiveSrc(newSrc);
-    }
-
-    function loadSuccess() {
+    const onImageLoad = useCallback(() => {
+        setSrc(src);
         setLoading(false);
-        if (!image.current) return;
-        setActiveSrc(image.current.src);
-        if (onLoad) onLoad();
-    }
+    }, [src]);
+    
+    useEffect(() => {
+        setLoading(true);
+        const img = new Image();
+        setTimeout(() => {
+            img.src = src;
+        });
+        img.addEventListener("load", onImageLoad);
+        
+        return () => {
+            img.removeEventListener("load", onImageLoad);
+        }
+    }, [src, onImageLoad]);
 
     return (
         <div className={styles.container}>
@@ -40,7 +38,7 @@ export default function ImageWrapperComponent({src, fallback, onLoad, loadingTit
                 <LoadingAnimComponent title={loadingTitle} />
             )}
             
-            <img ref={image} className={styles.image + (loading ? "" : ` ${styles.loaded}`)} src={activeSrc} onLoadStart={() => setLoading(true)} onError={loadError} onLoad={loadSuccess} />
+            <img ref={image} className={styles.image + (loading ? "" : ` ${styles.loaded}`)} src={imgSrc} />
         </div>
         
     )

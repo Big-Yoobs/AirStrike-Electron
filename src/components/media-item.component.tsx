@@ -14,6 +14,10 @@ export interface MediaItemComponentProps {
 export default function MediaItemComponent({ media, onClick }: MediaItemComponentProps) {
     const meta = useMediaMeta(media.filename);
 
+    useEffect(() => {
+        console.log("re-render");
+    }, [onClick]);
+
     if (!meta) {
         return (
             <div className={styles.container}>

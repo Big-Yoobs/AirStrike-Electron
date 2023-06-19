@@ -10,7 +10,7 @@ export default function useNotification() {
         return () => {
             Notifications.removeEventListener(setNotification);
         }
-    });
+    }, []);
 
     return notification;
 }

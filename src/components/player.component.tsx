@@ -82,7 +82,7 @@ export default function PlayerComponent(props: PlayerComponentProps) {
     return (
         <div>
             <div className={styles.videoContainer}>
-                <video ref={video} onWaiting={() => setIsBuffering(true)} onLoad={() => setIsBuffering(false)} onLoadStart={() => setIsBuffering(true)} onPlaying={() => setIsBuffering(false)} onError={console.error} onTimeUpdate={e => videoSetTime(e.currentTarget.currentTime)} className={styles.video} src={props.src}></video>
+                <video controls ref={video} onWaiting={() => setIsBuffering(true)} onLoad={() => setIsBuffering(false)} onLoadStart={() => setIsBuffering(true)} onPlaying={() => setIsBuffering(false)} onError={console.error} onTimeUpdate={e => videoSetTime(e.currentTarget.currentTime)} className={styles.video} src={props.src}></video>
                 {(roomBuffering || !videoElementReady) && (
                     <LoadingAnimComponent title={props.src ? "Buffering" : "Select a Video"} />
                 )}
