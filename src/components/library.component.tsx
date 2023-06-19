@@ -21,6 +21,8 @@ export interface LibraryComponentProps {
     extraMargin?: boolean
 }
 
+let universalScale = 1;
+
 export default function LibraryComponent(props: LibraryComponentProps) {
     const {width, ref} = useResizeDetector();
     const [columns, setColumns] = useState(1);
@@ -28,13 +30,39 @@ export default function LibraryComponent(props: LibraryComponentProps) {
     const [currentPage, setCurrentPage] = useState<string | null>(null);
     const [joinModelOpen, setJoinModalOpen] = useState(false);
     const itemsContainer = useRef<HTMLDivElement>(null);
+    const [scale, setScale] = useState(universalScale);
+    universalScale = scale;
 
     useEffect(() => {
         if (!width) return setColumns(0);
-        setColumns(Math.floor(width / 260) || 0);
-    }, [width]);
+        const roundedScale = Math.round(scale * 5) / 5;
+        const elementWidth = 240 * roundedScale;
+        // console.log("width:", elementWidth);
+        // console.log("width + gap:", elementWidth + 20)
+        // console.log("columns:", Math.floor(width / (elementWidth + 20)));
+        // console.log("container width:", width);
+        setColumns(Math.floor(width / (elementWidth + 20)) || 0);
+    }, [width, scale]);
+
+    useEffect(() => {
+
+        function wheel(e: WheelEvent) {
+            if (!e.ctrlKey) return;
+            e.preventDefault();
+
+            setScale(scale => {
+                return Math.min(Math.max(scale - (e.deltaY / 1000), 0.4), 1.2);   
+            });
+        }
+
+        window.addEventListener("wheel", wheel, {passive: false});
+
+        return () => {
+            document.removeEventListener("wheel", wheel);
+        }
+    }, []);
     
-    const libraryWidth = columns * 260;
+    const libraryWidth = columns * (240 * (Math.round(scale * 5) / 5) + 20);
     const alphaShortcuts = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     if (currentPage) {
@@ -72,7 +100,7 @@ export default function LibraryComponent(props: LibraryComponentProps) {
                             {columns ? (
                                 <ViewportList items={files} viewportRef={itemsContainer}>
                                     {media => (
-                                        <MediaItemComponent media={media} key={media.filename} onClick={() => setCurrentPage(media.filename)} />
+                                        <MediaItemComponent media={media} key={media.filename} onClick={() => setCurrentPage(media.filename)} scale={Math.round(scale * 5) / 5} />
                                     )}
                                 </ViewportList>
                             ) : (

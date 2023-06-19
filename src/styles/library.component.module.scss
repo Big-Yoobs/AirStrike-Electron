@@ -108,6 +108,12 @@
             gap: 40px 20px;
             padding: 40px 0;
             justify-content: flex-start;
+            position: relative;
+
+            & > *:first-child {
+                position: absolute;
+                top: 0;
+            }
         }
     }
 }

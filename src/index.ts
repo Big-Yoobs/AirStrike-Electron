@@ -86,6 +86,7 @@ const createWindow = (): void => {
             mainWindow.webContents.toggleDevTools();
         }
 
+        //RELOAD: Handle the F5 key press.
         if (input.key === 'F5') {
             event.preventDefault();
             mainWindow.reload();

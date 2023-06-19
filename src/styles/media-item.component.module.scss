@@ -7,10 +7,10 @@
     margin: 0;
     position: relative;
     box-sizing: border-box;
-    border-radius: 20px;
+    border-radius: calc(20px * var(--scale));
     overflow: hidden;
-    width: 240px;
-    height: 360px;
+    width: calc(240px * var(--scale));
+    height: calc(360px * var(--scale));
         
     .image {
         position: absolute;
@@ -43,6 +43,7 @@
             right: 0;
             box-sizing: border-box;
             padding: 10px;
+            --textSize: calc(0.7rem * max(var(--scale), 0.5) * 1.5);
 
             .split {
                 display: flex;
@@ -55,7 +56,7 @@
             .title {
                 margin: 0;
                 color: #fff;
-                font-size: 1rem;
+                font-size: var(--textSize);
                 flex-grow: 1;
                 pointer-events: none;
             }
@@ -64,20 +65,21 @@
                 color: white;
                 white-space: nowrap;
                 flex-shrink: 0;
+                font-size: var(--textSize);
             }
         }
 
         .play {
             position: absolute;
-            width: 70px;
-            height: 70px;
-            font-size: 4rem;
+            width: calc(70px * var(--scale));
+            height: calc(70px * var(--scale));
+            font-size: calc(4rem * var(--scale));
             border-radius: 50%;
-            border: 3px solid #fff;
+            border: calc(3px * var(--scale)) solid #fff;
             color: #fff;
             background: transparent;
             left: 50%;
-            top: calc(50% + 40px);
+            top: calc(50% + 40px * var(--scale));
             transition: top 0.2s, transform 0.15s;
             transform: translate(-50%, -50%) scale(1);
             cursor: pointer;
@@ -86,7 +88,7 @@
             svg {
                 position: absolute;
                 top: 50%;
-                left: calc(50% + 2px);
+                left: calc(50% + 2px * var(--scale));
                 transform: translate(-50%, -50%);
             }
 

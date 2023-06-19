@@ -10,11 +10,11 @@
     align-items: center;
     flex-direction: column;
     color: white;
-    gap: 100px;
+    gap: calc(100px * var(--scale));
 
     .logoIconContainer {
         position: relative;
-        transform: scale(0.9);
+        transform: scale(calc(0.9 * var(--scale)));
         
         .spinContainer {
             position: absolute;
@@ -63,14 +63,14 @@
     }
 
     .loadingText {
-        font-size: 1.5rem;
+        font-size: calc(1.5rem * var(--scale));
         font-weight: bold;
         text-align: center;
         text-transform: uppercase;
-        margin: 0 20px;
+        margin: 0 calc(20px * var(--scale));
         position: relative;
         display: block;
-        height: 50px;
+        height: calc(50px * var(--scale));
     }
 }
   
