@@ -99,6 +99,7 @@ export interface MovieCast {
 export interface Movie {
     details: MovieMetadata
     credits: MovieCast
+    filename: string
 }
 
 const DIRECTORY = Path.resolve("./");
@@ -235,15 +236,16 @@ export async function getMovieMetadata(filename: string): Promise<Movie | null> 
     if (!data) {
         console.log("\nFailed!", `'${name}'`);
         console.log(filename, "\n");
+        return null;
     }
 
-    // console.log("writing...", metaFile);
-    if (data) {
-        FS.writeFile(metaFile, JSON.stringify(data, null, 2), () => {});
+    const movie: Movie = {
+        ...data,
+        filename
     }
-    
 
-    return data;
+    FS.writeFile(metaFile, JSON.stringify(movie, null, 2), () => {});
+    return movie;
 }
 
 async function checkName(name: string, year?: string) {

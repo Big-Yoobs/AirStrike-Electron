@@ -3,7 +3,6 @@ import styles from '../styles/media-item.component.module.scss';
 import LoadingAnimComponent from "./loading-anim.component";
 import ImageWrapperComponent from './image-wrapper.component';
 import { BsPlayFill } from "react-icons/bs";
-import { useEffect, useState } from 'react';
 import { File } from '../backend/library';
 
 export interface MediaItemComponentProps {
@@ -13,10 +12,6 @@ export interface MediaItemComponentProps {
 
 export default function MediaItemComponent({ media, onClick }: MediaItemComponentProps) {
     const meta = useMediaMeta(media.filename);
-
-    useEffect(() => {
-        console.log("re-render");
-    }, [onClick]);
 
     if (!meta) {
         return (

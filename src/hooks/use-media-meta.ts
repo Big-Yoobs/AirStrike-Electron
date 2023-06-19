@@ -3,6 +3,17 @@ import { Movie } from "../backend/meta";
 import { electron } from "../utils";
 
 const usedIds: string[] = [];
+const cachedMetas: Map<string, Movie> = new Map();
+
+electron().addEventListener("metadata", data => {
+    const meta = data.metadata as Movie;
+    if (meta) {
+        cachedMetas.set(meta.filename, meta);
+        setTimeout(() => {
+            cachedMetas.delete(meta.filename);
+        }, 3600_000);
+    }
+});
 
 function generateId() {
     const start = Date.now().toString();
@@ -25,9 +36,11 @@ function generateId() {
 }
 
 export default function useMediaMeta(filename: string): Movie | undefined | null {
-    const [meta, setMeta] = useState<Movie | undefined | null>(undefined);
+    const [meta, setMeta] = useState<Movie | undefined | null>(cachedMetas.get(filename));
 
     useEffect(() => {
+        if (meta && meta.filename == filename) return;
+
         let active = true;
         setMeta(undefined);
 

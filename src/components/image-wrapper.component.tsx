@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "../styles/image-wrapper.component.module.scss";
 import LoadingAnimComponent from "./loading-anim.component";
 
@@ -13,30 +13,42 @@ export default function ImageWrapperComponent({src, fallback, onLoad, loadingTit
     const image = useRef<HTMLImageElement>(null);
     const [loading, setLoading] = useState(true);
     const [imgSrc, setSrc] = useState<string | null>(null);
-
-    const onImageLoad = useCallback(() => {
-        setSrc(src);
-        setLoading(false);
-    }, [src]);
     
     useEffect(() => {
         setLoading(true);
         const img = new Image();
-        setTimeout(() => {
-            img.src = src;
-        });
-        img.addEventListener("load", onImageLoad);
+        let doFallback = false;
+        let usingSrc = src;
+
+        function load() {
+            setSrc(usingSrc);
+            setLoading(false);
+            if (onLoad) onLoad();
+        }
+
+        function error() {
+            if (doFallback) return;
+            doFallback = true;
+            usingSrc = fallback || "gui://logo.png";
+            img.src = usingSrc;
+        }
+
+        img.addEventListener("load", load);
+        img.addEventListener("error", error);
+
+        img.src = src;
         
         return () => {
-            img.removeEventListener("load", onImageLoad);
+            img.removeEventListener("load", load);
+            img.removeEventListener("error", error);
         }
-    }, [src, onImageLoad]);
+    }, [src]);
 
     return (
         <div className={styles.container}>
-            {/* {loading && (
+            {loading && (
                 <LoadingAnimComponent title={loadingTitle} />
-            )} */}
+            )}
             
             <img ref={image} className={styles.image + (loading ? "" : ` ${styles.loaded}`)} src={imgSrc} />
         </div>
