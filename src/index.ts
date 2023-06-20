@@ -99,6 +99,7 @@ const createWindow = (): void => {
 
     mainWindow.webContents.on('dom-ready', () => {
         mainWindow.webContents.send("emojis", Array.from(emojis.keys()));
+        mainWindow.webContents.send("avatars", Array.from(avatars.keys()));
         mainWindow.webContents.send("library", Library.get());
         newSocket();
         Library.addListener(libraryListener);

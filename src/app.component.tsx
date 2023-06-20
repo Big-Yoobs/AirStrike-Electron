@@ -25,7 +25,7 @@ export default function AppComponent() {
             ) : (
                 <HomeComponent/>
             )}
-            <NotificationComponent />
+            <NotificationComponent />            
         </div>
     )
 }
