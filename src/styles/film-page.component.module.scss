@@ -78,10 +78,6 @@
             gap: 10px 30px;
             flex-wrap: wrap;
             width: 70%;
-
-            .tag {
-                font-weight: bold;
-            }
         }
     }
 
@@ -143,16 +139,32 @@
         }
     }
 
-    .description {
-        margin-top: 100px;
-        max-width: 2500px;
+    .descdeets {
+
+        display: flex;
+        flex-direction: row;
         width: calc(80% - 100px);
         margin: 100px auto 0 auto;
+        gap: 100px;
+        justify-content: space-between;
 
-        .bodyTitle {
-            font-size: 2rem;
-            font-weight: bold;
-            margin-bottom: 20px;
-        } 
+        .description {
+            width: 70%;
+            
+        }
+
+        .details {
+            width: 30%      
+        }
     }
+
+    .tag {
+        font-weight: bold;
+    }
+
+    .bodyTitle {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+    } 
 }

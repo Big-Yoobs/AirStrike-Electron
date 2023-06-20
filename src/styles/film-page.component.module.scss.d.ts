@@ -11,7 +11,9 @@ interface CssExports {
   'btnsContainer': string;
   'container': string;
   'coverContainer': string;
+  'descdeets': string;
   'description': string;
+  'details': string;
   'editBtn': string;
   'tag': string;
   'title': string;

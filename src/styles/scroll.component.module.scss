@@ -10,7 +10,7 @@
     }
 
     .scroll {
-        position: relative;
+        position: relative;       
 
         &::before {
             content: "";
@@ -38,7 +38,7 @@
             position: absolute;
             z-index: 2;
             color: white;
-            top: 0;
+            top: 40px;
             left: -30px;
             font-size: 2rem;
             transition: transform 0.15s;

@@ -33,6 +33,7 @@ export default function FilmPageComponent({ filename, onBack } : FilmPageCompone
     const title : string = meta.details.title;
     const coverSrc : string = "https://image.tmdb.org/t/p/w500/" + meta.details.poster_path;
     const bgSrc : string = "https://image.tmdb.org/t/p/original/" + meta.details.backdrop_path;
+    const fileContainer : string = meta.filename.split(".").pop()!;
     
     const release = new Date(meta.details.release_date).toLocaleDateString("en-NZ", {year: "numeric", month: "long", day: "numeric"});
     const directors: MovieCrewMember[] = [];
@@ -129,7 +130,6 @@ export default function FilmPageComponent({ filename, onBack } : FilmPageCompone
                         </div>
                     </div>
                 </div>
-
                 <div className={styles.btnsContainer}>
                     <div className={styles.btn} onClick={play}>
                         <div className={styles.btnIcon}>
@@ -159,11 +159,21 @@ export default function FilmPageComponent({ filename, onBack } : FilmPageCompone
                     }
                                         
                 </div>
+                    
             </div>
-
-            <div className={styles.description}>
-                <div className={styles.bodyTitle}>Description</div>
-                <div>{desc}</div>
+            
+            <div className={styles.descdeets}>
+                <div className={styles.description}>
+                    <div className={styles.bodyTitle}>Description</div>
+                    <div>{desc}</div>
+                </div>
+                <div className={styles.details}>
+                    <div className={styles.bodyTitle}>Details</div>
+                    <div>
+                        <span className={styles.tag}>Container: </span>
+                        <span>{fileContainer}</span>
+                    </div>
+                </div>
             </div>
 
             <ScrollComponent title="Cast">
