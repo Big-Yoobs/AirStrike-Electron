@@ -5,19 +5,42 @@ import ImageWrapperComponent from './image-wrapper.component';
 import { BsPlayFill } from "react-icons/bs";
 import { File } from '../backend/library';
 import { useMemo } from 'react';
+import StringSimilarity from "string-similarity";
 
 export interface MediaItemComponentProps {
     media: File
     onClick?: () => void
     scale?: number
+    searchQuery?: string
 }
 
-export default function MediaItemComponent({ media, onClick, scale }: MediaItemComponentProps) {
+export default function MediaItemComponent({ media, onClick, scale, searchQuery }: MediaItemComponentProps) {
     const meta = useMediaMeta(media.filename);
+    const shouldDisplay = useMemo(() => {
+        if (!searchQuery) return true;
+        if (!meta) return false;
+        const lower = searchQuery.toLowerCase();
+        const lowerName = meta.details.title.toLowerCase();
+        if (lowerName.includes(lower) || StringSimilarity.compareTwoStrings(lowerName, lower) > 0.5) {
+            return true;
+        }
+        if (meta.details.release_date.split("-")[0] == searchQuery) {
+            return true;
+        }
+        for (let member of [...meta.credits.cast, ...meta.credits.crew]) {
+            const lowerMemberName = member.name.toLowerCase();
+            if (lowerMemberName.includes(searchQuery) || StringSimilarity.compareTwoStrings(lowerMemberName, lower) > 0.8) {
+                return true;
+            }
+        }
+        return false;
+    }, [searchQuery, meta]);
 
     const css = useMemo(() => {
         return {"--scale": scale || 1} as any;
     }, [scale]);
+
+    if (!shouldDisplay) return null;
 
     if (!meta) {
         return (
@@ -48,5 +71,4 @@ export default function MediaItemComponent({ media, onClick, scale }: MediaItemC
             </div>
         </div>
     )
-    
 }

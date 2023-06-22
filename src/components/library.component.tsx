@@ -31,16 +31,13 @@ export default function LibraryComponent(props: LibraryComponentProps) {
     const [joinModelOpen, setJoinModalOpen] = useState(false);
     const itemsContainer = useRef<HTMLDivElement>(null);
     const [scale, setScale] = useState(universalScale);
+    const [search, setSearch] = useState("");
     universalScale = scale;
 
     useEffect(() => {
         if (!width) return setColumns(0);
         const roundedScale = Math.round(scale * 5) / 5;
         const elementWidth = 240 * roundedScale;
-        // console.log("width:", elementWidth);
-        // console.log("width + gap:", elementWidth + 20)
-        // console.log("columns:", Math.floor(width / (elementWidth + 20)));
-        // console.log("container width:", width);
         setColumns(Math.floor(width / (elementWidth + 20)) || 0);
     }, [width, scale]);
 
@@ -82,7 +79,7 @@ export default function LibraryComponent(props: LibraryComponentProps) {
                             <button onClick={() => setJoinModalOpen(true)} className="button">Join Room</button>
                         </>
                     )}
-                    <TextInputComponent placeholder="Search" />
+                    <TextInputComponent placeholder="Search" onChange={setSearch} />
                 </div>
                 <div className={styles.libraryContainer}>
                     {/* <div className={styles.librarySidebarContainer}>
@@ -100,7 +97,7 @@ export default function LibraryComponent(props: LibraryComponentProps) {
                             {columns ? (
                                 <ViewportList items={files} viewportRef={itemsContainer}>
                                     {media => (
-                                        <MediaItemComponent media={media} key={media.filename} onClick={() => setCurrentPage(media.filename)} scale={Math.round(scale * 5) / 5} />
+                                        <MediaItemComponent media={media} key={media.filename} onClick={() => setCurrentPage(media.filename)} scale={Math.round(scale * 5) / 5} searchQuery={search} />
                                     )}
                                 </ViewportList>
                             ) : (
