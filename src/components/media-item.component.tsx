@@ -1,46 +1,26 @@
-import useMediaMeta from '../hooks/use-media-meta';
 import styles from '../styles/media-item.component.module.scss';
 import LoadingAnimComponent from "./loading-anim.component";
 import ImageWrapperComponent from './image-wrapper.component';
 import { BsPlayFill } from "react-icons/bs";
 import { File } from '../backend/library';
 import { useMemo } from 'react';
-import StringSimilarity from "string-similarity";
+import { Movie } from '../backend/meta';
 
 export interface MediaItemComponentProps {
-    media: File
+    file: File
+    meta: Movie
     onClick?: () => void
     scale?: number
-    searchQuery?: string
 }
 
-export default function MediaItemComponent({ media, onClick, scale, searchQuery }: MediaItemComponentProps) {
-    const meta = useMediaMeta(media.filename);
-    const shouldDisplay = useMemo(() => {
-        if (!searchQuery) return true;
-        if (!meta) return false;
-        const lower = searchQuery.toLowerCase();
-        const lowerName = meta.details.title.toLowerCase();
-        if (lowerName.includes(lower) || StringSimilarity.compareTwoStrings(lowerName, lower) > 0.5) {
-            return true;
-        }
-        if (meta.details.release_date.split("-")[0] == searchQuery) {
-            return true;
-        }
-        for (let member of [...meta.credits.cast, ...meta.credits.crew]) {
-            const lowerMemberName = member.name.toLowerCase();
-            if (lowerMemberName.includes(searchQuery) || StringSimilarity.compareTwoStrings(lowerMemberName, lower) > 0.8) {
-                return true;
-            }
-        }
-        return false;
-    }, [searchQuery, meta]);
+export default function MediaItemComponent({ file, meta, onClick, scale }: MediaItemComponentProps) {
+    // const meta = useMediaMeta(media.filename);
 
     const css = useMemo(() => {
         return {"--scale": scale || 1} as any;
     }, [scale]);
 
-    if (!shouldDisplay) return null;
+    // if (!shouldDisplay) return null;
 
     if (!meta) {
         return (
@@ -48,7 +28,7 @@ export default function MediaItemComponent({ media, onClick, scale, searchQuery 
                 <div className={styles.image}>
                     <LoadingAnimComponent scale={scale} />
                 </div>
-                <h1 className={styles.loadingTitle}>{media.filename}</h1>
+                <h1 className={styles.loadingTitle}>{file.filename}</h1>
             </div>
         )
     }
