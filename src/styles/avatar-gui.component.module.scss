@@ -7,9 +7,10 @@
     border: 2px solid transparent;
     flex-grow: 0;
     flex-shrink: 0;
+    object-fit: cover;
 
     &:hover {
-        transform: scale(1.2);
+        transform: scale(1.05);
         border: 2px solid #430082;
     }
 }

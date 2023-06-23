@@ -51,7 +51,6 @@
     .currentPfp {
         width: 300px;
         height: 300px;
-        
     }
 
     .pfpTabs {
@@ -87,9 +86,13 @@
         align-items: center;
         width: 100%;
 
-        img {
+        .option {
+            border: none;
+            background: transparent;
             width: 100px;
             height: 100px;
+            padding: 0;
+            border-radius: 25%;
             cursor: pointer;
         }
     }

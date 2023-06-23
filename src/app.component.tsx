@@ -5,8 +5,11 @@ import useRoomId from "./hooks/use-room-id";
 import styles from './styles/app.component.module.scss';
 import useWebsocketState from "./hooks/use-websocket-state";
 import LoadingAnimComponent from "./components/loading-anim.component";
+import { useState } from "react";
+import ProfileModalComponent from "./components/profile-modal.component";
 
 export default function AppComponent() {
+    const [avatarId, setAvatarId] = useState<string | null>(null);
     const roomId = useRoomId();
     const socketState = useWebsocketState();
   
@@ -15,6 +18,12 @@ export default function AppComponent() {
             <div className={styles.container}>
                 <LoadingAnimComponent title="Connecting to Server" />
             </div>
+        )
+    }
+
+    if (!avatarId) {
+        return (
+            <ProfileModalComponent onSave={setAvatarId} />
         )
     }
 

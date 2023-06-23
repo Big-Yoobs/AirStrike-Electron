@@ -7,6 +7,7 @@ interface CssExports {
   'footer': string;
   'header': string;
   'headerTitle': string;
+  'option': string;
   'pfpOptions': string;
   'pfpTab': string;
   'pfpTabs': string;

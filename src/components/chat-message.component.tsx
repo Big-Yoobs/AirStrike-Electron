@@ -45,7 +45,7 @@ export default function ChatMessageComponent({ message }: ChatMessageProps) {
     return (
         <div className={styles.container}>
             <div className={styles.avatarContainer}>
-                <AvatarGuiComponent />
+                <AvatarGuiComponent avatar={message.sender} />
             </div>
             {isOnlyEmojis ? (
                 <div className={styles.emojis}>{words}</div>
