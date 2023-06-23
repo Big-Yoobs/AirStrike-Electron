@@ -35,7 +35,10 @@ export default function LibraryComponent(props: LibraryComponentProps) {
     const itemsContainer = useRef<HTMLDivElement>(null);
     const [scale, setScale] = useState(universalScale);
     const [search, setSearch] = useState("");
+    const [alphaChar, setAlphaChar] = useState<string | null>(null);
+    const [alphaActive, setAlphaActive] = useState(false);
     universalScale = scale;
+    const alphaShortcuts = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     useEffect(() => {
         if (!width) return setColumns(0);
@@ -43,6 +46,31 @@ export default function LibraryComponent(props: LibraryComponentProps) {
         const elementWidth = 240 * roundedScale;
         setColumns(Math.floor(width / (elementWidth + 20)) || 0);
     }, [width, scale]);
+
+    useEffect(() => {
+        if (!alphaActive) return;
+        const list = alphaShortcuts.split("");
+        const index = Math.max(list.indexOf(alphaChar), 0);
+        if (index < 0) return;
+        const children = Array.from(itemsContainer.current.children) as HTMLDivElement[];
+        for (let i = 0; i < children.length; i++) {
+            const element = children[i];
+            const firstLetter = element.dataset.firstletter;
+            const letterIndex = Math.max(list.indexOf(firstLetter), 0);
+            if (letterIndex >= index) {
+                const top = element.offsetTop;
+                itemsContainer.current.parentElement.scrollTo({
+                    top
+                });
+                return;
+            }
+        }
+        if (children.length) {
+            itemsContainer.current.parentElement.scrollTo({
+                top: children[children.length - 1].offsetTop
+            });
+        }
+    }, [alphaChar, alphaActive]);
 
     const items = useMemo(() => {
         const out = metas.filter(movie => {
@@ -101,10 +129,22 @@ export default function LibraryComponent(props: LibraryComponentProps) {
     }, []);
     
     const libraryWidth = columns * (240 * (Math.round(scale * 5) / 5) + 20);
-    const alphaShortcuts = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     if (currentPage) {
         return <FilmPageComponent filename={currentPage} onBack={() => setCurrentPage(null)} />
+    }
+
+    function alphaSelect() {
+        setAlphaActive(true);
+
+        function end() {
+            window.removeEventListener("mouseup", end);
+            window.addEventListener("mouseleave", end);
+            setAlphaActive(false);
+        }
+
+        window.addEventListener("mouseup", end);
+        window.addEventListener("mouseleave", end);
     }
 
     return (
@@ -128,9 +168,9 @@ export default function LibraryComponent(props: LibraryComponentProps) {
                         <LibrarySidebarItemComponent selected={true} title='Movies' icon={FaFilm}/>
                         <LibrarySidebarItemComponent selected={false} title='Series' icon={BsTvFill}/>
                     </div> */}
-                    <div className={styles.libraryAlphaShortcuts}>
+                    <div className={styles.libraryAlphaShortcuts} onMouseDown={alphaSelect}>
                         {alphaShortcuts.split("").map(letter => (
-                            <a key={letter}><span>{letter}</span></a>
+                            <a key={letter} onMouseOver={() => setAlphaChar(letter)}><span>{letter}</span></a>
                         ))}
                     </div>
                     <div className={styles.itemsCenter} ref={ref} style={{margin: `0 ${props.extraMargin ? 120 : 15}px`}}>

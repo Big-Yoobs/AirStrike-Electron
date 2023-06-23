@@ -70,10 +70,9 @@ export default function FilmPageComponent({ filename, onBack } : FilmPageCompone
 
     function play() {
         if (roomId) {
-            console.log("already in room! change media");
             electron().socketSend("url", "https://assets.airstrike.tv/" + filename);
         } else {
-            console.log("not in room, create one");
+            electron().socketSend("create room", "https://assets.airstrike.tv/" + filename);
         }
     }
 
@@ -145,11 +144,11 @@ export default function FilmPageComponent({ filename, onBack } : FilmPageCompone
                         <div className={styles.btnText}>Start Room</div>
                     </div> */}
 
-                    <div className={`${styles.btn} ${styles.editBtn}`}>
+                    {/* <div className={`${styles.btn} ${styles.editBtn}`}>
                         <div className={styles.btnIcon}>
                             <AiFillEdit/>
                         </div>
-                    </div>
+                    </div> */}
 
                     {watched ? (
                             <div className={styles.watchedContainer}>
@@ -171,7 +170,7 @@ export default function FilmPageComponent({ filename, onBack } : FilmPageCompone
                     <div className={styles.bodyTitle}>Details</div>
                     <div>
                         <span className={styles.tag}>Container: </span>
-                        <span>{fileContainer}</span>
+                        <span>{fileContainer.toUpperCase()}</span>
                     </div>
                 </div>
             </div>
