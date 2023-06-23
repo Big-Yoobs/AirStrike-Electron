@@ -24,7 +24,7 @@ export default function HeaderComponent() {
                 <div className={styles.menuItem}>About</div>
                 <div className={styles.menuItem}>Settings</div>
                 <div className={styles.avatarContainer}>
-                    <AvatarGuiComponent />
+                    {/* <AvatarGuiComponent /> */}
                 </div>
             </div>
 
