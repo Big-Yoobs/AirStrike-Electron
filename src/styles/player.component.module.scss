@@ -2,10 +2,21 @@
     background: #000;
     position: absolute;
     inset: 0;
+
     .video {
         width: 100%;
         height: 100%;
     }
+
+    .pointerDetecter {
+        position: absolute;
+        inset: 0;
+        z-index: 10;
+    }
+}
+
+.hiddenUi .dock {
+    opacity: 0 !important;
 }
 
 .dock {
@@ -23,6 +34,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 11;
 
 
     &::before {

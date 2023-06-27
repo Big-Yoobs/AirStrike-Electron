@@ -17,6 +17,14 @@ electron().addEventListener("chat", (message: ChatMessage) => {
     }
 });
 
+electron().addEventListener("room ID", (id: string | null) => {
+    if (id) return;
+    chat.splice(0, chat.length);
+    for (let callback of listeners) {
+        callback([]);
+    }
+});
+
 export default function useChat(): ChatMessage[] {
     const [messages, setMessages] = useState(chat);
 

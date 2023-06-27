@@ -22,6 +22,7 @@ let socket: Websocket;
 let socketId = -1;
 
 function newSocket() {
+    console.log("creating new socket!");
     const newSocketId = Date.now();
     socketId = newSocketId;
     if (socket) socket.close();
@@ -100,6 +101,7 @@ const createWindow = (): void => {
     mainWindow.webContents.on('dom-ready', () => {
         mainWindow.webContents.send("emojis", Array.from(emojis.keys()));
         mainWindow.webContents.send("avatars", Array.from(avatars.keys()));
+        mainWindow.webContents.send("local media", localMedia);
         mainWindow.webContents.send("library", Library.get());
         newSocket();
         Library.addListener(libraryListener);
@@ -125,7 +127,7 @@ app.on('ready', () => {
         // }
 
         try {
-            socket.message(data.type, data.data);
+            socket?.message(data.type, data.data);
         } catch {}
     });
 
@@ -166,7 +168,13 @@ app.on('ready', () => {
         callback({path});
     });
 
+    protocol.registerFileProtocol("content", (request, callback) => { // src="content://joecool.mp4"
+        const mediaName = request.url.substring(10);
+        if (!localMedia.includes(mediaName)) return callback(null);
 
+        const path = Path.join(DIRECTORY, "content", mediaName);
+        callback({path});
+    });
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -189,10 +197,14 @@ app.on('activate', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
-if (!fs.existsSync(Path.join(DIRECTORY, "content"))) {
-    console.log("making content directory");
-    fs.mkdirSync(Path.join(DIRECTORY, "content"));
+function makeDir(directory: string) {
+    if (!fs.existsSync(Path.join(DIRECTORY, directory))) {
+        console.log(`making ${directory} directory`);
+        fs.mkdirSync(Path.join(DIRECTORY, directory));
+    }
 }
+
+makeDir("content");
 
 const avatars: Map<string, string> = new Map();
 const avatarDir = fs.readdirSync(Path.join(DIRECTORY, "assets", "avatars"));
@@ -208,7 +220,6 @@ for (let avatarCategory of avatarDir) {
     }
 }
 
-
 const emojis: Map<string, string> = new Map();
 const emojiDir = fs.readdirSync(Path.join(DIRECTORY, "assets", "emojis"));
 
@@ -221,6 +232,16 @@ for (let emojiCategory of emojiDir) {
         if (!["png", "jpg", "gif"].includes(extension.substring(1))) continue;
         emojis.set(emoji.slice(0, -extension.length), Path.join(emojiCategory, emoji));
     }
+}
+
+const localMedia: string[] = [];
+const localMediaDir = fs.readdirSync(Path.join(DIRECTORY, "content"));
+
+for (let media of localMediaDir) {
+    if (typeof media != "string" || !media.includes(".")) continue;
+    const extension = Path.extname(media).toLowerCase();
+    if (!["mkv", "mov", "mp4", "webm"].includes(extension.substring(1))) continue;
+    localMedia.push(media);
 }
 
 

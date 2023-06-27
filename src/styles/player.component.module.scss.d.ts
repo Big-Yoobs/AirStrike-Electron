@@ -3,6 +3,8 @@
 interface CssExports {
   'dock': string;
   'dockButtons': string;
+  'hiddenUi': string;
+  'pointerDetecter': string;
   'progressBar': string;
   'video': string;
   'videoContainer': string;

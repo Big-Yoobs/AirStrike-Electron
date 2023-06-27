@@ -2,7 +2,7 @@
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 
 import { contextBridge, ipcRenderer } from "electron";
-const ALLOWED_EVENTS = ["emojis", "room ID", "chat", "error", "url", "library", "metadata", "websocket state", "buffering", "paused", "timestamp", "avatars"];
+const ALLOWED_EVENTS = ["emojis", "room ID", "chat", "error", "url", "library", "metadata", "websocket state", "buffering", "paused", "timestamp", "avatars", "local media"];
 
 
 const eventListeners: Map<string, ((data: any) => void)[]> = new Map();

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "../styles/player.component.module.scss"
 import Slider from "./slider.component";
 import { useResizeDetector } from "react-resize-detector";
@@ -11,6 +11,7 @@ import useBuffering from "../hooks/use-buffering";
 import LoadingAnimComponent from "./loading-anim.component";
 import useTimestamp from "../hooks/use-timestamp";
 import usePaused from "../hooks/use-paused";
+import useLocalMedias from "../hooks/use-local-media";
 
 export interface PlayerComponentProps {
     src: string | null
@@ -19,12 +20,29 @@ export interface PlayerComponentProps {
 export default function PlayerComponent(props: PlayerComponentProps) {
     const video = useRef<HTMLVideoElement>();
     const [isBuffering, setIsBuffering] = useState(true);
-    const {width: dockWidth, height: dockHeight, ref: dockRef} = useResizeDetector();
+    const {width: dockWidth, ref: dockRef} = useResizeDetector();
     const emojiPopups = useEmojiPopups();
     const roomBuffering = useBuffering();
     const targetTimestamp = useTimestamp();
     const roomPaused = usePaused();
     const [sliderActive, setSliderActive] = useState(false);
+    const localMedias = useLocalMedias();
+    const [showHud, setShowHud] = useState(false);
+    const setHudTimer = useState<ReturnType<typeof setTimeout>>(null)[1];
+    const src = useMemo(() => {
+        if (!props.src) return props.src;
+
+        const basename = props.src.split("/").pop();
+        if (localMedias.includes(basename)) {
+            console.log("Loading media from local disk", basename);
+            return "content://" + basename;
+        }
+        return props.src;
+    }, [props.src]);
+
+    useEffect(() => {
+        console.log("Playing", src);
+    }, [src]);
 
     useEffect(() => {
         const difference = Math.abs(targetTimestamp - video.current.currentTime);
@@ -43,7 +61,7 @@ export default function PlayerComponent(props: PlayerComponentProps) {
         video.current.oncanplay = () => setIsBuffering(false);
         setIsBuffering(true);
         video.current.load();
-    }, [props.src]);
+    }, [src]);
 
     useEffect(() => {
         electron().socketSend("buffering", isBuffering);
@@ -79,12 +97,31 @@ export default function PlayerComponent(props: PlayerComponentProps) {
         }
     }, [roomBuffering, video.current, roomPaused, videoElementReady]);
 
+    function setHudStatus(visible: boolean) {
+        setHudTimer(current => {
+            if (current) clearTimeout(current);
+            return null;
+        });
+
+        if (visible) {
+            setShowHud(true);
+        } else {
+            setShowHud(true);
+            setHudTimer(() => {
+                return setTimeout(() => {
+                    setShowHud(false);
+                }, 4_000);
+            });
+        }
+    }
+
     return (
-        <div>
+        <div className={!showHud ? styles.hiddenUi : undefined}>
             <div className={styles.videoContainer}>
-                <video ref={video} onWaiting={() => setIsBuffering(true)} onLoad={() => setIsBuffering(false)} onLoadStart={() => setIsBuffering(true)} onPlaying={() => setIsBuffering(false)} onError={console.error} onTimeUpdate={e => videoSetTime(e.currentTarget.currentTime)} className={styles.video} src={props.src}></video>
+                <div className={styles.pointerDetecter} onMouseOver={() => setHudStatus(false)} onMouseOut={() => setHudStatus(true)} onMouseMove={() => setHudStatus(false)} />
+                <video ref={video} onWaiting={() => setIsBuffering(true)} onLoad={() => setIsBuffering(false)} onLoadStart={() => setIsBuffering(true)} onPlaying={() => setIsBuffering(false)} onError={console.error} onTimeUpdate={e => videoSetTime(e.currentTarget.currentTime)} className={styles.video} src={src}></video>
                 {(roomBuffering || !videoElementReady) && (
-                    <LoadingAnimComponent title={props.src ? "Buffering" : "Select a Video"} />
+                    <LoadingAnimComponent title={src ? "Buffering" : "Select a Video"} />
                 )}
             </div>
             {emojiPopups.map(emoji => (
