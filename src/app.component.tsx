@@ -5,13 +5,20 @@ import useRoomId from "./hooks/use-room-id";
 import styles from './styles/app.component.module.scss';
 import useWebsocketState from "./hooks/use-websocket-state";
 import LoadingAnimComponent from "./components/loading-anim.component";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProfileModalComponent from "./components/profile-modal.component";
+import { electron } from "./utils";
 
 export default function AppComponent() {
     const [avatarId, setAvatarId] = useState<string | null>(null);
     const roomId = useRoomId();
     const socketState = useWebsocketState();
+
+    useEffect(() => {
+        if (avatarId) {
+            electron().socketSend("avatar", avatarId);
+        }
+    }, [avatarId]);
   
     if (!socketState.connected) {
         return (
