@@ -18,10 +18,19 @@ export default function RoomComponent() {
     const [sidebarOpen, setSidebarOpen] = useState(true);
     const chatMessages = useChat();
     const chatInput = useRef<HTMLInputElement>();
+    const chatContainer = useRef<HTMLDivElement>();
     const roomCode = useRoomId();
     const [autoComplete, setAutoComplete] = useState<string | null>(null);
     const [suggestedEmoji, setSuggestedEmoji] = useState<string | null>(null);
     const url = useRoomUrl();
+
+    useEffect(() => {
+        console.log("chat changed");
+        chatContainer.current.parentElement.scrollTo({
+            top: chatContainer.current.clientHeight,
+            behavior: "smooth"
+        });
+    }, [chatMessages]);
 
     useEffect(() => {
         if (url) {
@@ -104,7 +113,7 @@ export default function RoomComponent() {
                     </div>
                     <div className={styles.chat}>
                         <div className={styles.chatFeed}>
-                            <div className={styles.chatMessages}>
+                            <div className={styles.chatMessages} ref={chatContainer}>
                                 {chatMessages.map((message, index) => (
                                     <ChatMessageComponent message={message} key={index} />
                                 ))}
