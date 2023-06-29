@@ -131,7 +131,7 @@ export default function PlayerComponent(props: PlayerComponentProps) {
                 <div className={styles.dock} ref={dockRef}>
                     <div className={styles.dockButtons}>
                         <IconContext.Provider value={{size: "40px"}}>
-                            <button>
+                            <button onClick={() => videoSetTime(Math.max(video.current.currentTime - 10, 0))}>
                                 <BsRewindFill />
                             </button>
                             <IconContext.Provider value={{size: "50px"}}>
@@ -141,7 +141,7 @@ export default function PlayerComponent(props: PlayerComponentProps) {
                                     <BsPauseFill />
                                 )}</button>
                             </IconContext.Provider>
-                            <button>
+                            <button onClick={() => videoSetTime(Math.min(video.current.currentTime + 10, video.current.duration))}>
                                 <BsFastForwardFill />
                             </button>
                         </IconContext.Provider>
