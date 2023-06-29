@@ -15,8 +15,13 @@
     }
 }
 
-.hiddenUi .dock {
-    opacity: 0 !important;
+.hiddenUi {
+    .dock {
+        opacity: 0 !important;
+    }
+    .pointerDetecter {
+        cursor: none;
+    }
 }
 
 .dock {
