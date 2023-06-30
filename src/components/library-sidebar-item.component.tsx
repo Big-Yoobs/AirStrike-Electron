@@ -6,6 +6,7 @@ export interface LibrarySidebarItemProps {
     icon: React.FC;
 }
 
+// unused component for the the unused library sidebar
 export default function LibrarySidebarItemComponent(props: LibrarySidebarItemProps) {
 
     const Icon = props.icon;

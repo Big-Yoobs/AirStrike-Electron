@@ -41,6 +41,7 @@ export default function LibraryComponent(props: LibraryComponentProps) {
     universalScale = scale;
     const alphaShortcuts = "#ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
+    // calculating the amount of columns from the width and scale of library items
     useEffect(() => {
         if (!width) return setColumns(0);
         const roundedScale = Math.round(scale * 5) / 5;
@@ -48,6 +49,7 @@ export default function LibraryComponent(props: LibraryComponentProps) {
         setColumns(Math.floor(width / (elementWidth + 20)) || 0);
     }, [width, scale]);
 
+    // scrolls the library based on the alpha character pressed
     useEffect(() => {
         if (!alphaActive) return;
         const list = alphaShortcuts.split("");
@@ -112,9 +114,10 @@ export default function LibraryComponent(props: LibraryComponentProps) {
         return out;
     }, [metas, search]);
 
+    // scroll wheel zooming
     useEffect(() => {
 
-        // scroll wheel zooming
+        
         function wheel(e: WheelEvent) {
             if (!e.ctrlKey) return;
             e.preventDefault();
@@ -137,6 +140,7 @@ export default function LibraryComponent(props: LibraryComponentProps) {
         return <FilmPageComponent filename={currentPage} onBack={() => setCurrentPage(null)} />
     }
 
+    //alphabetical search bar functionality
     function alphaSelect() {
         setAlphaActive(true);
 
@@ -204,6 +208,7 @@ export default function LibraryComponent(props: LibraryComponentProps) {
                     </div>
                 </div>
             </div>
+            {/* the join room modal (which is activated by the join room button in the header above) */}
             <RoomModalComponent open={joinModelOpen} onClose={() => setJoinModalOpen(false)} />
         </>
     )

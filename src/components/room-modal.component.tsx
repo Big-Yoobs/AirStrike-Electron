@@ -16,6 +16,7 @@ export default function RoomModalComponent(props: RoomModelComponentProps) {
     
     if (!props.open) return null;
 
+    //send chat message on enter
     function chatKeypress(e: React.KeyboardEvent) {
         if (e.key == "Enter") {
             send();

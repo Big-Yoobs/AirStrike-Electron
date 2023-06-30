@@ -16,6 +16,7 @@ export default function RoomPopoutButton(props: RoomPopoutButtonProps) {
         if (props.onclick) props.onclick();
     }
 
+    //displaying the arrow button (in different ways based on state (ie. sidebar open or closed))
     return (
         <button className={styles.button + (props.selected ? ` ${styles.selected}` : "") + (!props.children ? ` ${styles.arrow}` : "") + (props.open ? ` ${styles.open}` : "")} onClick={click}>
             <IconContext.Provider value={{size: "40px"}}>

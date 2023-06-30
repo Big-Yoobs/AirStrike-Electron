@@ -13,6 +13,8 @@ import useRoomId from '../hooks/use-room-id';
 import { electron } from '../utils';
 import ScrollComponent from './scroll.component';
 
+// The film page for each film in the library
+
 export interface FilmPageComponentProps {
     filename: string
     onBack?: () => void

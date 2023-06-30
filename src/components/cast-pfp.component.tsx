@@ -3,6 +3,8 @@ import { MovieCastMember, MovieCrewMember } from '../backend/meta';
 import useMediaMeta from '../hooks/use-media-meta';
 import ImageWrapperComponent from './image-wrapper.component';
 
+// the profile picture component for both cast and crew members as seen on the film page
+
 export interface CastPfpComponentProps {
     member : MovieCastMember | MovieCrewMember
 }
@@ -17,9 +19,12 @@ export default function CastPfpComponent({member} : CastPfpComponentProps) {
     
     return (
         <div className={styles.container}>
+            {/* profile picture */}
             <div className={styles.pfp}>
                 <ImageWrapperComponent src={castPfp} fallback="gui://personW.png" />
             </div>
+            
+            {/* name and role */}
             <div className={styles.name}>
                 {castName}
             </div>
