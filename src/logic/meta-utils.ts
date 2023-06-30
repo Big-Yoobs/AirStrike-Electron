@@ -4,7 +4,7 @@ import { electron } from "../utils";
 const usedIds: string[] = [];
 const cachedMetas: Map<string, Movie> = new Map();
 
-electron().addEventListener("metadata", data => {
+electron().addEventListener("metadata", data => { // cache metadata for 1 hour
     const meta = data.metadata as Movie;
     if (meta) {
         cachedMetas.set(meta.filename, meta);
@@ -14,7 +14,7 @@ electron().addEventListener("metadata", data => {
     }
 });
 
-function generateId() {
+function generateId() { // generate unique unused id
     const start = Date.now().toString();
     let id = start;
 
@@ -39,7 +39,7 @@ export default class MetaUtils {
         return cachedMetas.get(filename);
     }
 
-    static search(filename: string) {
+    static search(filename: string) { // ask electron for movie file metadata
         const id = generateId();
 
         return new Promise<Movie>((resolve, reject) => {

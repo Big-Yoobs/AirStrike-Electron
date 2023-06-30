@@ -23,11 +23,11 @@ function generateId() {
     return id;
 }
 
-electron().addEventListener("emojis", (newEmojis: string[]) => {
+electron().addEventListener("emojis", (newEmojis: string[]) => { // update list of known emojis
     emojis.splice(0, emojis.length, ...newEmojis);
 });
 
-electron().addEventListener("chat", async (message: ChatMessage) => {
+electron().addEventListener("chat", async (message: ChatMessage) => { // subscribe to chat message event
     const separated = message.message.split(" ");
     const foundEmojis: string[] = [];
     for (let i = 0; i < separated.length; i++) {
@@ -67,7 +67,7 @@ function update() {
     }
 }
 
-export default class EmojiPopups {
+export default class EmojiPopups { // expose functions
     static addEventListener(callback: (emojis: EmojiInfo[]) => void) {
         if (eventListeners.includes(callback)) return;
         eventListeners.push(callback);

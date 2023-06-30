@@ -12,7 +12,7 @@ let notificationStatus: "normal" | "success" | "danger" | "none" = "none";
 
 const eventListeners: ((info: NotificationInfo) => void)[] = [];
 
-export default class Notifications {
+export default class Notifications { // expose functions for creating notifications
     static set(notification: string, status: "normal" | "success" | "danger") {
         let changed = false;
 
@@ -71,6 +71,6 @@ export default class Notifications {
     }
 }
 
-electron().addEventListener("error", e => {
+electron().addEventListener("error", e => { // create error notification
     Notifications.set(e, "danger");
 });

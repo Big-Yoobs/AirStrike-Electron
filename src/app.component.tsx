@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import ProfileModalComponent from "./components/profile-modal.component";
 import { electron } from "./utils";
 
-export default function AppComponent() {
+export default function AppComponent() { // main react component
     const [avatarId, setAvatarId] = useState<string | null>(null);
     const roomId = useRoomId();
     const socketState = useWebsocketState();
@@ -20,7 +20,7 @@ export default function AppComponent() {
         }
     }, [avatarId]);
   
-    if (!socketState.connected) {
+    if (!socketState.connected) { // not connected to server
         return (
             <div className={styles.container}>
                 <LoadingAnimComponent title="Connecting to Server" />
@@ -28,13 +28,13 @@ export default function AppComponent() {
         )
     }
 
-    if (!avatarId) {
+    if (!avatarId) { // avatar not set
         return (
             <ProfileModalComponent onSave={setAvatarId} />
         )
     }
 
-    return (
+    return ( // main app
         <div className={styles.container}>
             {roomId ? (
                 <RoomComponent/>

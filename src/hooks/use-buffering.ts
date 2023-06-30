@@ -12,7 +12,7 @@ electron().addEventListener("buffering", (data: boolean) => {
     }
 });
 
-export default function useBuffering() {
+export default function useBuffering() { // get whether the room is buffering
     const [buffering, setBuffering] = useState(isBuffering);
 
     useEffect(() => {

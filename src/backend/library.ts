@@ -9,7 +9,7 @@ export class File {
 const listeners: ((files: File[]) => void)[] = [];
 const library: File[] = [];
 
-Axios.get("https://assets.airstrike.tv").then(data => {
+Axios.get("https://assets.airstrike.tv").then(data => { // load library
     if (data.status == 200 && Array.isArray(data.data)) {
         const newLibrary: File[] = [];
         for (let item of data.data) {
@@ -28,7 +28,7 @@ Axios.get("https://assets.airstrike.tv").then(data => {
 
 
 
-const Library = {
+const Library = { // expose functions
     addListener: (listener: (files: File[]) => void) => {
         if (!listeners.includes(listener)) {
             listeners.push(listener);

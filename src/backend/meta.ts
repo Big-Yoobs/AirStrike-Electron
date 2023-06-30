@@ -103,11 +103,11 @@ export interface Movie {
 }
 
 const DIRECTORY = Path.resolve("./");
-if (!FS.existsSync(Path.join(DIRECTORY, "metadata"))) {
+if (!FS.existsSync(Path.join(DIRECTORY, "metadata"))) { // create metadata filder if not exists
     FS.mkdirSync(Path.join(DIRECTORY, "metadata"));
 }
 
-function readFile(filename: string): Promise<string> {
+function readFile(filename: string): Promise<string> { // get file contents
     return new Promise((resolve, reject) => {
         FS.readFile(filename, "utf-8", (e, data) => {
             if (e) return reject(e);
@@ -116,7 +116,7 @@ function readFile(filename: string): Promise<string> {
     });
 }
 
-async function tmdbRequest(url: string) {
+async function tmdbRequest(url: string) { // send an http request to tmdb
     const request = await fetch(url, {
         method: "GET",
         headers: {
@@ -141,7 +141,7 @@ export async function getMovieMetadata(filename: string): Promise<Movie | null> 
     let name = Path.parse(filename).name;
 
 
-    const foundYears: string[] = [];
+    const foundYears: string[] = []; // find 4 digit numbers in filename greater than 1899, treat them as years
     for (let i = 0; i < name.length - 3; i++) {
         const sub = name.substring(i, i + 4);
         if (sub.match(/^\d{4}$/g)) {
@@ -153,16 +153,16 @@ export async function getMovieMetadata(filename: string): Promise<Movie | null> 
     }
 
 
-    for (let i= 1; i < name.length; i++) {
+    for (let i = 1; i < name.length; i++) { // remove everything after bracket
         if (["(", "[", "{"].includes(name[i])) {
             name = name.substring(0, i - 1);
             break;
         }
     }
     
-    name = name.replace(/\./g, " ");
+    name = name.replace(/\./g, " "); // replace periods with spaces
 
-    const blacklist = [
+    const blacklist = [ // list of strings to remove
         "x264",
         "x265",
         "h264",
@@ -187,11 +187,11 @@ export async function getMovieMetadata(filename: string): Promise<Movie | null> 
         "amznweb-dl",
         "documentary"
     ];
-    blacklist.forEach(b => {
+    blacklist.forEach(b => { // remove blacklisted strings
         name = name.replace(new RegExp(b, "gi"), "");
     });
 
-    // remove instances of ' - '
+    // replace instances of ' - ' with spaces
     name = name.replace(/ - /g, " ");
 
 
@@ -209,9 +209,9 @@ export async function getMovieMetadata(filename: string): Promise<Movie | null> 
         name = name.substring(0, name.length - 2);
     }
 
-    let data = await checkName(name, foundYears[0]);
+    let data = await checkName(name, foundYears[0]); // search tmdb for name
 
-    if (!data) {
+    if (!data) { // search failed, include year
         // get all indexes of 4-character numbers in name
         const indexes = [];
         for (let i = 0; i < name.length - 3; i++) {
@@ -233,7 +233,7 @@ export async function getMovieMetadata(filename: string): Promise<Movie | null> 
         }
     }
 
-    if (!data) {
+    if (!data) { // couldn't find movie
         console.log("\nFailed!", `'${name}'`);
         console.log(filename, "\n");
         return null;
@@ -244,11 +244,11 @@ export async function getMovieMetadata(filename: string): Promise<Movie | null> 
         filename
     }
 
-    FS.writeFile(metaFile, JSON.stringify(movie, null, 2), () => {});
+    FS.writeFile(metaFile, JSON.stringify(movie, null, 2), () => {}); // store tmdb contents in json file
     return movie;
 }
 
-async function checkName(name: string, year?: string) {
+async function checkName(name: string, year?: string) { // search tmdb for name and optionally year
     try {
         const url = `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(name)}&include_adult=false&language=en-US&page=1`;
         const yearUrl = url + (year ? `&primary_release_year=${year}` : ``);

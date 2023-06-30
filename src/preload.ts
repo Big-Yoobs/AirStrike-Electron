@@ -2,14 +2,14 @@
 // https://www.electronjs.org/docs/latest/tutorial/process-model#preload-scripts
 
 import { contextBridge, ipcRenderer } from "electron";
-const ALLOWED_EVENTS = ["emojis", "room ID", "chat", "error", "url", "library", "metadata", "websocket state", "buffering", "paused", "timestamp", "avatars", "local media"];
+const ALLOWED_EVENTS = ["emojis", "room ID", "chat", "error", "url", "library", "metadata", "websocket state", "buffering", "paused", "timestamp", "avatars", "local media"]; // list of whitelisted events sent from the server or electron
 
 
 const eventListeners: Map<string, ((data: any) => void)[]> = new Map();
 
 
-contextBridge.exposeInMainWorld('electronAPI', {
-    addEventListener: (event: string, callback: (data: any) => void) => {
+contextBridge.exposeInMainWorld('electronAPI', { // expose this to the window
+    addEventListener: (event: string, callback: (data: any) => void) => { // add event listener
         const listeners = eventListeners.get(event);
         if (listeners) {
             listeners.push(callback);
@@ -18,7 +18,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
         }
     },
 
-    removeEventListener: (event: string, callback: (data: any) => void) => {
+    removeEventListener: (event: string, callback: (data: any) => void) => { // remove event listener
         const listeners = eventListeners.get(event);
         if (!listeners) return;
         const index = listeners.indexOf(callback);
@@ -26,7 +26,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
         listeners.splice(index, 1);
     },
 
-    socketSend: (type: string, data?: any) => {
+    socketSend: (type: string, data?: any) => { // send message to server
         try {
             ipcRenderer.send("socket", {
                 type,
@@ -37,7 +37,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
         }
     },
 
-    getMetadata: (filename: string, requestId: string) => {
+    getMetadata: (filename: string, requestId: string) => { // request movie metadata
         ipcRenderer.send("get metadata", {
             filename,
             requestId
@@ -45,14 +45,14 @@ contextBridge.exposeInMainWorld('electronAPI', {
     }
 });
 
-function sendEvent(event: string, data?: any) {
+function sendEvent(event: string, data?: any) { // send message to server
     const listeners = eventListeners.get(event) || [];
     for (let callback of listeners) {
         callback(data);
     }
 }
 
-for (let event of ALLOWED_EVENTS) {
+for (let event of ALLOWED_EVENTS) { // expose whitelisted events
     ipcRenderer.on(event, (e, data) => {
         sendEvent(event, data);
     })

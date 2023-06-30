@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import EmojiPopups from "../logic/emoji-popups";
 
-export default function useEmojiPopups() {
+export default function useEmojiPopups() { // get emoji popups
     const [emojis, setEmojis] = useState(EmojiPopups.get());
 
     useEffect(() => {
