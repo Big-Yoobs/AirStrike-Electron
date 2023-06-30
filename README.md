@@ -39,6 +39,7 @@ Refresh: ```f5```
 
 Full Screen: ```f11```
 
+Emoji Picker: ```\``` (room view sidebar chat)
 
 ### Room Creation
 Rooms can be created automatically by just playing a movie if you are currently not in a room. You can also create a room by clicking the "create room" button in the library view header. 
