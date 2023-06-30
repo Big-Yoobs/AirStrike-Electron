@@ -4,12 +4,15 @@ import AvatarGuiComponent from "./avatar-gui.component";
 import { useEffect, useState } from 'react';
 import LoadingAnimComponent from './loading-anim.component';
 
+//modal for selecting an avatar at program start
+
 const avatars: string[] = [];
 
 electron().addEventListener("avatars", (newAvatars: string[]) => {
     avatars.splice(0, avatars.length, ...newAvatars);
 });
 
+//setting the avatar first selected avatar in the modal by random
 function getRandom(): string | null {
     return avatars[Math.floor(Math.random() * avatars.length)] || null;
 }
@@ -42,7 +45,7 @@ export default function ProfileModalComponent(props: ProfileModalComponentProps)
         return <LoadingAnimComponent title="Loading avatars" />
     }
 
-    function save() {
+    function save() { //saving the selected avatar
         if (props.onSave) {
             props.onSave(activeId);
         }
@@ -52,12 +55,13 @@ export default function ProfileModalComponent(props: ProfileModalComponentProps)
         <div className={styles.container}>
             <div className={styles.header}>
                 <div className={styles.headerTitle}>Avatar Selection</div>
-                {/* <div className={styles.closeBtn}><FaSkullCrossbones/></div> */}
             </div>
+            {/* the currently highlighted avatar */}
             <div className={styles.currentPfp}>
-                <AvatarGuiComponent avatar={activeId} />
+                <AvatarGuiComponent avatar={activeId} /> 
             </div>
 
+            {/* tabs for filtering the different types of avatars */}
             {/* <div className={styles.pfpTabs}>
                 <div className={styles.pfpTab}>All</div>
                 <div className={styles.pfpTab}>General</div>
@@ -68,6 +72,7 @@ export default function ProfileModalComponent(props: ProfileModalComponentProps)
             </div> */}
 
             <div className={styles.pfpOptions}>
+                {/* looping through and rendering all the avatars as a wrapped list */}
                 {avatars.map((avatar, index) => (
                     <button key={index} onClick={() => setActiveId(avatar)} className={styles.option}>
                         <AvatarGuiComponent avatar={avatar} />
@@ -75,6 +80,7 @@ export default function ProfileModalComponent(props: ProfileModalComponentProps)
                 ))}
             </div>
 
+            {/* save button */}
             <div className={styles.footer}>
                 <button className="button"onClick={save}>Save</button>
             </div>

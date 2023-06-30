@@ -17,6 +17,7 @@ import TextInputComponent from './text-input.component';
 import LoadingAnimComponent from './loading-anim.component';
 import useMediaMetas, { MediaMetaWrapper } from '../hooks/use-media-metas';
 
+//the library where all the films are displayed and the effective home screen of the app.
 
 export interface LibraryComponentProps {
     showRoomButtons?: boolean
@@ -65,7 +66,7 @@ export default function LibraryComponent(props: LibraryComponentProps) {
                 return;
             }
         }
-        if (children.length) {
+        if (children.length) { 
             itemsContainer.current.parentElement.scrollTo({
                 top: children[children.length - 1].offsetTop
             });
@@ -112,6 +113,8 @@ export default function LibraryComponent(props: LibraryComponentProps) {
     }, [metas, search]);
 
     useEffect(() => {
+
+        // scroll wheel zooming
         function wheel(e: WheelEvent) {
             if (!e.ctrlKey) return;
             e.preventDefault();
@@ -150,33 +153,46 @@ export default function LibraryComponent(props: LibraryComponentProps) {
     return (
         <>
             <div className={styles.container}>
+
+                {/* header */}
                 <div className={styles.header}>
                     <div className={styles.home}>
                         <img className={styles.logo} src="gui://logo.png"/>
                     </div>
+
+                    {/* create and join room buttons */}
                     {props.showRoomButtons && (
                         <>
                             <button onClick={() => electron().socketSend("create room")} className="button">Create Room</button>
                             <button onClick={() => setJoinModalOpen(true)} className="button">Join Room</button>
                         </>
                     )}
+                    {/* search bar */}
                     <TextInputComponent placeholder="Search" onChange={setSearch} />
                 </div>
+
                 <div className={styles.libraryContainer}>
+
+                    {/* unused sidebar for different library filters  */}
                     {/* <div className={styles.librarySidebarContainer}>
                         <LibrarySidebarItemComponent selected={false} title='Home' icon={FaHome}/>
                         <LibrarySidebarItemComponent selected={true} title='Movies' icon={FaFilm}/>
                         <LibrarySidebarItemComponent selected={false} title='Series' icon={BsTvFill}/>
                     </div> */}
+                    
+                    {/* alphabetical search bar */}
                     <div className={styles.libraryAlphaShortcuts} onMouseDown={alphaSelect}>
                         {alphaShortcuts.split("").map(letter => (
                             <a key={letter} onMouseOver={() => setAlphaChar(letter)}><span>{letter}</span></a>
                         ))}
                     </div>
+
+                    {/* library grid of media items */}
                     <div className={styles.itemsCenter} ref={ref} style={{margin: `0 ${props.extraMargin ? 120 : 15}px`}}>
                         <div className={styles.itemsContainer} ref={itemsContainer} style={{width: libraryWidth + "px"}}>
                             {columns ? (
                                 <ViewportList items={items} viewportRef={itemsContainer}>
+                                    {/* loop displaying each media item */}
                                     {media => (
                                         <MediaItemComponent file={media.file} key={media.file.filename} onClick={() => setCurrentPage(media.file.filename)} scale={Math.round(scale * 5) / 5} meta={media.meta} />
                                     )}

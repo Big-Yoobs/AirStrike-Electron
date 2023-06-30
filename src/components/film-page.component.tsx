@@ -22,21 +22,23 @@ export default function FilmPageComponent({ filename, onBack } : FilmPageCompone
     const meta = useMediaMeta(filename);
     const roomId = useRoomId();
 
-    if (meta === null) {
+    if (meta === null) { //failed to load
         return <h1>Failed to load</h1>
     }
 
-    if (!meta) {
+    if (!meta) { //loading animation whilst no metadata exists for media item
         return <LoadingAnimComponent title={filename} />
     }
 
     const title : string = meta.details.title;
     const coverSrc : string = "https://image.tmdb.org/t/p/w500/" + meta.details.poster_path;
     const bgSrc : string = "https://image.tmdb.org/t/p/original/" + meta.details.backdrop_path;
-    const fileContainer : string = meta.filename.split(".").pop()!;
+    const fileContainer : string = meta.filename.split(".").pop()!; //file extension
     
-    const release = new Date(meta.details.release_date).toLocaleDateString("en-NZ", {year: "numeric", month: "long", day: "numeric"});
-    const directors: MovieCrewMember[] = [];
+    const release = new Date(meta.details.release_date).toLocaleDateString("en-NZ", {year: "numeric", month: "long", day: "numeric"}); //release year from release date
+
+    //getting the directors and writers from the crew array from the metadata
+    const directors: MovieCrewMember[] = []; 
     const writers: MovieCrewMember[] = [];
     for (let member of meta.credits.crew) {
         if (member.job === "Director") {
@@ -48,10 +50,12 @@ export default function FilmPageComponent({ filename, onBack } : FilmPageCompone
     }
 
     const desc : string = meta.details.overview;
-    const runtime : number = meta.details.runtime;
-    const length : number[] = [Math.floor(runtime / 60), runtime % 60];
+    const runtime : number = meta.details.runtime; //runtime in minutes
+    const length : number[] = [Math.floor(runtime / 60), runtime % 60]; //runtime in hours and minutes 
     const watched : boolean = true;
-    const userScore : number = Math.round(meta.details.vote_average * 10);
+    const userScore : number = Math.round(meta.details.vote_average * 10); //user score out of 100%
+    
+    //user score title based on the user score
     const scoreThresholds: { [key: number]: string } = {
         0: "Very Bad",
         20: "Bad",
@@ -61,17 +65,18 @@ export default function FilmPageComponent({ filename, onBack } : FilmPageCompone
         90: "Excellent"
     };
     let userScoreTitle: string;
-      
+    //setting the user score title based on the user score  
     for (const threshold in scoreThresholds) {
         if (userScore >= Number(threshold)) {
             userScoreTitle = scoreThresholds[threshold];
         }
     }
 
+    //play button functionality
     function play() {
-        if (roomId) {
+        if (roomId) { //if currently in a room, use that room
             electron().socketSend("url", "https://assets.airstrike.tv/" + filename);
-        } else {
+        } else { //if not in a room, create a new room
             electron().socketSend("create room", "https://assets.airstrike.tv/" + filename);
         }
     }
@@ -79,24 +84,28 @@ export default function FilmPageComponent({ filename, onBack } : FilmPageCompone
     return (
         <div className={styles.container}>
             <div>
+                {/* Background header image */}
                 <div className={styles.bgImg}>
+                    {/* back button which sits inside the header image */}
                     <button className={styles.backBtn} onClick={onBack}>
                         <MdOutlineArrowBackIos />
                     </button>
 
                     <ImageWrapperComponent src={bgSrc} />
                     
+                    {/* overlay to darken bg header image */}
                     <div className={styles.bgImgOverlay}></div>
                     <div className = {styles.coverContainer}>
                         <ImageWrapperComponent src={coverSrc}/>
                     </div>
                 </div>
 
+                {/* movie title */}
                 <div className={styles.txtHeader}>
                     <div className={styles.title}>{title}</div>
                     <div className={styles.txtHeaderSecLine}>
 
-                        
+                        {/* various metadata */}
                         <div>
                             <span className={styles.tag}>Director: </span>
                             <span>{directors.map(d => d.name).join(", ")}</span>
@@ -129,7 +138,11 @@ export default function FilmPageComponent({ filename, onBack } : FilmPageCompone
                         </div>
                     </div>
                 </div>
+
+                {/* buttons */}
                 <div className={styles.btnsContainer}>
+
+                    {/* play */}
                     <div className={styles.btn} onClick={play}>
                         <div className={styles.btnIcon}>
                             <BsPlayFill/>
@@ -137,35 +150,34 @@ export default function FilmPageComponent({ filename, onBack } : FilmPageCompone
                         <div className={styles.btnText}>Play</div>
                     </div>
 
-                    {/* <div className={styles.btn}>
-                        <div className={styles.btnIcon}>
-                            <FaUserFriends/>
-                        </div>
-                        <div className={styles.btnText}>Start Room</div>
-                    </div> */}
-
+                    {/* Edit button (edit with custom metadata) */}
                     {/* <div className={`${styles.btn} ${styles.editBtn}`}>
                         <div className={styles.btnIcon}>
                             <AiFillEdit/>
                         </div>
                     </div> */}
 
+                    {/* add tick if watched before */}
                     {watched ? (
                             <div className={styles.watchedContainer}>
                                 <BsFillCheckCircleFill />
                             </div>
                         ) : null
-                    }
-                                        
+                    }                                        
                 </div>
                     
             </div>
             
+            {/* description and further metadata details */}
             <div className={styles.descdeets}>
+
+                {/* movie description / about */}
                 <div className={styles.description}>
                     <div className={styles.bodyTitle}>Description</div>
                     <div>{desc}</div>
                 </div>
+
+                {/* further metadata details */}
                 <div className={styles.details}>
                     <div className={styles.bodyTitle}>Details</div>
                     <div>
@@ -175,18 +187,22 @@ export default function FilmPageComponent({ filename, onBack } : FilmPageCompone
                 </div>
             </div>
 
+            {/*Cast scroller  */}
             <ScrollComponent title="Cast">
                 {meta.credits.cast.map((c, index) => (
                     <CastPfpComponent member={c} key={index} />
                 ))}
             </ScrollComponent>
 
-            <ScrollComponent title="Reviews">
-            </ScrollComponent>
+            {/* Reviews scroller */}
+            {/* <ScrollComponent title="Reviews">
+            </ScrollComponent> */}
 
-            <ScrollComponent title="Related Films">
-            </ScrollComponent>
+            {/* Related Films scroller */}
+            {/*<ScrollComponent title="Related Films">
+            </ScrollComponent> */}
 
+            {/* Crew scroller */}
             <ScrollComponent title="Crew">
                 {meta.credits.crew.map((c, index) => (
                     <CastPfpComponent member={c} key={index} />

@@ -1,5 +1,6 @@
 import styles from "../styles/avatar-gui.component.module.scss";
 
+// square user avatar icon
 export interface AvatarGuiComponentProps {
     avatar: string
 }

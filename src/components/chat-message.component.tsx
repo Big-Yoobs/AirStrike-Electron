@@ -5,6 +5,8 @@ import AvatarGuiComponent from "./avatar-gui.component";
 import { electron } from "../utils";
 import { ChatMessage } from "../hooks/use-chat";
 
+// chat message component. The actual messages that users send within the chat sidebar
+
 const emojis: string[] = [];
 
 electron().addEventListener("emojis", (newEmojis: string[]) => {
@@ -37,6 +39,7 @@ export default function ChatMessageComponent({ message }: ChatMessageProps) {
         return out;
     }, [message]);
 
+    // check if the message only contains emojis
     let isOnlyEmojis = true;
     for (let word of words) {
         if (word.props.children) isOnlyEmojis = false;
@@ -44,9 +47,14 @@ export default function ChatMessageComponent({ message }: ChatMessageProps) {
 
     return (
         <div className={styles.container}>
+
+            {/* user profile picture */}
             <div className={styles.avatarContainer}>
                 <AvatarGuiComponent avatar={message.sender} />
             </div>
+
+            {/* the message */}
+            {/* message is displayed differently if it only contains emojis */}
             {isOnlyEmojis ? (
                 <div className={styles.emojis}>{words}</div>
             ) : (

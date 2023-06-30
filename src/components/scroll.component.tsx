@@ -3,9 +3,11 @@ import styles from "../styles/scroll.component.module.scss";
 import { useRef } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
+// A scrollable list of items (these appear on the film pages for the cast and crew)
+
 export interface ScrollComponentProps {
-    title: string
-    children?: JSX.Element | JSX.Element[]
+    title: string //the title of the scroll component
+    children?: JSX.Element | JSX.Element[] //the items to scroll through
 }
 
 export default function ScrollComponent(props: ScrollComponentProps) {
@@ -15,6 +17,7 @@ export default function ScrollComponent(props: ScrollComponentProps) {
         return null;
     }
 
+    // Scrolling using the left and right arrows
     function scrollElement(amount: number) {
         if (!container.width) return;
 
@@ -28,14 +31,18 @@ export default function ScrollComponent(props: ScrollComponentProps) {
 
     return (
         <div className={styles.container}>
-            <div className={styles.title}>{props.title}</div>
+            {/* title */}
+            <div className={styles.title}>{props.title}</div> 
             <div className={styles.scroll}>
-                <div className={styles.arrow} onClick={() => scrollElement(-1)}>
+                {/* left arrow */}
+                <div className={styles.arrow} onClick={() => scrollElement(-1)}> 
                     <MdOutlineArrowBackIos/>
                 </div>
+                {/* horozontal list of items */}
                 <div className={styles.items} ref={container.ref}>
                     {props.children}
                 </div>
+                {/* right arrow */}
                 <div className={styles.arrow} onClick={() => scrollElement(1)}>
                     <MdOutlineArrowBackIos/>
                 </div>

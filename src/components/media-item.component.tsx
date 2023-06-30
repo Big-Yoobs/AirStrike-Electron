@@ -22,6 +22,7 @@ export default function MediaItemComponent({ file, meta, onClick, scale }: Media
         return {"--scale": scale || 1} as any;
     }, [scale]);
 
+    //loading animation whilst no metadata exists for media item
     if (!meta) {
         return (
             <div className={styles.container} style={css} data-firstletter={file.filename.slice(0, 1).toUpperCase()}>
@@ -33,18 +34,21 @@ export default function MediaItemComponent({ file, meta, onClick, scale }: Media
         )
     }
 
+    //release year based on release date
     const releaseYear = meta.details.release_date.split("-").shift();
 
+    //clicking the play icon within the media item
     function directPlay(e: React.MouseEvent) {
         e.stopPropagation();
         e.preventDefault();
-        if (roomId) {
+        if (roomId) { //use current room if it exists
             electron().socketSend("url", "https://assets.airstrike.tv/" + file.filename);
-        } else {
+        } else { //create a new room if it doesn't
             electron().socketSend("create room", "https://assets.airstrike.tv/" + file.filename);
         }
     }
 
+    //Finding the first letter of a title when it starts with "The" by ignoring it.
     const firstLetter = (meta.details.title.toLowerCase().startsWith("the ") ? meta.details.title.slice(4, 5) : meta.details.title.slice(0, 1)).toUpperCase();
 
     return (

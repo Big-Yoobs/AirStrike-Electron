@@ -1,6 +1,8 @@
 import { IconContext } from "react-icons";
 import styles from "../styles/room-popout-button.component.module.scss";
 
+// the arrow button on the sidebar that pops in and out the sidebar in the room view
+
 export interface RoomPopoutButtonProps {
     selected?: boolean
     onclick?: () => void

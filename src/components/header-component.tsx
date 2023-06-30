@@ -5,6 +5,8 @@ import { electron } from '../utils';
 import RoomModalComponent from './room-modal.component';
 import { useState } from 'react';
 
+//Unused header component (In the current version the header is part of the library component)
+
 export default function HeaderComponent() {
     const [joinModelOpen, setJoinModalOpen] = useState(false);
 

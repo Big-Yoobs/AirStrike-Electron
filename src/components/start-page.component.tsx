@@ -4,6 +4,8 @@ import {BsFillNutFill} from "react-icons/bs";
 import { FaTheaterMasks } from "react-icons/fa";
 import {IoGameController} from "react-icons/io5";
 
+// Unused start page
+
 export default function StartPageComponent() {
 
     return (
