@@ -32,9 +32,13 @@ Airstrike is still in development so to use the application you have to build it
 
 ### Controls
 Zoom in/out: ```Ctrl + scroll+``` / ```Ctrl + scroll-``` (library view)
+
 Dev Tools: ```f12```
+
 Refresh: ```f5```
+
 Full Screen: ```f11```
+
 
 ### Room Creation
 Rooms can be created automatically by just playing a movie if you are currently not in a room. You can also create a room by clicking the "create room" button in the library view header. 
