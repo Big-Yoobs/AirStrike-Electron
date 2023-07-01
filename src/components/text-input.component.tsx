@@ -7,7 +7,7 @@ export interface TextInputComponentProps {
     onChange?: (value: string) => void | string
 }
 
-export default function TextInputComponent(props: TextInputComponentProps) {
+export default function TextInputComponent(props: TextInputComponentProps) { // styled wrapper for text input component
     const input = useRef<HTMLInputElement>(null);
 
     const change = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {

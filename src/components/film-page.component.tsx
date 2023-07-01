@@ -1,7 +1,5 @@
 import styles from '../styles/film-page.component.module.scss';
 import {BsPlayFill} from 'react-icons/bs';
-import {FaUserFriends} from 'react-icons/fa';
-import {AiFillEdit} from 'react-icons/ai';
 import {BsFillCheckCircleFill} from 'react-icons/bs';
 import useMediaMeta from '../hooks/use-media-meta';
 import ImageWrapperComponent from './image-wrapper.component';

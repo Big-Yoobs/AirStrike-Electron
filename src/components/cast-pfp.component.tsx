@@ -1,6 +1,5 @@
 import styles from '../styles/cast-pfp.component.module.scss';
 import { MovieCastMember, MovieCrewMember } from '../backend/meta';
-import useMediaMeta from '../hooks/use-media-meta';
 import ImageWrapperComponent from './image-wrapper.component';
 
 // the profile picture component for both cast and crew members as seen on the film page

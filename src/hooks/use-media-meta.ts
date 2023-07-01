@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Movie } from "../backend/meta";
 import MetaUtils from "../logic/meta-utils";
 
-export default function useMediaMeta(filename: string): Movie | undefined | null {
+export default function useMediaMeta(filename: string): Movie | undefined | null { // hook for getting movie metadata from filename
     const [meta, setMeta] = useState<Movie | undefined | null>(MetaUtils.get(filename));
 
     useEffect(() => {

@@ -13,7 +13,7 @@ import useRoomId from "../hooks/use-room-id";
 import EmojiSelectionComponent from "./emoji-selection.component";
 import useRoomUrl from "../hooks/use-room-url";
 
-export default function RoomComponent() {
+export default function RoomComponent() { // component for an active room
     const [view, setView] = useState<"library" | "theatre" | "settings">("theatre");
     const [sidebarOpen, setSidebarOpen] = useState(true);
     const chatMessages = useChat();
@@ -24,7 +24,7 @@ export default function RoomComponent() {
     const [suggestedEmoji, setSuggestedEmoji] = useState<string | null>(null);
     const url = useRoomUrl();
 
-    useEffect(() => {
+    useEffect(() => { // scroll to bottom when new chat message
         console.log("chat changed");
         chatContainer.current.parentElement.scrollTo({
             top: chatContainer.current.clientHeight,
@@ -32,21 +32,21 @@ export default function RoomComponent() {
         });
     }, [chatMessages]);
 
-    useEffect(() => {
+    useEffect(() => { // change to theatre view when url changes
         if (url) {
             console.log("URL changed to:", url);
             setView("theatre");
         }
     }, [url]);
 
-    function drawView() {
+    function drawView() { // draw appropriate component based on room state
         switch (view) {
             case "library": return <LibraryComponent extraMargin />
             default: return <PlayerComponent src={url} />
         }
     }
 
-    function chatKeypress(e: React.KeyboardEvent) {
+    function chatKeypress(e: React.KeyboardEvent) { // handler for chat message sending and emoji autocomplete
         if (e.key == "Enter") {
             if (autoComplete && suggestedEmoji) {
                 selectEmoji(suggestedEmoji);
@@ -80,7 +80,7 @@ export default function RoomComponent() {
         }
     }
 
-    function selectEmoji(emoji: string) {
+    function selectEmoji(emoji: string) { // add autocompleted emoji to chat message
         const words = chatInput.current.value.split(" ");
         if (words.length) {
             const lastWord = words[words.length - 1];

@@ -4,7 +4,7 @@ import { electron } from "../utils";
 let isPaused = false;
 const listeners: ((isPaused: boolean) => void)[] = [];
 
-electron().addEventListener("paused", (data: boolean) => {
+electron().addEventListener("paused", (data: boolean) => { // subscribe to paused event
     isPaused = data;
 
     for (let callback of listeners) {
@@ -12,7 +12,7 @@ electron().addEventListener("paused", (data: boolean) => {
     }
 });
 
-export default function usePaused() {
+export default function usePaused() { // hook for getting whether the current room is paused
     const [paused, setPaused] = useState(isPaused);
 
     useEffect(() => {

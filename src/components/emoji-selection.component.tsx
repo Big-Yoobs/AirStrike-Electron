@@ -6,7 +6,7 @@ import StringSimilarity from "string-similarity";
 
 const emojis: string[] = [];
 
-electron().addEventListener("emojis", (newEmojis: string[]) => {
+electron().addEventListener("emojis", (newEmojis: string[]) => { // subscribe to emojis event to keep track of all known emojis
     emojis.splice(0, emojis.length, ...newEmojis);
 });
 
@@ -16,7 +16,7 @@ export interface EmojiSelectionComponentProps {
     onSuggestionChange?: (emoji: string) => void
 }
 
-export default function EmojiSelectionComponent(props: EmojiSelectionComponentProps) {
+export default function EmojiSelectionComponent(props: EmojiSelectionComponentProps) { // component for selecting an emoji with autocompletion and string similarity support
     const [selectedEmoji, setSelectedEmoji] = useState<string | null>(null);
     const container = useRef<HTMLDivElement>(null);
 

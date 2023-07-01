@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import useNotification from "../hooks/use-notification";
 import styles from "../styles/notification.component.module.scss";
 
-export default function NotificationComponent() {
+export default function NotificationComponent() { // shows the most current notification
     const [lastText, setLastText] = useState("");
     const info = useNotification();
 

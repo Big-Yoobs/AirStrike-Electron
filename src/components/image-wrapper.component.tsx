@@ -10,24 +10,24 @@ export interface ImageWrapperProps {
     loadingScale?: number
 }
 
-export default function ImageWrapperComponent({src, fallback, onLoad, loadingTitle, loadingScale}: ImageWrapperProps) {
+export default function ImageWrapperComponent({src, fallback, onLoad, loadingTitle, loadingScale}: ImageWrapperProps) { // wrapper component for image which handles loading and fallbacks
     const image = useRef<HTMLImageElement>(null);
     const [loading, setLoading] = useState(true);
     const [imgSrc, setSrc] = useState<string | null>(null);
     
     useEffect(() => {
-        setLoading(true);
+        setLoading(true); // src changed, mark as loading
         const img = new Image();
         let doFallback = false;
         let usingSrc = src;
 
-        function load() {
+        function load() { // image load succeeded, stop loading
             setSrc(usingSrc);
             setLoading(false);
             if (onLoad) onLoad();
         }
 
-        function error() {
+        function error() { // image load failed, try fallback image if haven't already
             if (doFallback) return;
             doFallback = true;
             usingSrc = fallback || "gui://logo.png";
@@ -37,9 +37,9 @@ export default function ImageWrapperComponent({src, fallback, onLoad, loadingTit
         img.addEventListener("load", load);
         img.addEventListener("error", error);
 
-        img.src = src;
+        img.src = src; // test loading image
         
-        return () => {
+        return () => { // clean up
             img.removeEventListener("load", load);
             img.removeEventListener("error", error);
         }

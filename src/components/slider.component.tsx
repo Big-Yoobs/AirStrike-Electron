@@ -13,7 +13,7 @@ export interface SliderProps {
     activeCallback?: (active: boolean) => void
 }
 
-export default function Slider(props: SliderProps) {
+export default function Slider(props: SliderProps) { // stylable wrapper component for range input
     const input = useRef<HTMLInputElement>();
     const [isActive, setIsActive] = useState(false);
     const [activeValue, setActiveValue] = useState(0);

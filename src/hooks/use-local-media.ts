@@ -14,7 +14,7 @@ electron().addEventListener("local media", (data: string[]) => {
     }
 });
 
-export default function useLocalMedias() {
+export default function useLocalMedias() { // hook for getting list of locally stored media
     const [currentMedias, setMedias] = useState(medias);
 
     useEffect(() => {

@@ -7,6 +7,6 @@ export interface AvatarGuiComponentProps {
 
 export default function AvatarGuiComponent({ avatar }: AvatarGuiComponentProps) {
     return (
-        <img className={styles.avatar} src={avatar == "system" ? "gui://logo.png" : `avatar://${avatar}`} />
+        <img className={styles.avatar} src={avatar == "system" ? "gui://logo.png" : `avatar://${avatar}`} /> // avatar:// and gui:// are custom protocols created in index.ts
     )
 }

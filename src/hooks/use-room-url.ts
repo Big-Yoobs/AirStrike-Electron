@@ -9,7 +9,7 @@ interface ElectronResponse {
     url: string | null
 }
 
-electron().addEventListener("url", (data: ElectronResponse) => {
+electron().addEventListener("url", (data: ElectronResponse) => { // subscribe to url event
     url = data.url;
 
     for (let callback of listeners) {
@@ -17,7 +17,7 @@ electron().addEventListener("url", (data: ElectronResponse) => {
     }
 });
 
-export default function useRoomUrl() {
+export default function useRoomUrl() { // hook for getting the room's current media url
     const [currentUrl, setCurrentUrl] = useState(url);
 
     useEffect(() => {

@@ -4,7 +4,7 @@ import { electron } from "../utils";
 let timestamp = 0;
 const listeners: ((isPaused: number) => void)[] = [];
 
-electron().addEventListener("timestamp", (data: number) => {
+electron().addEventListener("timestamp", (data: number) => { // subscribe to timestamp event
     timestamp = data;
 
     for (let callback of listeners) {
@@ -12,7 +12,7 @@ electron().addEventListener("timestamp", (data: number) => {
     }
 });
 
-export default function useTimestamp() {
+export default function useTimestamp() { // hook for getting current timestamp of room's media
     const [currentTimestamp, setTimestamp] = useState(timestamp);
 
     useEffect(() => {

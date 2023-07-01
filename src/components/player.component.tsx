@@ -17,7 +17,7 @@ export interface PlayerComponentProps {
     src: string | null
 }
 
-export default function PlayerComponent(props: PlayerComponentProps) {
+export default function PlayerComponent(props: PlayerComponentProps) { // component for playing video
     const video = useRef<HTMLVideoElement>();
     const [isBuffering, setIsBuffering] = useState(true);
     const {width: dockWidth, ref: dockRef} = useResizeDetector();
@@ -29,7 +29,7 @@ export default function PlayerComponent(props: PlayerComponentProps) {
     const localMedias = useLocalMedias();
     const [showHud, setShowHud] = useState(false);
     const setHudTimer = useState<ReturnType<typeof setTimeout>>(null)[1];
-    const src = useMemo(() => {
+    const src = useMemo(() => { // detect if media is stored locally
         if (!props.src) return props.src;
 
         const basename = props.src.split("/").pop();
@@ -55,7 +55,7 @@ export default function PlayerComponent(props: PlayerComponentProps) {
         electron().socketSend("paused", !roomPaused);
     }
 
-    useEffect(() => {
+    useEffect(() => { // load video when src changes
         video.current.onload = console.log;
         video.current.onerror = console.error;
         video.current.oncanplay = () => setIsBuffering(false);
@@ -63,7 +63,7 @@ export default function PlayerComponent(props: PlayerComponentProps) {
         video.current.load();
     }, [src]);
 
-    useEffect(() => {
+    useEffect(() => { // update server when buffering state changes
         electron().socketSend("buffering", isBuffering);
     }, [isBuffering]);
 

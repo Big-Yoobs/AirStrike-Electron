@@ -9,7 +9,7 @@ export interface MediaMetaWrapper {
     meta?: Movie | null
 }
 
-export default function useMediaMetas(files: File[]) {
+export default function useMediaMetas(files: File[]) { // hook for getting media metadata for multiple files
     const [metas, setMetas] = useState<MediaMetaWrapper[]>(files.map(file => {
         const meta = MetaUtils.get(file.filename) || null;
 

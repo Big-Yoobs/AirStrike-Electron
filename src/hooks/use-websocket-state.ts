@@ -10,14 +10,14 @@ let websocketState: WebsocketState = {
 };
 const listeners: ((state: WebsocketState) => void)[] = [];
 
-electron().addEventListener("websocket state", (state: WebsocketState) => {
+electron().addEventListener("websocket state", (state: WebsocketState) => { // subscribe to websocket state event
     websocketState = state;
     for (let callback of listeners) {
         callback(websocketState);
     }
 });
 
-export default function useWebsocketState() {
+export default function useWebsocketState() { // hook for getting whether client is connected to server
     const [state, setState] = useState(websocketState);
 
     useEffect(() => {

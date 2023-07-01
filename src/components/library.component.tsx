@@ -1,13 +1,8 @@
 import styles from '../styles/library.component.module.scss';
 import MediaItemComponent from './media-item.component';
-import LibrarySidebarItemComponent from './library-sidebar-item.component';
 import { useResizeDetector } from "react-resize-detector";
 import { ViewportList } from 'react-viewport-list';
 import StringSimilarity from "string-similarity";
-
-import { FaHome } from 'react-icons/fa';
-import { FaFilm } from 'react-icons/fa';
-import { BsTvFill } from 'react-icons/bs';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import useLibrary from '../hooks/use-library';
 import FilmPageComponent from './film-page.component';
